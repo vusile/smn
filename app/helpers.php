@@ -1,0 +1,7 @@
+<?php
+
+if (! function_exists('songLink')) {
+    function songLink($song) {
+        return "<a href = '" . url('/') . "/wimbo/" . $song->url . "/". $song->id . "'>" . $song->name . "</a>";
+    }
+}
