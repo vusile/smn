@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Composer;
+use App\Models\Composer;
+use App\Services\ComposerService;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Http\Request;
 
 class ComposerController extends Controller
 {
+    protected $composerService;
+    
+    public function __construct(ComposerService $composerService) 
+    {
+        $this->composerService = $composerService;
+    }
+    
     public function index()
     {
         $title = "Watunzi Nyimbo za Kanisa";
@@ -65,5 +73,81 @@ class ComposerController extends Controller
             'composers.songs',
             compact('composer', 'approvedSongs')
         );
+    }
+    
+    public function create()
+    {
+        return view(
+            'composers.create'
+        );
+    }
+    
+    public function store(Request $request)
+    {
+        $duplicates = $this->composerService
+                ->checkForDuplicates($request->input('name'));
+        
+        if (!$duplicates) {
+            $customMessages = [
+                'name.required' => 'Jina la mtunzi ni lazima',
+            ];
+        
+            $this->validate(
+                $request,
+                [
+                    'name' => 'required',
+                ],
+                $customMessages
+            );
+
+            $additionalInfo = $this->uploadComposerPhotos($request);
+        
+            if ($request->has('uploader_is_composer')) {
+            $additionalInfo['user_id'] = auth()->user()->id;
+        }
+        
+            $composer = Composer::create(
+                array_replace(
+                    $request->all(),
+                    $additionalInfo
+                )
+            );
+
+            if (request('return_to_song_upload')) {
+                return redirect()->route(
+                    'song-upload.index',
+                    [
+                        'selected_composer' => $composer->id
+                    ]
+                );
+            } else {
+                return redirect()->route(
+                    'account.composers'
+                );
+            }
+        } else {
+            return view(
+                'composers.create',
+                compact('duplicates')
+            );
+        }
+    }
+    
+    protected function uploadComposerPhotos($request)
+    {        
+        $photos = [];
+        for ($i = 1; $i < 4; $i++) {
+            $photoField = "photo$i";
+            if ($request->file($photoField)) {
+                $path = $request->file($photoField)
+                    ->store(
+                        config('composer.files.paths.images'),
+                        'composers'
+                    );
+                $photos[$photoField] = getFileNameFromPath($path);
+            }
+        }
+       
+        return $photos;
     }
 }

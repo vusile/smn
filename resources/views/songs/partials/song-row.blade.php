@@ -12,12 +12,11 @@
     </div>
     <div class="col-lg-4" >
         <p class="text-success">
-
             @if($song->midi)
-                <small>- Una Midi</small>
+                <span class="badge badge-success">Una Midi</span><br>
             @endif
             @if($song->lyrics)
-                <small>- Una Maneno</small>
+                <span class="badge badge-primary">Una Maneno</span>
             @endif
         </p>
     </div>

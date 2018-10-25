@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\ComposerEmail;
+use App\Models\ComposerEmail;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;

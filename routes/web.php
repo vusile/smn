@@ -54,5 +54,36 @@ Route::get('/nyimbozajumapilinasikukuu/ratiba/{slug}/{dominika}', function ($slu
     return redirect("/dominika-sikukuu/$slug/$dominika", 301);
 });
 Route::get('/dominika-sikukuu/{slug}/{dominika}', 'DominikaController@show');
+Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('/login', 'Auth\LoginController@login');
+Route::get('/logout', 'Auth\LoginController@logout');
 Route::post('/comment/', 'CommentController@store');
 Route::post('/composer-email/', 'ComposerEmailController@store');
+Route::get('/search', 'SearchController@index');
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/upload/song', 'SongUploadController@index')
+        ->name('song-upload.index');
+    Route::get('/upload/details', 'SongUploadController@details');
+    Route::post('/upload/store', 'SongUploadController@store');
+    Route::post('/upload/update', 'SongUploadController@update');
+    Route::get('/upload/dominika/{song}', 'SongUploadController@dominika')
+            ->name('song-upload.dominika');
+    Route::post('/upload/dominika/', 'SongUploadController@storeDominika')
+            ->name('song-upload.dominika.store');
+    Route::get('/upload/preview/{song}', 'SongUploadController@preview')
+            ->name('song-upload.preview');
+    Route::get('/akaunti', 'AccountController@index');
+    Route::get('/akaunti/watunzi', 'AccountController@index')
+            ->name('account.composers');
+    Route::get('/akaunti/nyimbo/pending', 'SongController@pending')
+            ->name('account.songs.pending');
+    Route::get('/akaunti/nyimbo/live', 'SongController@live')
+            ->name('account.songs.pending');
+    Route::get('/mtunzi/create', 'ComposerController@create');
+    Route::post('/mtunzi/store', 'ComposerController@store');
+    Route::get('/edit-song/{song}', 'SongUploadController@edit');
+    Route::get('/search/mysongs', 'SearchController@searchUserSongs');
+    
+});

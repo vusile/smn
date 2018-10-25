@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\Models\User;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Http\Request;
 
@@ -19,7 +19,7 @@ class UserController extends Controller
             ->sortBy('first_name')
             ->filter(
                 function ($user) {
-                    return $user->has_songs && $user->name;
+                    return $user->has_active_songs && $user->name;
                 }
             );  
         

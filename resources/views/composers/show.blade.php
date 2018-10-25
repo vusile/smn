@@ -31,43 +31,44 @@
                     @if($composer->has_photo)
                         <div class="preview col-md-6">
                             <div class="preview-pic tab-content">
-                                @if ($composer->photo)
+                                @if ($composer->photo1)
                                     <div class="tab-pane active" id="pic-1">
-                                        <img src="{{config('composer.files.paths.images')}}{{$composer->photo}}" />
+                                        <img src="{{ url('storage/uploads/files/'.$composer->photo1) }}" />
                                     </div>
                                 @endif
                                 
                                 @if ($composer->photo2)
                                     <div class="tab-pane" id="pic-2">
-                                        <img src="{{config('composer.files.paths.images')}}{{$composer->photo2}}" />
+                                        <img src="{{ url('storage/uploads/files/'.$composer->photo2) }}" />
                                     </div>
                                 @endif
                        
                                 @if ($composer->photo3)
                                     <div class="tab-pane" id="pic-3">
-                                        <img src="{{config('composer.files.paths.images')}}{{$composer->photo3}}" />
+                                        <img src="{{ url('storage/uploads/files/'.$composer->photo3) }}" />
                                     </div>
                                 @endif
                             </div>
                             <ul class="preview-thumbnail nav nav-tabs">
-                                @if ($composer->photo)
+                                @if ($composer->photo1)
                                     <li class="active">
                                         <a data-target="#pic-1" data-toggle="tab">
-                                            <img src="{{config('composer.files.paths.images')}}{{$composer->photo}}" />
+
+                                            <img src="{{ url('storage/uploads/files/'.$composer->photo1) }}" />
                                         </a>
                                     </li>
                                 @endif
                                 @if ($composer->photo2)
                                     <li>
                                         <a data-target="#pic-2" data-toggle="tab">
-                                            <img src="{{config('composer.files.paths.images')}}{{$composer->photo2}}" />
+                                            <img src="{{ url('storage/uploads/files/'.$composer->photo2) }}" />
                                         </a>
                                     </li>
                                 @endif
                                 @if ($composer->photo3)
                                     <li>
                                         <a data-target="#pic-3" data-toggle="tab">
-                                            <img src="{{config('composer.files.paths.images')}}{{$composer->photo3}}" />
+                                            <img src="{{ url('storage/uploads/files/'.$composer->photo3) }}" />
                                         </a>
                                     </li>
                                 @endif

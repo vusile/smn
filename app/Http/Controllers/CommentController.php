@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Comment;
+use App\Models\Comment;
 use App\Events\CommentPosted;
-use App\Song;
+use App\Models\Song;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller

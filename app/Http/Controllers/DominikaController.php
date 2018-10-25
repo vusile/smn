@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Dominika;
+use App\Models\Dominika;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ class DominikaController extends Controller
         SEOMeta::setDescription($description);
         
         $dominikas = Dominika::where(
-                'mwaka_id',
+                'year_id',
                 config('dominika.mwaka')
             )
             ->get();

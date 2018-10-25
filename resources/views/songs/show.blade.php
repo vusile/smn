@@ -20,7 +20,7 @@
                 <p>
                     <strong>Wimbo huu unaweza kutumika: </strong><br />
                     @foreach($song->dominikas as $dominika)
-                        - {{ $parts[$dominika->id] }} <a href = "/nyimbozajumapilinasikukuu/ratiba/{{str_slug($dominika->title)}}/{{$dominika->id}}">{{ $dominika->title }}</a><br>
+                        - {{ $parts[$dominika->id]->name }} <a href = "/dominika-sikukuu/{{str_slug($dominika->title)}}/{{$dominika->id}}">{{ $dominika->title }}</a><br>
                     @endforeach
                 </p>
                 @endif

@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Song;
+use App\Models\Song;
 use Closure;
 
 class CheckSongUrl

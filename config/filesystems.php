@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DRIVER', 'local'),
+    'default' => env('FILESYSTEM_DRIVER', 'public'),
 
     /*
     |--------------------------------------------------------------------------
@@ -53,6 +53,36 @@ return [
             'root' => storage_path('app/public'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
+        ],
+        
+        'categories' => [
+            'driver' => 'local',
+            'root'   => public_path('images'),            
+        ],
+        
+        'composers' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',            
+        ],
+        
+        'pdf-midi' => [
+            'driver' => 'local',
+            'root'   => public_path('uploads/files'),            
+        ],
+        
+        'uploads' => [ // used for Backpack/CRUD (in elFinder)
+            'driver' => 'local',
+            'root'   => public_path('uploads'),
+        ],
+        'backups' => [ // used for Backpack/BackupManager
+            'driver' => 'local',
+            'root'   => storage_path('backups'), // that's where your backups are stored by default: storage/backups
+        ],
+        'storage' => [ // used for Backpack/LogManager
+            'driver' => 'local',
+            'root'   => storage_path(),
         ],
 
         's3' => [

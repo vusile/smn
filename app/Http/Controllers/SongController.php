@@ -2,16 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Song;
-use App\SongView;
-use App\SongDownload;
+use App\Models\Song;
+use App\Models\SongView;
+use App\Models\SongDownload;
+use App\Services\SongService;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class SongController extends Controller
 {
+    /*
+     * @var SongService
+     */
+    protected $songService;
+    
+    public function __construct(SongService $songService)
+    {
+        $this->songService = $songService;
+    }
+    
     public function show(string $slug, Song $song)
     {
         SEOMeta::setTitle('Nota za ' . $song->name . ' na ' . $song->composer->name);
@@ -22,7 +34,7 @@ class SongController extends Controller
         $parts = null;
         
         if($song->dominikas) {
-            $parts = $this->determinePartOfMass($song);
+            $parts = $this->songService->determinePartOfMass($song);
         }
         
         $songView = SongView::firstOrCreate(
@@ -44,7 +56,7 @@ class SongController extends Controller
     {
         switch($type) {
             case 'midi':
-                $path = config('song.files.paths.midi') . $song->midi;
+                $path = storage_path('app/public/' . config('song.files.paths.midi') . $song->midi);
                 header("Pragma: public");
                 header("Expires: 0");
                 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
@@ -55,8 +67,7 @@ class SongController extends Controller
                 header("Content-Transfer-Encoding: binary");
                 header("Content-Length: " . filesize($path));
                 readfile($path);
-                exit;
-                
+                exit; 
             break;
             
             case 'pdf':
@@ -66,9 +77,21 @@ class SongController extends Controller
 
                 $songDownload->increment('downloads');
                 
-                return redirect(config('song.files.paths.pdf') . $song->pdf);
+                return response()->file(
+                    storage_path('app/public/' . config('song.files.paths.pdf') . $song->pdf)
+                );
                 
                 break;
+            
+            case 'original':
+                $path = storage_path('app/public/' . config('song.files.paths.midi') . $song->nota_original);
+                return Storage::download($path);
+            break;
+        
+            case 'software':
+                $path = storage_path('app/public/' . config('song.files.paths.midi') . $song->software_file);
+                return Storage::download($path);
+            break;
         }
     }
     
@@ -92,18 +115,34 @@ class SongController extends Controller
         return $otherSongs;
     }
     
-    protected function determinePartOfMass(Song $song)
+    public function pending()
     {
-        $dominikaPartsOfMass = DB::table('dominikas_songs')
-                ->where('song_id', $song->id)
-                ->get()
-                ->mapWithKeys(function ($dominikaPartOfMass) {
-                    $partOfMass = DB::table('parts_of_mass')
-                            ->find($dominikaPartOfMass->parts_of_mass_id);
-
-                    return [$dominikaPartOfMass->dominika_id => $partOfMass->name];
-                });
-
-        return $dominikaPartsOfMass->all();
+        $songs = Song::pending()
+            ->ownedBy(auth()->user())
+            ->orderBy('id', 'desc')
+            ->paginate(20);
+        
+        $status = 'Nyimbo zinazosubiri Review';
+        $count = $songs->total();
+        
+        return view(
+            'account.songs',
+            compact('songs', 'status', 'count')
+        );
+    }
+    
+    public function live()
+    {
+        $songs = Song::approved()
+            ->ownedBy(auth()->user())
+            ->orderBy('id', 'desc')
+            ->paginate(20);
+        
+        $status = 'Nyimbo zinazosubiri Review';
+        
+        return view(
+            'account.songs',
+            compact('songs', 'status', 'count')
+        );
     }
 }

@@ -3,7 +3,7 @@
 return [
     'files' => [
         'paths' => [
-            'pdf' => '/uploads/files/',
+            'pdf' => 'uploads/files/',
             'midi' => '/uploads/files/'
         ],
     ],

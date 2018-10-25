@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Dominika;
-use App\Song;
-use App\User;
+use App\Models\Dominika;
+use App\Models\Song;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 

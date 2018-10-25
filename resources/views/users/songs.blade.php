@@ -8,7 +8,7 @@
 <div class="container">
     @include('layouts.alphabets')
     @foreach($user->songs->where('status',1)->sortBy('name') as $song)
-        @include('songs.partials.song-row');
+        @include('songs.partials.song-row')
     @endforeach
 </div>
 @stop

@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Category;
+use App\Models\Category;
 use Closure;
 
 class CheckCategoryUrl

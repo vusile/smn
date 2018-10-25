@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\BlogPost;
+use App\Models\BlogPost;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Http\Request;
 
