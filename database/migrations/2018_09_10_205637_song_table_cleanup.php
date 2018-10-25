@@ -16,7 +16,7 @@ class SongTableCleanup extends Migration
         Schema::table('songs', function (Blueprint $table) {
             $table->renameColumn('uploaded_by', 'user_id');
             $table->renameColumn('approved', 'status');
-            $table->dropForeign('songs_approved_by_foreign');
+//            $table->dropForeign('songs_approved_by_foreign');
         });
     }
 
