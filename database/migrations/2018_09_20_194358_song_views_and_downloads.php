@@ -1,8 +1,8 @@
 <?php
 
-use App\Song;
-use App\SongDownload;
-use App\SongView;
+use App\Models\Song;
+use App\Models\SongDownload;
+use App\Models\SongView;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
