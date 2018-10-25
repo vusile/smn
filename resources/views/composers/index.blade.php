@@ -9,7 +9,7 @@
     @include('layouts.alphabets')
     @foreach($composers as $composer)
         @if($composer->name)
-            
+            @include('composers.partials.composers-row')
         @endif
     @endforeach
 </div>

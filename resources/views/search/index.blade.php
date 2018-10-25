@@ -9,7 +9,7 @@
     <h2>Watunzi waliopatikana</h2>
     @include('layouts.alphabets')
     @foreach($composers->sortBy('name') as $composer)
-        @include('songs.partials.song-row')
+        @include('composers.partials.composers-row')
     @endforeach
 </div>
 <div class="container">
