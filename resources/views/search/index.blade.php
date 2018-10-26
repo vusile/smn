@@ -2,7 +2,7 @@
 @section('content')
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">Matokeo ya Utafutaji</h1>
-    <p class="lead">Kuna watunzi {{ number_format($composersTotal) }} na nyimbo {{ number_format($songsTotal()) }} zilizopatikana kutokana na utafutaji.</p>
+    <p class="lead">Kuna watunzi {{ number_format($composersTotal) }} na nyimbo {{ number_format($songsTotal) }} zilizopatikana kutokana na utafutaji.</p>
 </div>
 
 <div class="container">
