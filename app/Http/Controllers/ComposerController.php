@@ -27,10 +27,10 @@ class ComposerController extends Controller
             ->sortBy('name')
             ->filter(
                 function ($composer) {
-                    return $composer->has_songs && $composer->name;
+                    return $composer->has_active_songs && $composer->name;
                 }
             );       
-              
+        
         return view(
             'composers.index',
             compact('composers', 'title', 'description')

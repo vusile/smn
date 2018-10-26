@@ -3,7 +3,7 @@
         <p>{{ $composer->name }}</p>
     </div>
     <div class="col-lg-4" >
-        <p><a href="/composer/songs/{{$composer->url}}/{{$composer->id}}">Tazama nyimbo zake {{ $composer->songs->count() }}</a></p>
+        <p><a href="/composer/songs/{{$composer->url}}/{{$composer->id}}">Tazama nyimbo zake {{ $composer->activeSongs()->count() }}</a></p>
     </div>
     <div class="col-lg-4" >
 

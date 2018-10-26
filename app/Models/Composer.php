@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\SongTrait;
 use Backpack\CRUD\CrudTrait;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,7 @@ class Composer extends Model
 {
     use CrudTrait;
     use Sluggable;
+    use SongTrait;
     
     public $timestamps = false;
     
@@ -38,10 +40,5 @@ class Composer extends Model
     public function getHasPhotoAttribute()
     {
         return $this->photo2 || $this->photo1 || $this->photo3;
-    }
-    
-    public function getHasSongsAttribute()
-    {
-        return $this->songs->count();
     }    
 }
