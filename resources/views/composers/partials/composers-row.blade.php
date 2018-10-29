@@ -1,9 +1,9 @@
 <div class="row  {{$loop->index%2 == 0 ? "bg-light" : "" }} ">
     <div id="{{ substr($composer->name,0,1) }}" class="col-lg-4" >
-        <p>{{ $composer->name }}</p>
+        <p>{{ title_case($composer->name) }}</p>
     </div>
     <div class="col-lg-4" >
-        <p><a href="/composer/songs/{{$composer->url}}/{{$composer->id}}">Tazama nyimbo zake {{ $composer->activeSongs()->count() }}</a></p>
+        <p><a href="/composer/songs/{{$composer->url}}/{{$composer->id}}">Tazama nyimbo zake {{ $composer->active_songs }}</a></p>
     </div>
     <div class="col-lg-4" >
 

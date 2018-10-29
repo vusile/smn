@@ -6,6 +6,7 @@ use App\Models\Composer;
 use App\Services\ComposerService;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ComposerController extends Controller
 {
@@ -27,7 +28,7 @@ class ComposerController extends Controller
             ->sortBy('name')
             ->filter(
                 function ($composer) {
-                    return $composer->has_active_songs && $composer->name;
+                    return ($composer->active_songs > 0) && $composer->name;
                 }
             );       
         
