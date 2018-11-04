@@ -114,7 +114,7 @@ class Song extends Model
     
     public function scopePending($query)
     {
-        return $query->whereNotIn('status', [1, 2]);
+        return $query->whereIn('status', [4]);
     }
     
     public function scopeOwnedBy($query, $user)

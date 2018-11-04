@@ -6,7 +6,7 @@
         <div class="col-lg-8" >
             <br />
             <h3>Hakiki Wimbo Tafadhali</h3>
-            
+            <br />
             <p><strong>Jina la wimbo: </strong> {{ $song->name }}</p>
             <p><strong>Mtunzi: </strong> {{ $song->composer->name }}</p>
             <p><strong>Makundi Nyimbo: </strong> {{ $song->categories->pluck('title')->implode(' | ') }}</p>

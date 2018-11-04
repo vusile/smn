@@ -78,7 +78,7 @@
                         <div class="details col-md-6">
                             <h3 class="product-title">Maelezo zaidi</h3>
 
-                            <p class="vote"><strong>Idadi ya nyimbo SMN: </strong> {{ $composer->songs->count() }} > <a href="/watunzi/nyimbo/{{$composer->url}}/{{$composer->id}}">Zitazame</a></p>
+                            <p class="vote"><strong>Idadi ya nyimbo SMN: </strong> {{ $composer->active_songs }} > <a href="/watunzi/nyimbo/{{$composer->url}}/{{$composer->id}}">Zitazame</a></p>
                             @if ($composer->jimbo)
                                 <p class="vote"><strong>Jimbo analofanya utume: </strong> {{ $composer->jimbo }}</p>
                             @endif
