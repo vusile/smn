@@ -15,13 +15,9 @@ class UserController extends Controller
         SEOMeta::setTitle($title);
         SEOMeta::setDescription($description);
         
-        $users = User::all()
-            ->sortBy('first_name')
-            ->filter(
-                function ($user) {
-                    return $user->has_active_songs && $user->name;
-                }
-            );  
+        $users = User::where('active_songs', '>', 0)
+            ->orderBy('first_name')
+            ->get();  
         
         return view(
             'users.index',

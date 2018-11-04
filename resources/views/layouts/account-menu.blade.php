@@ -17,11 +17,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/akaunti/nyimbo/pending">Subiri Review</a>
                 </li>
-                <li class="nav-item">
+<!--                <li class="nav-item">
                     <a class="nav-link" href="/akaunti/wasifu">Wasifu Wangu</a>
+                </li>-->
+                <li class="nav-item">
+                    <a class="nav-link" href="/akaunti/watunzi">Watunzi</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/akaunti/watunzi">Ongeza Mtunzi</a>
+                    <a class="nav-link" href="/akaunti/review-nyimbo">Review Nyimbo</a>
                 </li>
             </ul>
         </div>

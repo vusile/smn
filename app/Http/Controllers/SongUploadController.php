@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SongCreated;
 use App\Models\Category;
 use App\Models\Composer;
 use App\Models\Dominika;
@@ -171,6 +172,8 @@ class SongUploadController extends Controller
         $song->categories()
             ->sync($request->input('categories'));
         
+        event(new SongCreated($song));
+
         return redirect()->route(
             'song-upload.dominika',
             [

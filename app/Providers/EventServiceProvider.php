@@ -23,7 +23,16 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\ComposerEmailCreated' => [
             'App\Listeners\SendComposerEmail',
-        ]
+        ],
+        'App\Events\SongCreated' => [
+            'App\Listeners\SendSongCreatedEmail',
+        ],
+        'App\Events\SongApproved' => [
+            'App\Listeners\SendSongApprovedEmail',
+        ],
+        'App\Events\SongRejected' => [
+            'App\Listeners\SendSongRejectedEmail',
+        ],
     ];
 
     /**

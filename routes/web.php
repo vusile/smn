@@ -12,6 +12,9 @@
 */
 
 Route::get('/', 'HomeController@index');
+Route::get('/home', function() {
+    return redirect('/');
+});
 Route::get('/blog/{slug}/{blogPost}', 'BlogPostController@show');
 Route::get('/blog', 'BlogPostController@index');
 Route::get('/song/{slug}/{song}', function($slug, $song){
@@ -64,7 +67,12 @@ Route::get('/search', 'SearchController@index');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/upload/song', 'SongUploadController@index')
-        ->name('song-upload.index');
+        ->name('song-upload.index')
+        ->middleware('review.songs');
+    Route::get('/akaunti/review-nyimbo/', 'SongReviewController@index')
+        ->name('song-review.index');
+    Route::post('/akaunti/review-nyimbo/store', 'SongReviewController@store')
+        ->name('song-review.store');
     Route::get('/upload/details', 'SongUploadController@details');
     Route::post('/upload/store', 'SongUploadController@store');
     Route::post('/upload/update', 'SongUploadController@update');
@@ -75,7 +83,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/upload/preview/{song}', 'SongUploadController@preview')
             ->name('song-upload.preview');
     Route::get('/akaunti', 'AccountController@index');
-    Route::get('/akaunti/watunzi', 'AccountController@index')
+    Route::get('/akaunti/watunzi', 'ComposerController@account')
             ->name('account.composers');
     Route::get('/akaunti/nyimbo/pending', 'SongController@pending')
             ->name('account.songs.pending');
@@ -83,7 +91,10 @@ Route::middleware(['auth'])->group(function () {
             ->name('account.songs.pending');
     Route::get('/mtunzi/create', 'ComposerController@create');
     Route::post('/mtunzi/store', 'ComposerController@store');
+    Route::post('/mtunzi/update', 'ComposerController@update');
+    Route::get('/mtunzi/edit/{composer}', 'ComposerController@edit');
     Route::get('/edit-song/{song}', 'SongUploadController@edit');
     Route::get('/search/mysongs', 'SearchController@searchUserSongs');
-    
+    Route::get('/impersonate/{user}', 'AccountController@impersonate');
+    Route::get('/stop-impersonation/', 'AccountController@stopImpersonating');
 });

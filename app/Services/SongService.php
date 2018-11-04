@@ -2,8 +2,11 @@
 
 namespace App\Services;
 
+use App\Events\SongApproved;
+use App\Events\SongRejected;
 use App\Models\Song;
 use App\Services\SearchService;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class SongService
@@ -50,5 +53,21 @@ class SongService
         }
         
         return null;
+    }
+    
+    public function approveSong(Song $song)
+    {
+        $song->status = 1;
+        $song->approved_date = Carbon::now()->toDateString();
+        $song->save();
+        
+        event(new SongApproved($song));
+    }
+    
+    public function rejectSong(Song $song)
+    {
+        $song->status = 5;
+        
+        event(new SongRejected($song));
     }
 }

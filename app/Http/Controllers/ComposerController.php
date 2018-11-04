@@ -83,6 +83,14 @@ class ComposerController extends Controller
         );
     }
     
+    public function edit(Composer $composer)
+    {
+        return view(
+            'composers.edit',
+            compact('composer')
+        );
+    }
+    
     public function store(Request $request)
     {
         $duplicates = $this->composerService
@@ -104,8 +112,8 @@ class ComposerController extends Controller
             $additionalInfo = $this->uploadComposerPhotos($request);
         
             if ($request->has('uploader_is_composer')) {
-            $additionalInfo['user_id'] = auth()->user()->id;
-        }
+                $additionalInfo['user_id'] = auth()->user()->id;
+            }
         
             $composer = Composer::create(
                 array_replace(
@@ -134,6 +142,40 @@ class ComposerController extends Controller
         }
     }
     
+    public function update(Request $request)
+    {
+        $customMessages = [
+            'name.required' => 'Jina la mtunzi ni lazima',
+        ];
+
+        $this->validate(
+            $request,
+            [
+                'name' => 'required',
+            ],
+            $customMessages
+        );
+
+        $additionalInfo = $this->uploadComposerPhotos($request);
+
+        if ($request->has('uploader_is_composer')) {
+            $additionalInfo['user_id'] = auth()->user()->id;
+        }
+
+        Composer::where('id', $request->input('composer_id'))
+            ->update(
+                array_replace(
+                    $request->except(['uploader_is_composer', '_token', 'composer_id']),
+                    $additionalInfo
+                )
+            );
+
+       
+        return redirect()->route(
+            'account.composers'
+        );
+    }
+    
     protected function uploadComposerPhotos($request)
     {        
         $photos = [];
@@ -150,5 +192,18 @@ class ComposerController extends Controller
         }
        
         return $photos;
+    }
+    
+    public function account()
+    {   
+        $composers = Composer::where('user_id', auth()->user()->id)
+            ->orderBy('name')
+            ->whereNotNull('name')
+            ->paginate(20);       
+        
+        return view(
+            'account.composers',
+            compact('composers')
+        );
     }
 }
