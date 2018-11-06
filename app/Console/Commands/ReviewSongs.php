@@ -60,6 +60,15 @@ class ReviewSongs extends Command
                            ->where('mandatory', true)
                            ->count();
                    
+                    if ($song->midi) {
+                       $questions = DB::table('review_questions')
+                           ->get();
+                    } else {
+                       $questions = DB::table('review_questions')
+                           ->where('mandatory', true)
+                           ->get();
+                    }
+                   
                    if ($reviewsCount >=  ($mandatoryQuestions * config('song.reviews.no_of_reviews_per_song'))) {
                        $approvals = $reviews->filter(function ($review) {
                            return $review->review_answer_id == 1;
