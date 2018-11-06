@@ -49,7 +49,7 @@ class LoginController extends Controller
         
         $salt = substr($user->password, 0, 10);
         
-        if($salt . substr(sha1($salt . $password), 0, -10) == $password) {
+        if($salt . substr(sha1($salt . $password), 0, -10) == $user->password) {
             $user->password = Hash::make($password);
             $user->save();
         }
