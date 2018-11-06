@@ -67,6 +67,7 @@ class SongService
     public function rejectSong(Song $song)
     {
         $song->status = 5;
+        $song->save();
         
         event(new SongRejected($song));
     }
