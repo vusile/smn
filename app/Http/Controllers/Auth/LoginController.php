@@ -47,17 +47,13 @@ class LoginController extends Controller
         $user = User::where('email', request()->input('email'))
                 ->firstOrFail();
         
-        
-        if (
-                sha1($password) == $user->password
-                || bcrypt($password) == $user->password
-        ) {
+        if (sha1($password) == $user->password)
+        {
             $user->password = Hash::make($password);
             $user->save();
         }
         else {
-            echo $user->id;
-            dd(sha1($password) . " - " . $user->password);
+            dd(bcrypt($password) . " - " . $user->password);
         }
         
         return $this->tlogin($request);
