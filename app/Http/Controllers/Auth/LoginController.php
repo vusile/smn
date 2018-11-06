@@ -49,7 +49,6 @@ class LoginController extends Controller
         
         if (sha1($password) == $user->password)
         {
-              // User old password matches - so now lets re-hash the password as bcrypt
               $user->password = Hash::make($password);
         }
         
