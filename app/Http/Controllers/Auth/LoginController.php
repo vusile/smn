@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -18,7 +20,9 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    use AuthenticatesUsers {
+        login as protected tlogin;
+    }
 
     /**
      * Where to redirect users after login.
@@ -35,5 +39,20 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+    
+    public function login(Request $request)
+    {
+        $password = request()->input('password');
+        $user = User::where('email', request()->input('email'))
+                ->firstOrFail();
+        
+        if (sha1($password) == $user->password)
+        {
+              // User old password matches - so now lets re-hash the password as bcrypt
+              $user->password = Hash::make($password);
+        }
+        
+        return $this->tlogin($request);
     }
 }
