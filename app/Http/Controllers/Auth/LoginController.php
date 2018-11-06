@@ -49,7 +49,8 @@ class LoginController extends Controller
         
         if (sha1($password) == $user->password)
         {
-              $user->password = Hash::make($password);
+            $user->password = Hash::make($password);
+            $user->save();
         }
         
         return $this->tlogin($request);
