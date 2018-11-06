@@ -50,11 +50,11 @@ class ReviewSongs extends Command
         Song::pending()
            ->chunk(50, function($songs){
                foreach ($songs as $song) {
-                   $reviews = DB::table('reviews')
+                   $reviewsCount = DB::table('reviews')
+                        ->groupBy('song_id')
+                        ->groupBy('user_id')
                         ->where('song_id', $song->id)
-                        ->get();
-                   
-                   $reviewsCount = $reviews->count();
+                        ->count();
                    
                    $mandatoryQuestions = DB::table('review_questions')
                            ->where('mandatory', true)
@@ -69,10 +69,15 @@ class ReviewSongs extends Command
                            ->get();
                     }
                    
-                   if ($reviewsCount >=  ($mandatoryQuestions * config('song.reviews.no_of_reviews_per_song'))) {
-                       $approvals = $reviews->filter(function ($review) {
-                           return $review->review_answer_id == 1;
-                       })->count();
+                   if ($reviewsCount >= config('song.reviews.no_of_reviews_per_song')) {
+                       $approvalQuestionScores = DB::table('reviews')
+                        ->select(DB::raw('count(*) as answers_count, review_question_id'))
+                        ->groupBy('review_question_id')
+                        ->where('song_id', $song->id)
+                        ->where('review_answer_id', 1)
+                        ->get();
+                       
+                       dd($approvalQuestionScores);
                        
                        if ($approvals / $reviewsCount >= config('song.reviews.percentage')){
                            $this->songService->approveSong($song);
