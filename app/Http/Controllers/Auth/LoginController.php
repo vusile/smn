@@ -49,9 +49,12 @@ class LoginController extends Controller
         
         if (sha1($password) == $user->password)
         {
-            dd("Made it Here");
             $user->password = Hash::make($password);
             $user->save();
+        }
+        else {
+            echo $user->id;
+            dd(sha1($password) . " - " . $user->password);
         }
         
         return $this->tlogin($request);
