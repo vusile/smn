@@ -6,6 +6,7 @@ use App\Models\Song;
 use App\Services\SongService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ReviewSongs extends Command
 {
@@ -14,7 +15,7 @@ class ReviewSongs extends Command
      *
      * @var string
      */
-    protected $signature = 'review:songs';
+    protected $signature = 'review:songs {song?}';
 
     /**
      * The console command description.
@@ -47,38 +48,59 @@ class ReviewSongs extends Command
      */
     public function handle()
     {
+        $songId = $this->argument('song');
         Song::pending()
+           ->when($songId, function ($query, $songId){
+               return $query->where('id', $songId);
+           })
            ->chunk(50, function($songs){
                foreach ($songs as $song) {
-                   $reviews = DB::table('reviews')
+                   $reviewsCount = DB::table('reviews')
+                        ->groupBy('song_id')
+                        ->groupBy('user_id')
                         ->where('song_id', $song->id)
-                        ->get();
+                        ->count();
+                 
                    
-                   $reviewsCount = $reviews->count();
-                   
-                   $mandatoryQuestions = DB::table('review_questions')
-                           ->where('mandatory', true)
-                           ->count();
-                   
-                    if ($song->midi) {
-                       $questions = DB::table('review_questions')
-                           ->get();
-                    } else {
-                       $questions = DB::table('review_questions')
-                           ->where('mandatory', true)
-                           ->get();
-                    }
-                   
-                   if ($reviewsCount >=  ($mandatoryQuestions * config('song.reviews.no_of_reviews_per_song'))) {
-                       $approvals = $reviews->filter(function ($review) {
-                           return $review->review_answer_id == 1;
-                       })->count();
+                   if ($reviewsCount >= config('song.reviews.no_of_reviews_per_song')) {
+                       $approvalQuestionScores = DB::table('reviews')
+                        ->select(DB::raw('count(*) as answers_count, review_question_id'))
+                        ->groupBy('review_question_id')
+                        ->where('song_id', $song->id)
+                        ->where('review_answer_id', 1)
+                        ->pluck('answers_count', 'review_question_id');
                        
-                       if ($approvals / $reviewsCount >= config('song.reviews.percentage')){
-                           $this->songService->approveSong($song);
-                       } else {
-                           $this->songService->rejectSong($song);
-                       }
+                       $reject = false;
+                       
+                        if(!count($approvalQuestionScores)) {
+                            $reject = true;
+                        }
+                        else {
+                            $questions = DB::table('review_questions')
+                                ->when(!$song->midi, function($query) {
+                                    return $query->where('mandatory', true);
+                                })
+                                ->get();
+                                
+                            foreach($questions as $question) {
+                                if(
+                                     $question->critical
+                                     && $approvalQuestionScores[$question->id] < config('song.reviews.min_no_of_critical_reviews')
+                                ) {
+                                    $reject = true;
+                                }
+                            }
+                            
+                            
+                        }
+                        
+                        if($reject) {
+                            Log::info('song rejected - ' .$song->id);
+                            $this->songService->rejectSong($song);
+                        } else {                                
+                            Log::info('song approved - ' .$song->id);
+                            $this->songService->approveSong($song);
+                        }
                    }
                }
            }
