@@ -60,12 +60,7 @@ class ReviewSongs extends Command
                         ->groupBy('user_id')
                         ->where('song_id', $song->id)
                         ->count();
-                   
-                    $questions = DB::table('review_questions')
-                        ->when(!$song->midi, function($query) {
-                            return $query->where('mandatory', true);
-                        })
-                        ->get();
+                 
                    
                    if ($reviewsCount >= config('song.reviews.no_of_reviews_per_song')) {
                        $approvalQuestionScores = DB::table('reviews')
@@ -75,19 +70,37 @@ class ReviewSongs extends Command
                         ->where('review_answer_id', 1)
                         ->pluck('answers_count', 'review_question_id');
                        
-                        foreach($questions as $question) {
-                            if(
-                                 $question->critical
-                                 && $approvalQuestionScores[$question->id] < config('song.reviews.min_no_of_critical_reviews')
-                            ) {
-                                Log::info('song rejected - ' .$song->id);
-                                $this->songService->rejectSong($song);
-                                break;
-                            }
-                        }
+                       $reject = false;
                        
-                        Log::info('song approved - ' .$song->id);
-                        $this->songService->approveSong($song);
+                        if(!count($approvalQuestionScores)) {
+                            $reject = true;
+                        }
+                        else {
+                            $questions = DB::table('review_questions')
+                                ->when(!$song->midi, function($query) {
+                                    return $query->where('mandatory', true);
+                                })
+                                ->get();
+                                
+                            foreach($questions as $question) {
+                                if(
+                                     $question->critical
+                                     && $approvalQuestionScores[$question->id] < config('song.reviews.min_no_of_critical_reviews')
+                                ) {
+                                    $reject = true;
+                                }
+                            }
+                            
+                            
+                        }
+                        
+                        if($reject) {
+                            Log::info('song rejected - ' .$song->id);
+                            $this->songService->rejectSong($song);
+                        } else {                                
+                            Log::info('song approved - ' .$song->id);
+                            $this->songService->approveSong($song);
+                        }
                    }
                }
            }
