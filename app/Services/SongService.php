@@ -59,7 +59,7 @@ class SongService
     {
         $song->status = 1;
         $song->approved_date = Carbon::now()->toDateString();
-//        $song->save();
+        $song->save();
         
         event(new SongApproved($song));
     }

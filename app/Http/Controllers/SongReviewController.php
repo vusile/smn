@@ -93,9 +93,17 @@ class SongReviewController extends Controller
         
         $song = Song::find($request->input('song_id'));
         
+        $iDontKnows = 0;
         foreach ($questions as $question) {
             if (($question->field == 'midi') && !$song->midi) {
                 continue;
+            }
+            
+            if(
+                $question->critical
+                && $request->input('answer' . $question->id) == 3
+            ) {
+                $iDontKnows += 1; 
             }
             
             $reviews[] = [
@@ -110,8 +118,10 @@ class SongReviewController extends Controller
             ];
         }
         
-        DB::table('reviews')
-            ->insert($reviews);
+        if(!$iDontKnows) {            
+            DB::table('reviews')
+                ->insert($reviews);
+        }
         
         $reviewedSongs = session('songs_reviewed', 0);
         session(['songs_reviewed' => $reviewedSongs + 1]);
