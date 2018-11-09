@@ -127,7 +127,7 @@
                         <div class="col-sm-10">
                             <input type="hidden" value='{{$song->id}}' name ='song_id' />
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input type="text" name ='maoni' />
+                            <input type="text" name ='maoni' class ='maoni' />
                           <button type="submit" class="btn btn-primary">Toa maoni</button>
                         </div>
                     </div>

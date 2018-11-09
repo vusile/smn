@@ -86,10 +86,26 @@ class SongReviewController extends Controller
     
     public function store(Request $request)
     {
-        $reviews = [];
-
         $questions = DB::table('review_questions')
-                ->get();
+            ->get();
+        
+        $customMessages = [];
+        
+        foreach($questions as $question) {
+            $customMessages['answer' . $question->id . '.required'] = 'Tafadhali jibu maswali yote';
+        }
+        
+        foreach($questions as $question) {
+            $validations['answer' . $question->id] = 'required';
+        }
+  
+        $this->validate(
+            $request,
+            $validations,
+            $customMessages
+        );
+        
+        $reviews = [];
         
         $song = Song::find($request->input('song_id'));
         

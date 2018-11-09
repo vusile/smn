@@ -21,7 +21,7 @@
                 <div class="form-group row">
                     <div class="col-sm-10">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <input type="text" name ='maoni' />
+                        <input type="text" name ='maoni' class ='maoni' />
                       <button type="submit" class="btn btn-primary">Ingia</button>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                 <div class="form-group row">
                     <div class="col-sm-10">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <input type="text" name ='maoni' />
+                        <input type="text" name ='maoni' class ='maoni' />
                       <button type="submit" class="btn btn-primary">Ingia</button>
                     </div>
                 </div>

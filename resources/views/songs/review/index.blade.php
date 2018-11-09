@@ -19,6 +19,16 @@
                 </div>
             @endif
             
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            
             <form class="needs-validation" method="post" action="/akaunti/review-nyimbo/store" id="review-form" novalidate enctype='multipart/form-data'>
                 <p><strong>Jina la wimbo: </strong> {{ $song->name }}</p>
                 @foreach($nameQuestions as $question)
