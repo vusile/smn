@@ -129,7 +129,7 @@
                                     <div class="col-sm-10">
                                         <input type="hidden" value='{{$composer->id}}' name ='composer_id' />
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="text" name ='maoni' />
+                                        <input type="text" name ='maoni' class ='maoni' />
                                       <button type="submit" class="btn btn-primary">Tuma Ujumbe</button>
                                     </div>
                                 </div>
