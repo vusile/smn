@@ -58,12 +58,15 @@ Route::get('/nyimbozajumapilinasikukuu/ratiba/{slug}/{dominika}', function ($slu
 });
 Route::get('/dominika-sikukuu/{slug}/{dominika}', 'DominikaController@show');
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('/login', 'Auth\LoginController@login');
+Route::post('/register', 'Auth\RegisterController@create')->name('register');
 Route::get('/logout', 'Auth\LoginController@logout');
+Route::post('/password/forgot', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('password.reset');
 Route::post('/comment/', 'CommentController@store');
 Route::post('/composer-email/', 'ComposerEmailController@store');
 Route::get('/search', 'SearchController@index');
-
+Route::get('/auth/{provider}', 'Auth\SocialAuthController@redirectToProvider');
+Route::get('/auth/{provider}/callback', 'Auth\SocialAuthController@handleProviderCallback');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/upload/song', 'SongUploadController@index')

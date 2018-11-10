@@ -68,6 +68,11 @@
             </div>
             <button type="submit" class="btn btn-primary mb-2">Tafuta</button>
         </form>
+        @if (session('msg', null))
+            <div class="alert alert-success" role="alert">
+                {{session('msg', null)}}
+            </div>
+        @endif
     </div>
     @section('content')
     @show
