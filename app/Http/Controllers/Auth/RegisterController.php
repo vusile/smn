@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -28,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -49,8 +50,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users|confirmed',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -58,15 +60,46 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
-     * @return \App\User
+     * @return \App\Model\User
      */
-    protected function create(array $data)
+    protected function create()
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+        $request = request();
+        
+        $customMessages = [
+            'first_name.required' => 'Jina la kwanza linahitajika',
+            'last_name.required' => 'Jina la pili linahitajika',
+            'email.required' => 'Email inahitajika',
+            'email.unique' => 'Email hii ishatumika. Tafadhali login',
+            'email.confirmed'  => 'Email haifanani na hiyo uliyoandika tena',
+            'phone.unique' => 'Namba hii ishatumika. Tafadhali login au sajili kutumia namba nyingine',
+            'password.required' => 'Password inahitajika',
+            'password.confirmed'  => 'Password haifanani na hiyo uliyoandika tena',
+        ];
+        
+        $this->validate(
+            $request,
+            [
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users|confirmed',
+                'phone' => 'required|string|max:255|unique:users',
+                'password' => 'required|string|min:6|confirmed',
+            ],
+            $customMessages
+        );
+        
+        Session::flash('msg', 'Umefanikiwa kujisajili na tumeshaku-login. Karibu Swahili Music Notes');
+       
+        $user = User::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
         ]);
+        
+        auth()->login($user);
+        return redirect('/akaunti');
     }
 }
