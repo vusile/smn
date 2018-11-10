@@ -47,6 +47,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/blog/about-us/1">Kuhusu SMN</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/">Taarifa</a>
+                        </li>
                     </ul>
                 </div>
 

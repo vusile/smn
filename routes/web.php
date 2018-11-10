@@ -58,6 +58,7 @@ Route::get('/nyimbozajumapilinasikukuu/ratiba/{slug}/{dominika}', function ($slu
 });
 Route::get('/dominika-sikukuu/{slug}/{dominika}', 'DominikaController@show');
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('/login', 'Auth\LoginController@login');
 Route::post('/register', 'Auth\RegisterController@create')->name('register');
 Route::get('/logout', 'Auth\LoginController@logout');
 Route::post('/password/forgot', 'Auth\ForgotPasswordController@sendResetLinkEmail');
@@ -98,6 +99,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/mtunzi/edit/{composer}', 'ComposerController@edit');
     Route::get('/edit-song/{song}', 'SongUploadController@edit');
     Route::get('/search/mysongs', 'SearchController@searchUserSongs');
+    Route::get('/songs-with-no-categories', 'CleanUpController@index');
     Route::get('/impersonate/{user}', 'AccountController@impersonate');
     Route::get('/stop-impersonation/', 'AccountController@stopImpersonating');
 });
