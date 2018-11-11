@@ -16,7 +16,8 @@ class SearchService
                 $index
             )
             ->limit(1000)
-            ->setMatchMode(SphinxClient::SPH_MATCH_ANY)
+//            ->setMatchMode(SphinxClient::SPH_MATCH_EXTENDED2)
+            ->setRankingMode(SphinxClient::SPH_SORT_RELEVANCE)
             ->get();
     }
     

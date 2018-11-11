@@ -30,6 +30,11 @@
             @endif
             
             <form class="needs-validation" method="post" action="/akaunti/review-nyimbo/store" id="review-form" novalidate enctype='multipart/form-data'>
+                <p><strong>PDF: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf" role="button">Download Nota Uhakiki</a></p>
+                @foreach($pdfQuestions as $question)
+                    @include('songs.review.question')
+                @endforeach
+                <br>
                 <p><strong>Jina la wimbo: </strong> {{ $song->name }}</p>
                 @foreach($nameQuestions as $question)
                     @include('songs.review.question')
@@ -45,11 +50,7 @@
                     @include('songs.review.question')
                 @endforeach
                 <br>
-                <p><strong>PDF: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf" role="button">Download Nota Uhakiki</a></p>
-                @foreach($pdfQuestions as $question)
-                    @include('songs.review.question')
-                @endforeach
-                <br>
+
                 @if($song->midi)
                     <p><strong>Midi: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/midi" role="button">Download Midi Uhakiki</a></p>
                     @foreach($midiQuestions as $question)
