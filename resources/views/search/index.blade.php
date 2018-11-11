@@ -5,16 +5,21 @@
     <p class="lead">Kuna watunzi {{ number_format($composersTotal) }} na nyimbo {{ number_format($songsTotal) }} zilizopatikana kutokana na utafutaji wa <strong><em>"{{ request()->query('st') }}"</em></strong></p>
 </div>
 
-<div class="container">
-    <h2>Watunzi waliopatikana</h2>
-    @foreach($composers->sortBy('name') as $composer)
-        @include('composers.partials.composers-row')
-    @endforeach
-</div>
-<div class="container">
-    <h2>Nyimbo zilizopatikana</h2>
-    @foreach($songs->sortBy('name') as $song)
-        @include('songs.partials.song-row')
-    @endforeach
-</div>
+@if($composers)
+    <div class="container">
+        <h2>Watunzi waliopatikana</h2>
+        @foreach($composers->sortBy('name') as $composer)
+            @include('composers.partials.composers-row')
+        @endforeach
+        <br>
+    </div
+@endif
+@if($songs)
+    <div class="container">
+        <h2>Nyimbo zilizopatikana</h2>
+        @foreach($songs->sortBy('name') as $song)
+            @include('songs.partials.song-row')
+        @endforeach
+    </div>
+@endif
 @stop

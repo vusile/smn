@@ -24,17 +24,17 @@
                     @endforeach
                 </p>
                 @endif
-                <i class="fa fa-heart-o"></i> 
+<!--                <i class="fa fa-heart-o"></i> 
                 <p><a style="-moz-text-decoration-style: wavy; text-decoration: underline;" href="/favorites/addtofavorites/{{ $song->id }}">
-                        Weka wimbo kwenye favorites</a></p>
-                @if($song->place_of_composition || $song->date_of_composition)
+                        Weka wimbo kwenye favorites</a></p>-->
+<!--                @if($song->place_of_composition || $song->date_of_composition)
                     <p>Umetungwa 
                         {{ $song->place_of_composition }} 
                         {{   
                             $song->date_of_composition ? ' ' . date("M d, Y",strtotime($song->date_of_composition)): '' 
                         }} 
                     </p>
-                @endif
+                @endif-->
                 
                 <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf" role="button">Download Nota</a>
                 @if($song->midi)
