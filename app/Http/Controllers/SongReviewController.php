@@ -86,16 +86,24 @@ class SongReviewController extends Controller
     
     public function store(Request $request)
     {
+        $song = Song::find($request->input('song_id'));
         $questions = DB::table('review_questions')
             ->get();
         
         $customMessages = [];
         
         foreach($questions as $question) {
+            if(!$song->midi && $question->field == 'midi') {
+                continue;
+            }
             $customMessages['answer' . $question->id . '.required'] = 'Tafadhali jibu maswali yote';
         }
         
         foreach($questions as $question) {
+            if(!$song->midi && $question->field == 'midi') {
+                continue;
+            }
+
             $validations['answer' . $question->id] = 'required';
         }
   
@@ -107,7 +115,6 @@ class SongReviewController extends Controller
         
         $reviews = [];
         
-        $song = Song::find($request->input('song_id'));
         
         $iDontKnows = 0;
         foreach ($questions as $question) {
