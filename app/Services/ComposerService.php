@@ -17,7 +17,7 @@ class ComposerService
     ){
         $composerParts = explode('.', $composerName);
         if(!is_array($composerParts)) {
-            $composerParts = explode('.', $composerName);
+            $composerParts = explode(' ', $composerName);
         }
         
         $search = collect($composerParts)
