@@ -99,7 +99,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/mtunzi/edit/{composer}', 'ComposerController@edit');
     Route::get('/edit-song/{song}', 'SongUploadController@edit');
     Route::get('/search/mysongs', 'SearchController@searchUserSongs');
-    Route::get('/songs-with-no-categories', 'CleanUpController@index');
+    Route::get('/songs-with-no-categories', 'CleanUpController@missingCategories');
     Route::get('/impersonate/{user}', 'AccountController@impersonate');
     Route::get('/stop-impersonation/', 'AccountController@stopImpersonating');
 });
