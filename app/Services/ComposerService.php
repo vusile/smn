@@ -16,7 +16,9 @@ class ComposerService
         string $composerName
     ){
         $composerParts = explode('.', $composerName);
-       
+        if(count($composerParts < 2)) {
+            $composerParts = explode('.', $composerName);
+        }
         
         $search = collect($composerParts)
             ->filter(function ($composerPart){
