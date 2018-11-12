@@ -16,7 +16,7 @@ class ComposerService
         string $composerName
     ){
         $composerParts = explode('.', $composerName);
-        if(count($composerParts < 2)) {
+        if(!is_array($composerParts)) {
             $composerParts = explode('.', $composerName);
         }
         
