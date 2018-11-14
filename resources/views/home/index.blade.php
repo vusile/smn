@@ -14,7 +14,7 @@
               <div class="card-body">
                 <ul class="list-unstyled mt-3 mb-4">
                     @foreach($recentSongs as $song)
-                        <li>{!! songLink($song) !!}<br>{{ $song->composer->name }}</li>
+                    <li style="margin-bottom: 10px;">{!! songLink($song) !!}<br>{{ $song->composer->name }}</li>
                     @endforeach
                 </ul>
               </div>
@@ -26,7 +26,7 @@
               <div class="card-body">
                 <ul class="list-unstyled mt-3 mb-4">
                     @foreach($weeklyTopTenSongs as $song)
-                    <li>{!! songLink($song) !!}<br>{{ $song->composer->name }}</li>
+                    <li style="margin-bottom: 10px;">{!! songLink($song) !!}<br>{{ $song->composer->name }}</li>
                     @endforeach
                 </ul>
               </div>
@@ -38,7 +38,7 @@
               <div class="card-body">
                 <ul class="list-unstyled mt-3 mb-4">
                     @foreach($topTenSongs as $song)
-                    <li>{!! songLink($song) !!}<br>{{ $song->composer->name }}</li>
+                    <li style="margin-bottom: 10px;">{!! songLink($song) !!}<br>{{ $song->composer->name }}</li>
                     @endforeach
                 </ul>
               </div>
@@ -50,7 +50,7 @@
               <div class="card-body">
                 <ul class="list-unstyled mt-3 mb-4">
                     @foreach($topTenUploaders as $user)
-                    <li>{{ $user->first_name . ' ' . $user->last_name }}
+                    <li style="margin-bottom: 10px;">{{ $user->first_name . ' ' . $user->last_name }}
                         <br>Nyimbo {{ number_format($user->songs()->approved()->count()) }}
                     </li>
                     @endforeach
