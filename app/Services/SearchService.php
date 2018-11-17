@@ -10,6 +10,7 @@ class SearchService
     public function search($searchString, $index = null)
     {
         $sphinx = new SphinxSearch();
+        
         return $sphinx
             ->search(
                 $searchString,
