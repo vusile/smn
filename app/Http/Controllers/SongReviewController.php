@@ -89,6 +89,7 @@ class SongReviewController extends Controller
     {
         $song = Song::find($request->input('song_id'));
         $questions = DB::table('review_questions')
+            ->where('review_level', auth()->user()->review_level)
             ->get();
         
         $customMessages = [];
