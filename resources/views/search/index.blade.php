@@ -12,7 +12,7 @@
             @include('composers.partials.composers-row')
         @endforeach
         <br>
-    </div
+    </div>
 @endif
 @if($songs)
     <div class="container">
