@@ -15,9 +15,11 @@ class AccountController extends Controller
         $views = $this->getLiveSongs()->sum('views');
         $downloads = $this->getLiveSongs()->sum('downloads');
         $songsReviewed = DB::table('reviews')
+            ->select(DB::raw('count(*) as reviewed'))
             ->where('user_id', auth()->user()->id)
-            ->groupBy('song_id')
-            ->count();
+            ->where('review_question_id', 1)
+            ->groupBy('user_id')
+            ->get();
         
         return view(
             'account.index',

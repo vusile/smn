@@ -11,7 +11,7 @@
             <p><strong>Jumla ya nyimbo ulizo - upload:</strong> {{number_format($pendingSongs + $activeSongs)}}</p>
             <p><strong>Jumla ya nyimbo zilizo live:</strong> {{number_format($activeSongs)}} ambazo zimetamwa mara {{number_format($views)}}, na kupakuliwa mara {{number_format($downloads)}}</p>
             <p><strong>Jumla ya nyimbo zilizo pending:</strong> {{number_format($pendingSongs)}}</p>
-            <p><strong>Mpaka sasa umesaidia SMN kureview nyimbo:</strong> {{number_format($songsReviewed)}}</p>
+            <p><strong>Mpaka sasa umesaidia SMN kureview nyimbo:</strong> {{number_format($songsReviewed->first()->reviewed)}}</p>
         </div>
         <div class="col-lg-2"></div>
       
