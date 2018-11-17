@@ -114,35 +114,4 @@ class SongController extends Controller
         
         return $otherSongs;
     }
-    
-    public function pending()
-    {
-        $songs = Song::pending()
-            ->ownedBy(auth()->user())
-            ->orderBy('id', 'desc')
-            ->paginate(20);
-        
-        $status = 'Nyimbo zinazosubiri Review';
-        $count = $songs->total();
-        
-        return view(
-            'account.songs',
-            compact('songs', 'status', 'count')
-        );
-    }
-    
-    public function live()
-    {
-        $songs = Song::approved()
-            ->ownedBy(auth()->user())
-            ->orderBy('id', 'desc')
-            ->paginate(20);
-        
-        $status = 'Nyimbo zinazosubiri Review';
-        
-        return view(
-            'account.songs',
-            compact('songs', 'status', 'count')
-        );
-    }
 }

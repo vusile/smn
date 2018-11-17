@@ -12,6 +12,7 @@ class SongReviewController extends Controller
     public function index()
     {
         $questions = DB::table('review_questions')
+            ->where('review_level', auth()->user()->review_level)
             ->get();
         
         $answers = DB::table('review_answers')

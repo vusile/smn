@@ -89,9 +89,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/akaunti', 'AccountController@index');
     Route::get('/akaunti/watunzi', 'ComposerController@account')
             ->name('account.composers');
-    Route::get('/akaunti/nyimbo/pending', 'SongController@pending')
+    Route::get('/akaunti/nyimbo/pending', 'AccountController@pending')
             ->name('account.songs.pending');
-    Route::get('/akaunti/nyimbo/live', 'SongController@live')
+    Route::get('/akaunti/nyimbo/live', 'AccountController@live')
             ->name('account.songs.pending');
     Route::get('/mtunzi/create', 'ComposerController@create');
     Route::post('/mtunzi/store', 'ComposerController@store');

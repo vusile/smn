@@ -15,7 +15,7 @@
                 </div>
             @else
                 <div class="alert alert-success" role="alert">
-                    Unareview wimbo wa {{ session('songs_reviewed', 0)+1 }}.
+                    Unareview wimbo wa {{ session('songs_reviewed', 0)+1 }}. Unaitwa: <strong>{{$song->name}} wa {{$song->composer->name}}</strong>. Tafadhali pakua nota zake, kisha ujibu maswali yanayofuata.
                 </div>
             @endif
             
@@ -30,7 +30,7 @@
             @endif
             
             <form class="needs-validation" method="post" action="/akaunti/review-nyimbo/store" id="review-form" novalidate enctype='multipart/form-data'>
-                <p><strong>PDF: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf" role="button">Download Nota Uhakiki</a></p>
+                <p><strong>PDF: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf" role="button">Pakua Nota Uhakiki</a></p>
                 @foreach($pdfQuestions as $question)
                     @include('songs.review.question')
                 @endforeach
