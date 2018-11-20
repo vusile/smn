@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use App\Models\Song;
+use App\Notifications\MailResetPasswordNotification;
 use App\Traits\SongTrait;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Lab404\Impersonate\Models\Impersonate;
 
-class User extends Authenticatable
+class User extends Authenticatable implements CanResetPassword
 {
     use Notifiable, Impersonate, SongTrait;
 
@@ -39,5 +39,13 @@ class User extends Authenticatable
     public function getNameAttribute()
     {
         return $this->first_name . " " . $this->last_name;
+    }
+    
+    /**
+ * Send a password reset email to the user
+ */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new MailResetPasswordNotification($token));
     }
 }

@@ -99,7 +99,6 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
         ]);
         
-        auth()->login($user);
-        return redirect('/akaunti');
+        return $user;
     }
 }

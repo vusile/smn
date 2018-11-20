@@ -61,7 +61,7 @@
         <a class="btn btn-outline-primary" href="/akaunti">Akaunti</a>
         &nbsp;<a class="btn btn-outline-primary" href="/logout">Logout</a>
       @else
-        <a class="btn btn-outline-primary" href="/login">Ingia / Jisajili</a>
+        <a class="btn btn-outline-primary" href="{{ route('login') }}">Ingia / Jisajili</a>
       @endif
     </div>
     <div class="container">

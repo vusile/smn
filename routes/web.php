@@ -103,3 +103,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/impersonate/{user}', 'AccountController@impersonate');
     Route::get('/stop-impersonation/', 'AccountController@stopImpersonating');
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
