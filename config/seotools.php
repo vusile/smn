@@ -7,7 +7,7 @@ return [
          */
         'defaults'       => [
             'title'        => "Swahili Music Notes - Swahili Music Sheet", // set false to total remove
-            'description'  => 'Mkusanyiko wa kidigitali wa nota za nyimbo za watunzi mbalimbali duniani wanaotumia lugha ya Kiswahili', // set false to total remove
+            'description'  => 'Mkusanyiko wa nota za kidigitali za nyimbo za watunzi mbalimbali duniani wanaotumia lugha ya Kiswahili', // set false to total remove
             'separator'    => ' - ',
             'keywords'     => ['swahili', 'music', 'notes', 'nota'],
             'canonical'    => false, // Set null for using Url::current(), set false to total remove

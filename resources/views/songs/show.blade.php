@@ -10,7 +10,7 @@
                     <strong>Mtunzi:</strong> {{ $song->composer->name }} 
                     
                     @if ($song->composer->has_profile) <br> > <a href="/composer/profile/{{ $song->composer->url }}/{{ $song->composer->id }}">Mfahamu Zaidi {{ $song->composer->name }} </a>@endif
-                    @if ($otherSongs) <br> > <a href="/composer/songs/{{ $song->composer->url }}/{{ $song->composer->id }}">Tazama Nyimbo zote za {{ $song->composer->name }} </a>@endif
+                    @if ($otherSongs) <br> > <a href="/composer/songs/{{ $song->composer->url }}/{{ $song->composer->id }}">Tazama Nyimbo nyingine za {{ $song->composer->name }} </a>@endif
                 </p>
                 <p><strong>Makundi Nyimbo:</strong> {{ $song->categories->pluck('title')->implode(' | ') }}</p>
                 <p><strong>Umepakiwa na:</strong> {{ $song->user->first_name . ' ' . $song->user->last_name }}</p>
