@@ -307,6 +307,22 @@ class SongUploadController extends Controller
         );
     }
     
+    public function deleteDominika(Request $request)
+    {
+        $song = Song::find($request->input('song_id'));
+ 
+        DB::table('dominikas_songs')
+                ->where('song_id', $request->input('song_id'))
+                ->delete();
+
+        return redirect()->route(
+            'song-upload.preview',
+            [
+                'song' => $song
+            ]
+        );
+    }
+    
     public function preview(Song $song)
     {
         $parts = null;

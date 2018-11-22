@@ -1,6 +1,5 @@
-@extends('layouts.front-end')
+@extends('layouts.backend-end')
 @section('content')
-@include('layouts.account-menu')
 <div class="container">
     <div class="row">
         

@@ -84,6 +84,8 @@ Route::middleware(['auth'])->group(function () {
             ->name('song-upload.dominika');
     Route::post('/upload/dominika/', 'SongUploadController@storeDominika')
             ->name('song-upload.dominika.store');
+    Route::post('/upload/remove-dominika/', 'SongUploadController@deleteDominika')
+            ->name('song-upload.dominika.delete');
     Route::get('/upload/preview/{song}', 'SongUploadController@preview')
             ->name('song-upload.preview');
     Route::get('/akaunti', 'AccountController@index');

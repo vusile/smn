@@ -20,12 +20,11 @@
         });
     
 ?>
-@extends('layouts.front-end')
+@extends('layouts.backend-end')
 @section('header')
     <link rel="stylesheet" href="/css/fastselect.min.css" />
 @stop
 @section('content')
-@include('layouts.account-menu')
 <div class="container">
     <div class="row">
         <div class="col-lg-10" >
@@ -66,7 +65,7 @@
                         <input type="hidden" name="song_id" value="{{$song->id}}">
                         <button type="submit" class="btn btn-primary">Na huu pia hutumika hivyo</button>
                         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#dominika-form" aria-expanded="false" aria-controls="dominika-form">Hutumika na Dominika nyingine pia</button>
-                        <a class="btn btn-primary" href="{{route('song-upload.preview', ['song' => $song])}}" >Hautumiki kwenye dominika</a>
+                        <button type="submit" class="btn btn-primary" formaction="/upload/remove-dominika">Hautumiki kwenye dominikas</button>
                     </div>
                 </div>
             </form>

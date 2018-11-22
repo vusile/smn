@@ -1,20 +1,45 @@
-@extends('layouts.front-end')
+@extends('layouts.backend-end')
 @section('content')
-@include('layouts.account-menu')
-<div class="container">
-    <div class="row">
-        
-        <div class="col-lg-8" >
-            <br />
-            <h3>Karibu kwenye akaunti yako:</h3>
-            <br />
-            <p><strong>Jumla ya nyimbo ulizo - upload:</strong> {{number_format($pendingSongs + $activeSongs)}}</p>
-            <p><strong>Jumla ya nyimbo zilizo live:</strong> {{number_format($activeSongs)}} ambazo zimetamwa mara {{number_format($views)}}, na kupakuliwa mara {{number_format($downloads)}}</p>
-            <p><strong>Jumla ya nyimbo zilizo pending:</strong> {{number_format($pendingSongs)}}</p>
-            <p><strong>Mpaka sasa umesaidia SMN kureview nyimbo:</strong> {{number_format($songsReviewed->first()->reviewed)}}</p>
+<div class="notika-status-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30">
+                        <div class="website-traffic-ctn">
+                            <h2><span class="counter">{{number_format($pendingSongs + $activeSongs)}}</span></h2>
+                            <p>Nyimbo Ulizoupload</p>
+                        </div>
+                        <div class="sparkline-bar-stats1">9,4,8,6,5,6,4,8,3,5,9,5</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30">
+                        <div class="website-traffic-ctn">
+                            <h2><span class="counter">{{number_format($activeSongs)}}</span></h2>
+                            <p>Zilizo live</p>
+                        </div>
+                        <div class="sparkline-bar-stats2">1,4,8,3,5,6,4,8,3,3,9,5</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30 dk-res-mg-t-30">
+                        <div class="website-traffic-ctn">
+                            <h2><span class="counter">{{number_format($pendingSongs)}}</span></h2>
+                            <p>Zilizo Pending</p>
+                        </div>
+                        <div class="sparkline-bar-stats3">4,2,8,2,5,6,3,8,3,5,9,5</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30 dk-res-mg-t-30">
+                        <div class="website-traffic-ctn">
+                            <h2><span class="counter">{{number_format($songsReviewed->first()->reviewed)}}</span></h2>
+                            <p>Nyimbo ulizoreview</p>
+                        </div>
+                        <div class="sparkline-bar-stats4">2,4,8,4,5,7,4,7,3,5,7,5</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-lg-2"></div>
-      
     </div>
-</div>
 @stop

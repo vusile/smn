@@ -1,6 +1,5 @@
-@extends('layouts.front-end')
+@extends('layouts.backend-end')
 @section('content')
-@include('layouts.account-menu')
 <div class="container">
     <div class="row">
         <div class="col-lg-8" >
@@ -36,18 +35,5 @@
       
     </div>
 </div>
-    
-@section('footer')
-    <script type="text/javascript" src="/js/fastselect.standalone.min.js"></script>
-    
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#mwanzo').fastselect();
-            $('#katikati').fastselect();
-            $('#shangilio').fastselect();
-            $('#antifona').fastselect();
-        });
-    </script>
-    
-@stop
+   
 @stop

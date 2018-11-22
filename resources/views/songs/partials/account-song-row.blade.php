@@ -1,7 +1,7 @@
-<div class="row  {{$loop->index%2 == 0 ? "bg-light" : "" }} ">
+<div class="row  {{$loop->index%2 == 0 ? "nk-white" : "" }} ">
     <div id="{{ substr($song->name,0,1) }}" class="col-lg-4" >
         @if ($song->is_active)
-        <p><span class="badge badge-pill badge-success">&nbsp;</span> {!! songLink($song) !!}<br>
+        <p><span class="badge badge-pill badge-success">&nbsp;</span> {!! songLink($song, true) !!}<br>
         @else
             <p><span class="badge badge-pill badge-warning">&nbsp;</span> {{ $song->name }}<br>
         @endif

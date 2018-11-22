@@ -1,6 +1,5 @@
-@extends('layouts.front-end')
+@extends('layouts.backend-end')
 @section('content')
-@include('layouts.account-menu')
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">{{ $status }} - {{$songs->total()}}</h1>
 </div>
