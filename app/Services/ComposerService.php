@@ -13,18 +13,25 @@ class ComposerService
     }
     
     public function checkForDuplicates(
-        string $composerName
+        string $composerName,
+        $split = true
     ){
-        $composerParts = explode('.', $composerName);
-        if(count($composerParts) < 2) {
-            $composerParts = explode(' ', $composerName);
-        }
         
-        $search = collect($composerParts)
-            ->filter(function ($composerPart){
-                 return strlen($composerPart) > 2; 
-            })
-            ->implode(' | '); 
+        $search = $composerName;
+        
+        if ($split) {            
+            $composerParts = explode('.', $composerName);
+
+            if(count($composerParts) < 2) {
+                $composerParts = explode(' ', $composerName);
+            }
+
+            $search = collect($composerParts)
+                ->filter(function ($composerPart){
+                     return strlen($composerPart) > 2; 
+                })
+                ->implode(' | '); 
+        }
      
         $results = $this->searchService
             ->search(
