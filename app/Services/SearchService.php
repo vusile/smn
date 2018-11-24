@@ -13,7 +13,7 @@ class SearchService
         
         return $sphinx
             ->search(
-                $searchString,
+                utf8_encode($searchString),
                 $index
             )
             ->limit(1000)
