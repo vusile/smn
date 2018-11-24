@@ -3,6 +3,10 @@
 namespace App\Console;
 
 use App\Console\Commands\ReviewSongs;
+use App\Console\Commands\FindComposerDuplicates;
+use App\Console\Commands\UpdateComposerActiveSongs;
+use App\Console\Commands\UpdateUserActiveSongs;
+use App\Console\Commands\UpdateSongDownloadsAndViews;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,7 +18,11 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-       ReviewSongs::class
+        ReviewSongs::class,
+        FindComposerDuplicates::class,
+        UpdateComposerActiveSongs::class,
+        UpdateSongDownloadsAndViews::class,
+        UpdateUserActiveSongs::class
     ];
 
     /**

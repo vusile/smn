@@ -66,23 +66,20 @@ class CleanUpController extends Controller
     
     public function duplicateComposers()
     {
-        $duplicates = Composer::where('duplicates_checked', false)
-            ->take(20)
-            ->get()
-            ->each(function ($composer){
-                $composer->duplicates_checked = true;
-                $composer->save();
-            })    
-            ->filter(function ($composer) {
-                return $this->composerService->checkForDuplicates($composer->name, false)->count() > 1;
-            })
-            ->mapWithKeys(function ($composer){
-                return [
-                    $composer->id => $this->composerService
-                        ->checkForDuplicates($composer->name, false)
-                        ->sortByDesc('active_songs')
-                ];
-            });
+        $duplicates = DB::table('duplicates')
+                ->where('entity_type', 'composer')
+                ->limit(10)
+                ->get()
+                ->mapWithKeys(function ($duplicate){
+                    return [
+                        $duplicate->entity_id => Composer::whereIn(
+                                'id',
+                                explode(',', $duplicate->duplicates)
+                            )
+                            ->get()
+                            ->sortByDesc('active_songs')
+                    ];
+                });
             
         $composerIds = $duplicates->keys()->implode(',');
             
@@ -118,6 +115,11 @@ class CleanUpController extends Controller
                 Composer::whereIn('id', $composerDuplicates)
                     ->delete();
             }
+            
+            DB::table('duplicates')
+                ->where('entity_type', 'composer')
+                ->where('entity_id', $composerId)
+                ->delete();
         }
         
         return redirect('duplicate-composers');
