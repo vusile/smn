@@ -58,12 +58,16 @@ class FindComposerDuplicates extends Command
                 })
                 ->mapWithKeys(function ($composer) use ($output) {
                     $output->writeln($composer->name . ' - ' . $composer->id);
+                    $dupes = $this->composerService
+                            ->checkForDuplicates($composer->name, false);
+                    
+                    if(is_array($dupes) or is_bool($dupes)) {
+                        $dupes = collect($composer);
+                    }
                     return [
                         'entity_type' => 'composer',
                         'entity_id' => $composer->id,
-                        'duplicates' => $this->composerService
-                            ->checkForDuplicates($composer->name, false)
-                            ->sortByDesc('active_songs')
+                        'duplicates' => $dupes->sortByDesc('active_songs')
                             ->pluck('id')
                             ->implode(',')
                     ];

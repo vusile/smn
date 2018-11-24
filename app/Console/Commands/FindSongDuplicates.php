@@ -61,12 +61,16 @@ class FindSongDuplicates extends Command
                 ->mapWithKeys(function ($song) use ($output){
                     $search = addslashes($song->name . ' ' . $song->composer->name);
                     $output->writeln($search . ' - ' . $song->id);
+                    $dupes = $this->searchService
+                            ->search($search, 'songs');
+                    
+                    if(is_array($dupes) or is_bool($dupes)) {
+                        $dupes = collect($song);
+                    }
                     return [
                         'entity_type' => 'song',
                         'entity_id' => $song->id,
-                        'duplicates' => $this->searchService
-                            ->search($search, 'songs')
-                            ->sortByDesc('active_songs')
+                        'duplicates' => $dupes->sortByDesc('active_songs')
                             ->pluck('id')
                             ->implode(',')
                     ];
