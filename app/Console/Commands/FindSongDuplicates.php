@@ -51,7 +51,7 @@ class FindSongDuplicates extends Command
             ->chunk(10, function($songs) use ($output) {
                 $duplicates = $songs->each(function ($song) use ($output){
                     $song->duplicates_checked = true;
-                    $song->name = title_case($song->name);
+                    $song->name = trim(title_case($song->name));
                     $song->save();
                 })
                 ->filter(function ($song) use ($output) {

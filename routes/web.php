@@ -103,7 +103,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/search/mysongs', 'SearchController@searchUserSongs');
     Route::get('/songs-with-no-categories', 'CleanUpController@missingCategories');
     Route::get('/duplicate-composers', 'CleanUpController@duplicateComposers');
+    Route::get('/duplicate-songs', 'CleanUpController@duplicateSongs');
     Route::post('/remove-composer-duplicates', 'CleanUpController@removeDuplicateComposers');
+    Route::post('/remove-song-duplicates', 'CleanUpController@removeDuplicateSongs');
     Route::get('/impersonate/{user}', 'AccountController@impersonate');
     Route::get('/stop-impersonation/', 'AccountController@stopImpersonating');
 });

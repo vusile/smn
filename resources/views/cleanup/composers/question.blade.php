@@ -1,7 +1,9 @@
 @foreach($composerDuplicates as $composerDuplicate)
     <div class="form-check">
         <label class="form-check-label" for="composer-{{$composerId}}" >
-            <input @if($loop->iteration == 1) checked @endif type="radio" name ="composer-{{$composerId}}" id ="composer-{{$composerId}}" value="{{$composerDuplicate->id}}" /> {{$composerDuplicate->name}} - {{$composerDuplicate->active_songs}}
+            <input @if($loop->iteration == 1) checked @endif type="radio" name ="composer-{{$composerId}}" id ="composer-{{$composerId}}" value="{{$composerDuplicate->id}}" /> 
+            <input checked type="checkbox" name ="include-composer{{$composerId}}[]" id ="include-composer{{$composerId}}[]" value="{{$composerDuplicate->id}}" />  
+            {{$composerDuplicate->name}} - {{$composerDuplicate->active_songs}}
         </label>
     </div>
 @endforeach

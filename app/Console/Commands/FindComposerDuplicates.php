@@ -51,7 +51,7 @@ class FindComposerDuplicates extends Command
             ->chunk(10, function($composers) use ($output) {
                 $duplicates = $composers->each(function ($composer) use ($output) {
                     $composer->duplicates_checked = true;
-                    $composer->name = title_case($composer->name);
+                    $composer->name = trim(title_case($composer->name));
                     $composer->save();
                 })
                 ->filter(function ($composer) use ($output) {
