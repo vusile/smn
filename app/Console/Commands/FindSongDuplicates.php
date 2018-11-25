@@ -46,14 +46,13 @@ class FindSongDuplicates extends Command
      */
     public function handle()
     {
-//        dd($this->searchService->search("Alelluia -e Poi Gabriel D. Ng'honoli"));
         $output = new ConsoleOutput();
         Song::orderBy('name')
             ->chunk(10, function($songs) use ($output) {
                 $duplicates = $songs->each(function ($song) use ($output){
-//                    $song->duplicates_checked = true;
-//                    $song->save();
-                    
+                    $song->duplicates_checked = true;
+                    $song->name = title_case($song->name);
+                    $song->save();
                 })
                 ->filter(function ($song) use ($output) {
                     return $song->name;
@@ -84,37 +83,5 @@ class FindSongDuplicates extends Command
                 }
 
             });
-//        $duplicates = Song::where('duplicates_checked', false)
-//            ->orderBy('name')    
-//            ->take(200)
-//            ->get()
-//            ->each(function ($song){
-//                $song->duplicates_checked = true;
-//                $song->save();
-//            })    
-//            ->filter(function ($song) {
-//                $search = $song->name . ' ' . $song->composer->name;
-//                $sr = $this->searchService->search($search);
-//                if (!is_array($sr)){
-//                    $sr = $sr->toArray();
-//                }
-//                return (count($sr) > 1) && $song->name;
-//            })
-//            ->mapWithKeys(function ($song){
-//                $search = $song->name . ' ' . $song->composer->name;
-//                return [
-//                    'entity_type' => 'song',
-//                    'entity_id' => $song->id,
-//                    'duplicates' => $this->searchService
-//                        ->search($search)
-//                        ->sortByDesc('active_songs')
-//                        ->pluck('id')
-//                        ->implode(',')
-//                ];
-//            })
-//            ->toArray();
-//            
-//            DB::table('duplicates')
-//                ->insert($duplicates);
     }
 }

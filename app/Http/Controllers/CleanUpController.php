@@ -92,10 +92,11 @@ class CleanUpController extends Controller
     public function removeDuplicateComposers(Request $request)
     {
         $composerIds = explode(',', $request->input('composer_ids'));
+
         foreach ($composerIds as $composerId) {
             if (
                 $request->input('composer-' . $composerId)
-                && $request->input('composer-' . $composerId != 'ignore')
+                && $request->input('composer-' . $composerId) != 'ignore'
             ) {
                 $selectedComposer = $request->input('composer-' . $composerId);
                 $composerDuplicates = collect(

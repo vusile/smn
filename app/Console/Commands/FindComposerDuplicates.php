@@ -50,8 +50,9 @@ class FindComposerDuplicates extends Command
         Composer::orderBy('name')
             ->chunk(10, function($composers) use ($output) {
                 $duplicates = $composers->each(function ($composer) use ($output) {
-//                    $composer->duplicates_checked = true;
-//                    $composer->save();
+                    $composer->duplicates_checked = true;
+                    $composer->name = title_case($composer->name);
+                    $composer->save();
                 })
                 ->filter(function ($composer) use ($output) {
                     return $composer->name;
