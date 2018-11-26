@@ -113,7 +113,7 @@ class CreateReviewQuestionsTable extends Migration
                     [
                         'question' => 'Je, wimbo upo kwenye makundi nyimbo sahihi? ',
                         'has_comment' => false,
-                        'has_suggestion' => true,
+                        'has_suggestion' => false,
                         'reviewer_help_video_link' => '',
                         'uploader_help_video_link' => '',
                         'field' => 'categories',
