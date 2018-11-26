@@ -30,9 +30,9 @@ class SendSongCreatedEmail
     {
         $song = $event->song;
         
-        Mail::to($song->user->email)
-            ->bcc('admin@swahilimusicnotes.com')
-            ->queue(new UserSongCreatedEmail($song));
+//        Mail::to($song->user->email)
+//            ->bcc('admin@swahilimusicnotes.com')
+//            ->queue(new UserSongCreatedEmail($song));
         
     }
 }

@@ -30,6 +30,8 @@ class SearchService
                 $searchString,
                 $index
             )
+            ->setMatchMode(SphinxClient::SPH_MATCH_ALL)
+            ->setRankingMode(SphinxClient::SPH_SORT_RELEVANCE)
             ->filter('user_id', [auth()->user()->id])
             ->get();
     }
