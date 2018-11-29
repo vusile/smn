@@ -160,6 +160,7 @@ class SongUploadController extends Controller
             'nota_original' => isset($originalFileName) ? $originalFileName : null,
             'software_file' => isset($softwareFileName) ? $softwareFileName : null,
             'uploaded_date' => Carbon::now()->format('Y-m-d H:i:s'),
+            'status' => 4
         ];
         
         $song = Song::create(
