@@ -29,29 +29,29 @@
             @endif
             
             <form class="needs-validation" method="post" action="/akaunti/review-nyimbo/store" id="review-form" novalidate enctype='multipart/form-data'>
-                <p><strong>PDF: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf" role="button">Pakua Nota Uhakiki</a></p>
+                <h4 class = 'alert-success'><strong>PDF: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf" role="button">Pakua Nota Uhakiki</a></h4>
                 @foreach($pdfQuestions as $question)
                     @include('songs.review.question')
                 @endforeach
                 <br>
-                <p><strong>Jina la wimbo: </strong> {{ $song->name }}</p>
+                <h4 class = 'alert-success'><strong>Jina la wimbo: </strong> {{ $song->name }}</h4>
                 @foreach($nameQuestions as $question)
                     @include('songs.review.question')
                 @endforeach
                 <br>
-                <p><strong>Mtunzi: </strong> {{ $song->composer->name }}</p>
+                <h4 class = 'alert-success'><strong>Mtunzi: </strong> {{ $song->composer->name }}</h4>
                 @foreach($composerQuestions as $question)
                     @include('songs.review.question')
                 @endforeach
                 <br>
-                <p><strong>Makundi Nyimbo: </strong> {{ $song->categories->pluck('title')->implode(' | ') }}</p>
+                <h4 class = 'alert-success'><strong>Makundi Nyimbo: </strong> {{ $song->categories->pluck('title')->implode(' | ') }}</h4>
                 @foreach($categoriesQuestions as $question)
                     @include('songs.review.question')
                 @endforeach
                 <br>
 
                 @if($song->midi)
-                    <p><strong>Midi: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/midi" role="button">Download Midi Uhakiki</a></p>
+                    <h4 class = 'alert-success'><strong>Midi: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/midi" role="button">Download Midi Uhakiki</a></h4>
                     @foreach($midiQuestions as $question)
                         @include('songs.review.question')
                     @endforeach
