@@ -12,7 +12,7 @@
             <p><strong>PDF: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf/{{$song->pdf}}" role="button">Download Nota Uhakiki</a></p>
             
             @if($song->midi)
-                <p><strong>Midi: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/midi" role="button">Download Midi Uhakiki</a></p>
+                <p><strong>Midi: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/midi/{{ $song->midi }}" role="button">Download Midi Uhakiki</a></p>
             @endif
   
             @if($song->dominikas->count())

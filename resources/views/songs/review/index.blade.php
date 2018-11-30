@@ -51,7 +51,7 @@
                 <br>
 
                 @if($song->midi)
-                    <h4 class = 'alert-success'><strong>Midi: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/midi" role="button">Download Midi Uhakiki</a></h4>
+                    <h4 class = 'alert-success'><strong>Midi: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/midi/{{ $song->midi }}" role="button">Download Midi Uhakiki</a></h4>
                     @foreach($midiQuestions as $question)
                         @include('songs.review.question')
                     @endforeach

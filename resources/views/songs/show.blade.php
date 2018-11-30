@@ -38,7 +38,7 @@
                 
 <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf/{{$song->pdf}}" role="button">Download Nota</a>
                 @if($song->midi)
-                    <a class="btn btn-primary" href="/song/download/{{ $song->id }}/midi" role="button">Download Midi</a>
+                    <a class="btn btn-primary" href="/song/download/{{ $song->id }}/midi/{{ $song->midi }}" role="button">Download Midi</a>
                 @endif
             </div>
             @if($song->lyrics)

@@ -39,7 +39,7 @@ Route::get('/uploader/songs/{slug}/{user}', function ($slug, $user){
     return redirect("/wapakia-nyimbo/$slug/$user", 301);
 });
 Route::get('/wapakia-nyimbo/{slug}/{user}', 'UserController@songs');
-Route::get('/song/download/{song}/{type}', 'SongController@download');
+Route::get('/song/download/{song}/{type}/{name}', 'SongController@download');
 Route::get('/categories', function(){
     return redirect('/makundi-nyimbo', 301);
 });
