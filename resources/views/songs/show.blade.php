@@ -36,7 +36,7 @@
                     </p>
                 @endif-->
                 
-                <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf" role="button">Download Nota</a>
+<a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf/{{$song->pdf}}" role="button">Download Nota</a>
                 @if($song->midi)
                     <a class="btn btn-primary" href="/song/download/{{ $song->id }}/midi" role="button">Download Midi</a>
                 @endif
