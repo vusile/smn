@@ -77,8 +77,13 @@ class SongController extends Controller
 
                 $songDownload->increment('downloads');
                 
+                $pdfName = $song->pdf;
+                
                 return response()->file(
-                    storage_path('app/public/' . config('song.files.paths.pdf') . $song->pdf)
+                    storage_path('app/public/' . config('song.files.paths.pdf') . $song->pdf),
+                    [
+                        'Content-Disposition: attachment; filename="$pdfName"'
+                    ]
                 );
                 
                 break;
