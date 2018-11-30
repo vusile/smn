@@ -12,11 +12,11 @@
                     Asante kwa ku-review nyimbo {{session('songs_reviewed')}}. Sasa unaweza ku-upload wimbo. Unaweza pia kuendelea kureview ukitaka<br>
                     <a class="btn btn-primary" href="{{route('song-upload.index')}}" >Pakia Wimbo</a>
                 </div>
-            @else
-                <div class="alert alert-success" role="alert">
-                    Unareview wimbo wa {{ session('songs_reviewed', 0)+1 }}. Unaitwa: <strong>{{$song->name}} wa {{$song->composer->name}}</strong>. Tafadhali pakua nota zake, kisha ujibu maswali yanayofuata.
-                </div>
             @endif
+            <div class="alert alert-success" role="alert">
+                Unareview wimbo wa {{ session('songs_reviewed', 0)+1 }}. Unaitwa: <strong>{{$song->name}} wa {{$song->composer->name}}</strong>. Tafadhali pakua nota zake, kisha ujibu maswali yanayofuata.
+            </div>
+
             
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -29,7 +29,7 @@
             @endif
             
             <form class="needs-validation" method="post" action="/akaunti/review-nyimbo/store" id="review-form" novalidate enctype='multipart/form-data'>
-                <h4 class = 'alert-success'><strong>PDF: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf" role="button">Pakua Nota Uhakiki</a></h4>
+                <h4 class = 'alert-success'><strong>PDF: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf" target="_blank" role="button">Pakua Nota Uhakiki</a></h4>
                 @foreach($pdfQuestions as $question)
                     @include('songs.review.question')
                 @endforeach
