@@ -91,7 +91,6 @@
     @section('content')
     @show
     <footer class="blog-footer">
-      <!--@include('layouts.newsletter')-->
       <!--<p>&nbsp</p>-->
       <p>Mawasiliano <a href="/contact">Bofya hapa</a></p>
       <p>&copy {{date('Y')}}</p>
