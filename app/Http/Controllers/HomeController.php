@@ -22,10 +22,9 @@ class HomeController extends Controller
             ->limit(10)
             ->get();
         
-        $topTenSongs = Song::withCount('songDownloads')
-            ->orderBy('song_downloads_count', 'desc')
+        $topTenSongs = Song::approved()
+            ->orderBy('downloads', 'desc')
             ->limit(10)
-            ->approved()
             ->get();
         
          $weekly = DB::select("SELECT Sum(Downloads) as NumOfDownloads, song_id FROM song_downloads WHERE downloaded_on >= '" . $now->startOfWeek()->format('Y-m-d') . "' and downloaded_on <= '" . $now->endOfWeek()->format('Y-m-d') . "' GROUP BY song_id ORDER BY NumOfDownloads DESC LIMIT 10");

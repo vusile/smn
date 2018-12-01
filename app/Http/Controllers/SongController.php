@@ -45,6 +45,7 @@ class SongController extends Controller
         );
         
         $songView->increment('views');
+        $song->increment('views');
         
         return view(
             'songs.show',
@@ -76,6 +77,7 @@ class SongController extends Controller
                 );
 
                 $songDownload->increment('downloads');
+                $song->increment('downloads');
                 
                 $pdfName = $song->pdf;
                 
