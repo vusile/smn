@@ -77,6 +77,7 @@ class ReviewSongs extends Command
                         }
                         else {
                             $questions = DB::table('review_questions')
+                                ->where('review_level', 1)    
                                 ->when(!$song->midi, function($query) {
                                     return $query->where('mandatory', true);
                                 })
