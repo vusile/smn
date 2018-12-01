@@ -6,7 +6,6 @@ use App\Console\Commands\ReviewSongs;
 use App\Console\Commands\FindComposerDuplicates;
 use App\Console\Commands\UpdateComposerActiveSongs;
 use App\Console\Commands\UpdateUserActiveSongs;
-use App\Console\Commands\UpdateSongDownloadsAndViews;
 use App\Console\Commands\CleanUpDownloadsAndViewsTable;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -22,7 +21,6 @@ class Kernel extends ConsoleKernel
         ReviewSongs::class,
         FindComposerDuplicates::class,
         UpdateComposerActiveSongs::class,
-        UpdateSongDownloadsAndViews::class,
         UpdateUserActiveSongs::class,
         CleanUpDownloadsAndViewsTable::class
     ];
@@ -35,8 +33,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command('clean-up:downloads-views')->daily();
+        $schedule->command('review:songs')->everyFiveMinutes();
+        $schedule->command('composers:update-active-songs')->everyFiveMinutes();
+        $schedule->command('users:update-active-songs')->everyFiveMinutes();
     }
 
     /**
