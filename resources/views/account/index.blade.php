@@ -53,7 +53,7 @@
                 <div class="col-lg-6 col-md-8 col-sm-7 col-xs-12">
                     <div class="sale-statistic-inner notika-shadow mg-tb-30">
                         <h2>Jinsi ya Ku-review nyimbo</h2>
-                        <p>Jifunze jinsi ya ku-reveiw nyimbo</p>
+                        <p>Jifunze jinsi ya ku-review nyimbo</p>
                         <div class="videoWrapper">
                             <iframe width="560" height="315" src="https://www.youtube.com/embed/nc1TCbvxcZY?rel=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
