@@ -6,6 +6,7 @@ use App\Models\Dominika;
 use App\Models\Song;
 use App\Models\User;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -27,18 +28,15 @@ class HomeController extends Controller
             ->approved()
             ->get();
         
-        $weeklyTopTenSongs = Song::withCount(['songDownloads' => function ($query) use ($now) {
-                    $query->whereBetween(
-                        'downloaded_on', 
-                        [
-                            $now->startOfWeek()->format('Y-m-d'),
-                            $now->endOfWeek()->format('Y-m-d')
-                        ]
-                    );
-                }
-            ])
-            ->orderBy('song_downloads_count', 'desc')
-            ->limit(10)
+         $weekly = DB::select("SELECT Sum(Downloads) as NumOfDownloads, song_id FROM song_downloads WHERE downloaded_on >= '" . $now->startOfWeek()->format('Y-m-d') . "' and downloaded_on <= '" . $now->endOfWeek()->format('Y-m-d') . "' GROUP BY song_id ORDER BY NumOfDownloads DESC LIMIT 10");
+         
+        
+        $weeklySongIds = collect($weekly)
+            ->pluck('song_id')
+            ->toArray();
+                
+        $weeklyTopTenSongs = Song::whereIn('id', $weeklySongIds)
+            ->orderBy('downloads', 'desc')    
             ->approved()
             ->get();
            
