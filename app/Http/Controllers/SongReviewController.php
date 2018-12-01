@@ -59,7 +59,13 @@ class SongReviewController extends Controller
             ->pluck('song_id')
             ->toArray();
             
+        $ids = DB::table('song_categories')
+            ->select('song_id')
+            ->get()
+            ->pluck('song_id');
+            
         $song = Song::pending()
+            ->whereIn('id', $ids)
             ->whereNotIn('id', $songsUserHasReviewed)
             ->whereNotIn('user_id', [auth()->user()->id])
             ->when($songsAlredyInReviewProcess, function($query, $songsAlredyInReviewProcess) {
