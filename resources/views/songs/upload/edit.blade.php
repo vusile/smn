@@ -32,7 +32,7 @@
                     )}}
                 </div>
                 
-                <p><strong>PDF: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf" role="button">Download Nota Uhakiki</a></p>
+                <p><strong>PDF: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf/{{$song->pdf}}" role="button">Download Nota Uhakiki</a></p>
            
                 <div class="form-group">
                     <p><strong>Pakia PDF kama unataka kubadili iliyopo:</strong></p>
@@ -40,7 +40,7 @@
                 </div>
                 
                 @if($song->midi)
-                    <br><p><strong>Midi: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/midi" role="button">Download Midi Uhakiki</a></p>
+                    <br><p><strong>Midi: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/midi/{{$song->midi}}" role="button">Download Midi Uhakiki</a></p>
                 @endif
                 
                 <div class="form-group">
