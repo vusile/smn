@@ -35,8 +35,8 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('clean-up:downloads-views')->daily();
         $schedule->command('review:songs')->everyFiveMinutes();
-        $schedule->command('composers:update-active-songs')->everyFiveMinutes();
-        $schedule->command('users:update-active-songs')->everyFiveMinutes();
+        $schedule->command('composers:update-active-songs')->everyTenMinutes();
+        $schedule->command('users:update-active-songs')->everyTenMinutes();
     }
 
     /**
