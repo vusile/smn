@@ -39,6 +39,7 @@ class CleanUpController extends Controller
             ->pluck('song_id');
         
         $songs = Song::whereNotIn('id', $ids)
+            ->orderBy('status', 'desc')
             ->paginate(20);
         
         $status = 'Nyimbo zisizo na Category';
