@@ -36,8 +36,9 @@ class ContactController
         if (
             !$request->input('maoni')
         ) {
+            $data = $request->all();
             Mail::to('admin@swahilimusicnotes.com')
-                ->send(new SiteContact($request));
+                ->queue(new SiteContact($data));
             
             Session::flash('msg', "Ujumbe wako umetumwa! Tutakujibu karibuni");
         }

@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Http\Request;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -19,7 +18,7 @@ class SiteContact extends Mailable
      *
      * @return void
      */
-    public function __construct(Request $request)
+    public function __construct(array $request)
     {
         $this->request = $request;
     }
