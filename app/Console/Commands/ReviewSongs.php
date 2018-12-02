@@ -61,9 +61,16 @@ class ReviewSongs extends Command
                         ->where('song_id', $song->id)
                         ->count();
                  
-                    dd((config('song.reviews.no_of_reviews_per_song') * 3) . "-" . $reviewsCount);
-                   
-                    if ($reviewsCount >= (config('song.reviews.no_of_reviews_per_song') * 3)) {
+                    $questions = DB::table('review_questions')
+                        ->where('review_level', 1)    
+                        ->when(!$song->midi, function($query) {
+                            return $query->where('mandatory', true);
+                        })
+                        ->get();
+                        
+                        dd($questions->count() * 3);
+
+                    if ($reviewsCount >= ($questions->count() * 3)) {
                        $approvalQuestionScores = DB::table('reviews')
                         ->select(DB::raw('count(*) as answers_count, review_question_id'))
                         ->groupBy('review_question_id')
@@ -76,14 +83,7 @@ class ReviewSongs extends Command
                         if(!count($approvalQuestionScores)) {
                             $reject = true;
                         }
-                        else {
-                            $questions = DB::table('review_questions')
-                                ->where('review_level', 1)    
-                                ->when(!$song->midi, function($query) {
-                                    return $query->where('mandatory', true);
-                                })
-                                ->get();
-                                
+                        else {                                
                             foreach($questions as $question) {
                                 if(
                                      $question->critical
@@ -92,8 +92,7 @@ class ReviewSongs extends Command
                                     $reject = true;
                                 }
                             }
-                            
-                            
+                           
                         }
                         
                         if($reject) {
