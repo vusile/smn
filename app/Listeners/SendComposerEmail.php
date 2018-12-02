@@ -34,7 +34,7 @@ class SendComposerEmail
         $sendTo = $composer->email;
         
         Mail::to($sendTo)
-            ->bcc('admin@swahilimusicnotes.com')
+//            ->bcc('admin@swahilimusicnotes.com')
             ->queue(new ComposerMessagedEmail($event->composerEmail));
     }
 }

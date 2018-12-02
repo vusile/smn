@@ -40,7 +40,7 @@ class SendCommentEmail
         }
         
         Mail::to($sendTo)
-            ->bcc('admin@swahilimusicnotes.com')
+//            ->bcc('admin@swahilimusicnotes.com')
             ->queue(new CommentPostedEmail($event->comment));
     }
 } 

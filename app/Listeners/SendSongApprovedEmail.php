@@ -32,7 +32,7 @@ class SendSongApprovedEmail
         $song = $event->song;
         
         Mail::to($song->user->email)
-            ->bcc('admin@swahilimusicnotes.com')
+//            ->bcc('admin@swahilimusicnotes.com')
             ->queue(new UserSongApprovedEmail($song));
         
         if ($song->composer->email) {
