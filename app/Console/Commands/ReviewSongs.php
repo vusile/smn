@@ -66,7 +66,7 @@ class ReviewSongs extends Command
                         })
                         ->get();
                       
-
+                        
                     if ($reviewsCount >= ($questions->count() * 3)) {
                        $approvalQuestionScores = DB::table('reviews')
                         ->select(DB::raw('count(*) as answers_count, review_question_id'))
@@ -75,6 +75,7 @@ class ReviewSongs extends Command
                         ->where('review_answer_id', 1)
                         ->pluck('answers_count', 'review_question_id');
                        
+                       dd($approvalQuestionScores);
                         $reject = false;
                        
                         if(!count($approvalQuestionScores)) {
