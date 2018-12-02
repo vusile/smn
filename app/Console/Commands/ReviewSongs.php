@@ -61,7 +61,7 @@ class ReviewSongs extends Command
                         ->where('song_id', $song->id)
                         ->count();
                  
-                    dd(config('song.reviews.no_of_reviews_per_song') * 3) . "-" . $reviewsCount);
+                    dd((config('song.reviews.no_of_reviews_per_song') * 3) . "-" . $reviewsCount);
                    
                     if ($reviewsCount >= (config('song.reviews.no_of_reviews_per_song') * 3)) {
                        $approvalQuestionScores = DB::table('reviews')
