@@ -60,10 +60,9 @@ class ReviewSongs extends Command
                         ->groupBy('user_id')
                         ->where('song_id', $song->id)
                         ->count();
-                   
-                   dd($reviewsCount);
                  
-                    if ($reviewsCount >= config('song.reviews.no_of_reviews_per_song')) {
+                 
+                    if ($reviewsCount >= (config('song.reviews.no_of_reviews_per_song') * 3)) {
                        $approvalQuestionScores = DB::table('reviews')
                         ->select(DB::raw('count(*) as answers_count, review_question_id'))
                         ->groupBy('review_question_id')
