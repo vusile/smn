@@ -56,8 +56,6 @@ class ReviewSongs extends Command
            ->chunk(50, function($songs){
                foreach ($songs as $song) {
                    $reviewsCount = DB::table('reviews')
-                        ->groupBy('song_id')
-                        ->groupBy('user_id')
                         ->where('song_id', $song->id)
                         ->count();
                  
