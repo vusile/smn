@@ -37,7 +37,7 @@ class UserSongRejectedEmail extends Mailable
             ->join('review_questions', 'review_questions.id', '=', 'reviews.review_question_id')
             ->groupBy('review_question_id')
             ->where('song_id', $this->song->id)
-            ->where('review_answer_id', 2)
+//            ->where('review_answer_id', 2)
             ->get();
         
         return $this->subject('Wimbo ' . $this->song->name . ' Haujawa Reviewed')

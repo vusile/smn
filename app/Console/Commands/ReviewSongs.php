@@ -75,7 +75,6 @@ class ReviewSongs extends Command
                         ->where('review_answer_id', 1)
                         ->pluck('answers_count', 'review_question_id');
                        
-                       dd($approvalQuestionScores);
                         $reject = false;
                        
                         if(!count($approvalQuestionScores)) {
