@@ -65,9 +65,7 @@ class ReviewSongs extends Command
                             return $query->where('mandatory', true);
                         })
                         ->get();
-                       
-                    dd($reviewsCount);
-                        
+                      
 
                     if ($reviewsCount >= ($questions->count() * 3)) {
                        $approvalQuestionScores = DB::table('reviews')
