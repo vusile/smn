@@ -2,11 +2,12 @@
 
 namespace App\Console;
 
-use App\Console\Commands\ReviewSongs;
+use App\Console\Commands\CleanUpDownloadsAndViewsTable;
 use App\Console\Commands\FindComposerDuplicates;
+use App\Console\Commands\GroupOneDominikaUpdates;
+use App\Console\Commands\ReviewSongs;
 use App\Console\Commands\UpdateComposerActiveSongs;
 use App\Console\Commands\UpdateUserActiveSongs;
-use App\Console\Commands\CleanUpDownloadsAndViewsTable;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -22,7 +23,8 @@ class Kernel extends ConsoleKernel
         FindComposerDuplicates::class,
         UpdateComposerActiveSongs::class,
         UpdateUserActiveSongs::class,
-        CleanUpDownloadsAndViewsTable::class
+        CleanUpDownloadsAndViewsTable::class,
+        GroupOneDominikaUpdates::class
     ];
 
     /**

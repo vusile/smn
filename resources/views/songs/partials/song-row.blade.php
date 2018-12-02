@@ -2,8 +2,8 @@
     <div id="{{ substr($song->name,0,1) }}" class="col-lg-4" >
         <p>{!! songLink($song) !!}<br>
             <small>
-                Umetazamwa {{ $song->views }},
-                Umepakuliwa {{ $song->downloads }}
+                Umetazamwa {{ number_format($song->views) }},
+                Umepakuliwa {{ number_format($song->downloads) }}
             </small>
         </p>
     </div>
