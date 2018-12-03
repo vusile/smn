@@ -31,7 +31,7 @@ class SendSongRejectedEmail
         $song = $event->song;
         
         Mail::to($song->user->email)
-            ->bcc('admin@swahilimusicnotes.com')
+            ->bcc('vusile@gmail.com')
             ->queue(new UserSongRejectedEmail($song));
     }
 }
