@@ -11,7 +11,7 @@
         @foreach($approvalQuestionScores as $approvalQuestion)
             @if(config('song.reviews.no_of_reviews_per_song') - $approvalQuestion->answers_count < 2)
                 <p>
-                    {!! $approvalQuestion->question !!};<br>
+                    {!! $approvalQuestion->question !!}:<br>
                     <strong>Umepata {{config('song.reviews.no_of_reviews_per_song') - $approvalQuestion->answers_count}} / {{config('song.reviews.no_of_reviews_per_song')}} </strong>
                 </p>
             @endif
