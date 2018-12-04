@@ -185,6 +185,15 @@ class CleanUpController extends Controller
                     ]
                 );
                 
+                DB::table('song_categories')
+                        ->whereIn('song_id', $songDuplicates)
+                        ->delete();
+                
+                
+                DB::table('dominikas_songs')
+                        ->whereIn('song_id', $songDuplicates)
+                        ->delete();
+                
                 Song::whereIn('id', $songDuplicates)
                     ->delete();
             }

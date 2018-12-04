@@ -1,4 +1,7 @@
 @extends('layouts.front-end')
+@section('header')
+    <meta name="google-site-verification" content="m4kU6DMJfRPgEdwiaY-EhY8WF23d9X93YMqGUeCVxBU" />
+@stop
 @section('content')
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 class="display-4">NYIMBO {{ number_format($activeSongsCount) }}</h1>
