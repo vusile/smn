@@ -77,8 +77,8 @@ class SongReviewController extends Controller
             ->inRandomOrder()
             ->first();
             
-        echo $song->name;
-        echo $song->composer->name;
+//        echo $song->name;
+//        echo $song->composer->name;
         dd($song);
         
         return view(
