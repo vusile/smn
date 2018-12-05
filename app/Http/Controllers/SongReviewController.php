@@ -50,7 +50,6 @@ class SongReviewController extends Controller
                 
         $songsAlredyInReviewProcess = DB::table('reviews')
             ->whereNotIn('song_id', $songsUserHasReviewed)
-            ->groupBy('song_id', 'user_id')
             ->select(DB::raw('count(*) as answered, song_id, user_id'))
             ->get()
             ->filter(function ($review) use ($mandatoryQuestions) {
@@ -63,7 +62,6 @@ class SongReviewController extends Controller
             ->select('song_id')
             ->get()
             ->pluck('song_id');
-        
         
             
         $song = Song::pending()
@@ -81,7 +79,7 @@ class SongReviewController extends Controller
             
 //        echo $song->name;
 //        echo $song->composer->name;
-        dd($song);
+//        dd($song);
         
         return view(
             'songs.review.index',
