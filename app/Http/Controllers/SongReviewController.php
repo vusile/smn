@@ -63,17 +63,19 @@ class SongReviewController extends Controller
             ->select('song_id')
             ->get()
             ->pluck('song_id');
+        
+        
             
         $song = Song::pending()
             ->whereIn('id', $ids)
             ->whereNotIn('id', $songsUserHasReviewed)
             ->whereNotIn('user_id', [auth()->user()->id])
-            ->when($songsAlredyInReviewProcess, function($query, $songsAlredyInReviewProcess) {
-                return $query->whereIn(
-                    'id',
-                    $songsAlredyInReviewProcess
-                );
-            })
+//            ->when($songsAlredyInReviewProcess, function($query, $songsAlredyInReviewProcess) {
+//                return $query->whereIn(
+//                    'id',
+//                    $songsAlredyInReviewProcess
+//                );
+//            })
             ->inRandomOrder()
             ->first();
             
