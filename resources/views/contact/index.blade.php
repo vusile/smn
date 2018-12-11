@@ -1,7 +1,7 @@
 @extends('layouts.front-end')
 
 @section('header')
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js?hl=sw" async defer></script>
 @endsection
 @section('content')
 <div class="container">

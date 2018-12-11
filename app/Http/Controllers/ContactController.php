@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Session;
  *
  * @author Vusile
  */
-class ContactController 
+class ContactController extends Controller
 {
     public function index()
     {
