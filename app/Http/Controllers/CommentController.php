@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Events\CommentPosted;
 use App\Models\Song;
+use App\Rules\ValidRecaptcha;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
