@@ -35,6 +35,7 @@ class ContactController extends Controller
     public function sendEMail(Request $request)
     {
 
+        dd($request);
         if (
             !$request->input('maoni')
         ) {
