@@ -14,12 +14,21 @@ class CommentController extends Controller
         if (
                 $request->input('song_id') 
                 && !$request->input('maoni')
-        ) {            
-            $this->validate($request, [
-                'name' => 'required',
-                'comment' => 'required',
-                'song_id' => 'required',
-            ]);
+        ) {    
+            $customMessages = [
+                'g-recaptcha-response.required' => 'Tafadhali jaribu tena!'
+            ];
+            
+            $this->validate(
+                    $request,
+                    [
+                        'name' => 'required',
+                        'comment' => 'required',
+                        'song_id' => 'required',
+                        'g-recaptcha-response' => ['required', new ValidRecaptcha]
+                    ], 
+                    $customMessages
+                );
 
             $comment = Comment::create($request->all());
             

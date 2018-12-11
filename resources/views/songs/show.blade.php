@@ -1,4 +1,7 @@
 @extends('layouts.front-end')
+@section('header')
+    <script src="https://www.google.com/recaptcha/api.js?hl=sw" async defer></script>
+@endsection
 @section('content')
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 class="display-4">{{ $song->name }}</h1>
@@ -123,6 +126,19 @@
                     <div class="form-group">
                       <label for="comment">Maoni yako</label>
                       <textarea required="" class="form-control" id="comment" name="comment" rows="3" placeholder="Pongeza, Kosoa.... Uwe mstaarabu"></textarea>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <label for="feedback-recaptcha" class="col-md-4 col-form-label text-md-right"></label>
+                        <div class="col-md-6">
+                            <div class="g-recaptcha" id="feedback-recaptcha" data-sitekey="6LfmUYAUAAAAAMRJDZX7NR784FH74RRz0brOYh4G"></div>
+
+                            @if ($errors->has('g-recaptcha-response'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                </span>
+                            @endif
+                        </div>
                     </div>
 
                     <div class="form-group row">
