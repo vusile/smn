@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Composer;
 use App\Models\ComposerEmail;
 use App\Events\ComposerEmailCreated;
+use App\Rules\ValidRecaptcha;
 use Illuminate\Http\Request;
 
 class ComposerEmailController extends Controller
@@ -14,14 +15,23 @@ class ComposerEmailController extends Controller
         if (
             $request->input('composer_id') 
             && !$request->input('maoni')
-        ) {            
-            $this->validate($request, [
-                'sender_name' => 'required',
-                'sender_email' => 'required',
-                'sender_phone' => 'required',
-                'message' => 'required',
-                'composer_id' => 'required',
-            ]);
+        ) {      
+            $customMessages = [
+                'g-recaptcha-response.required' => 'Tafadhali jaribu tena!'
+            ];
+            
+            $this->validate(
+                    $request,
+                    [
+                        'sender_name' => 'required',
+                        'sender_email' => 'required',
+                        'sender_phone' => 'required',
+                        'message' => 'required',
+                        'composer_id' => 'required',
+                        'g-recaptcha-response' => ['required', new ValidRecaptcha]
+                    ],
+                    $customMessages
+                );
            
 
             $composerEmail = ComposerEmail::create($request->all());

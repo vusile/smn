@@ -129,7 +129,6 @@
                     </div>
                     
                     <div class="form-group row">
-                        <label for="feedback-recaptcha" class="col-md-4 col-form-label text-md-right"></label>
                         <div class="col-md-6">
                             <div class="g-recaptcha" id="feedback-recaptcha" data-sitekey="6LfmUYAUAAAAAMRJDZX7NR784FH74RRz0brOYh4G"></div>
 
