@@ -108,6 +108,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/remove-song-duplicates', 'CleanUpController@removeDuplicateSongs');
     Route::get('/impersonate/{user}', 'AccountController@impersonate');
     Route::get('/stop-impersonation/', 'AccountController@stopImpersonating');
+    Route::get('/jobs', 'JobController@index');
+    Route::get('/jobs/{job}/delete', 'JobController@delete');
+    Route::get('/comments/{comment}', 'CommentController@show');
 });
 Auth::routes();
 

@@ -32,4 +32,9 @@ class CommentController extends Controller
         
         return back();
     }
+    
+    public function show(Comment $comment)
+    {
+        dd($comment->comment);
+    }
 }
