@@ -13,7 +13,8 @@
                     @if ($otherSongs) <br> > <a href="/composer/songs/{{ $song->composer->url }}/{{ $song->composer->id }}">Tazama Nyimbo nyingine za {{ $song->composer->name }} </a>@endif
                 </p>
                 <p><strong>Makundi Nyimbo:</strong> {{ $song->categories->pluck('title')->implode(' | ') }}</p>
-                <p><strong>Umepakiwa na:</strong> {{ $song->user->first_name . ' ' . $song->user->last_name }}</p>
+               
+                <p><strong>Umepakiwa na:</strong> {{ $song->user->name }}</p>
                 <p><strong>Umepakuliwa mara</strong> {{ number_format($song->downloads) }} | <strong>Umetazamwa mara</strong> {{ number_format($song->views) }}</p>
                 
                 @if($song->dominikas->count())
