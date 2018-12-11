@@ -35,6 +35,6 @@ class CommentController extends Controller
     
     public function show(Comment $comment)
     {
-        dd($comment->comment);
+        echo($comment->comment);
     }
 }

@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\SiteContact;
+use App\Rules\ValidRecaptcha;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -33,9 +34,20 @@ class ContactController
     
     public function sendEMail(Request $request)
     {
+
         if (
             !$request->input('maoni')
         ) {
+            $customMessages = [
+                'g-recaptcha-response.required' => 'Tafadhali jaribu tena!'
+            ];
+            $this->validate(
+                $request,
+                [
+                    'g-recaptcha-response' => ['required', new ValidRecaptcha]
+                ],
+                $customMessages
+            );
             $data = $request->all();
             Mail::to('admin@swahilimusicnotes.com')
                 ->queue(new SiteContact($data));
