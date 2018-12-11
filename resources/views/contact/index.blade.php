@@ -80,9 +80,15 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="message" class="col-md-4 col-form-label text-md-right"></label>
+                            <label for="feedback-recaptcha" class="col-md-4 col-form-label text-md-right"></label>
                             <div class="col-md-6">
                                 <div class="g-recaptcha" id="feedback-recaptcha" data-sitekey="6LfmUYAUAAAAAMRJDZX7NR784FH74RRz0brOYh4G"></div>
+                                
+                                @if ($errors->has('g-recaptcha-response'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
                         <div class="form-group row mb-0">
