@@ -58,28 +58,33 @@ class SongReviewController extends Controller
             ->pluck('song_id')
             ->toArray();
             
-        $ids = DB::table('song_categories')
-            ->select('song_id')
-            ->get()
-            ->pluck('song_id');
+//        $ids = DB::table('song_categories')
+//            ->select('song_id')
+//            ->get()
+//            ->pluck('song_id');
         
-            
+//        dd($ids);
+        
+        $toReview = array_diff(
+                $songsAlredyInReviewProcess,
+                $songsUserHasReviewed
+            );
+        
+        if(!head($toReview)){
+            $toReview = null;
+        }
+        
         $song = Song::pending()
-            ->whereIn('id', $ids)
-            ->whereNotIn('id', $songsUserHasReviewed)
+            ->has('categories')
             ->whereNotIn('user_id', [auth()->user()->id])
-//            ->when($songsAlredyInReviewProcess, function($query, $songsAlredyInReviewProcess) {
-//                return $query->whereIn(
-//                    'id',
-//                    $songsAlredyInReviewProcess
-//                );
-//            })
+            ->when($toReview, function($query, $toReview) {
+                return $query->whereIn(
+                    'id',
+                    $toReview
+                );
+            })
             ->inRandomOrder()
             ->first();
-            
-//        echo $song->name;
-//        echo $song->composer->name;
-//        dd($song);
         
         return view(
             'songs.review.index',
