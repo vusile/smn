@@ -57,20 +57,12 @@ class SongReviewController extends Controller
             })
             ->pluck('song_id')
             ->toArray();
-            
-//        $ids = DB::table('song_categories')
-//            ->select('song_id')
-//            ->get()
-//            ->pluck('song_id');
-        
-//        dd($ids);
+           
         
         $toReview = array_diff(
                 $songsAlredyInReviewProcess,
                 $songsUserHasReviewed
             );
-        
-        dd($toReview);
         
         if(!head($toReview)){
             $toReview = null;
