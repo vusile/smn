@@ -70,6 +70,8 @@ class SongReviewController extends Controller
                 $songsUserHasReviewed
             );
         
+        dd($toReview);
+        
         if(!head($toReview)){
             $toReview = null;
         }
