@@ -36,6 +36,8 @@ class SongService
         $similarSongs = $this->searchService
             ->search($songName, 'songs');
         
+        $dominikas = collect();
+        
         if($similarSongs) {
             $dominikas = Song::whereIn('id', $similarSongs->pluck('id'))
                 ->get()
@@ -52,7 +54,7 @@ class SongService
             return $dominikas;
         }
         
-        return null;
+        return $dominikas;
     }
     
     public function approveSong(Song $song)

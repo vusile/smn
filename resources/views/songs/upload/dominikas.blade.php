@@ -39,7 +39,7 @@
                 </div>
             @endif
             
-            @if($parts)
+            @if($parts->count())
             <h2>Nyimbo zenye maneno kama huu hutumika:</h2>
             <form class="needs-validation" method="post" action="/upload/dominika" id="upload-song-details" novalidate>
                 @foreach($dominikas as $id => $name)
@@ -65,13 +65,13 @@
                         <input type="hidden" name="song_id" value="{{$song->id}}">
                         <button type="submit" class="btn btn-primary">Na huu pia hutumika hivyo</button>
                         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#dominika-form" aria-expanded="false" aria-controls="dominika-form">Hutumika na Dominika nyingine pia</button>
-                        <button type="submit" class="btn btn-primary" formaction="/upload/remove-dominika">Hautumiki kwenye dominikas</button>
+                        <button type="submit" class="btn btn-primary" formaction="/upload/remove-dominika">Hautumiki kwenye dominika</button>
                     </div>
                 </div>
             </form>
             @endif
             
-            <form class="@if($parts) collapse @endif needs-validation" method="post" action="/upload/dominika" id="dominika-form" novalidate  >
+            <form class="@if($parts->count()) collapse @endif needs-validation" method="post" action="/upload/dominika" id="dominika-form" novalidate  >
             <h2>Wimbo huu hutumika kwenye dominika au sikukuu?</h2>
                 <div class="form-group row">
                     <div class="col-sm-10">
@@ -142,7 +142,9 @@
                     <div class="col-sm-10">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="song_id" value="{{$song->id}}">
-                        <button type="submit" class="btn btn-primary">Maliza >></button>
+                        <button type="submit" class="btn btn-primary">Ndio, nimezichagua</button>
+                        <button type="submit" class="btn btn-primary">Hapana, endelea</button>
+                        
                     </div>
                 </div>
             </form>
