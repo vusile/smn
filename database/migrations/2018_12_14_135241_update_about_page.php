@@ -70,7 +70,7 @@ Siwezi kuongelea historia bila kuzungumzia changamoto. SMN imepata changamoto ny
 Mnamo May 2017. Niliridhia kwa moyo safi na kwa kutaka mwenyewe SMN imilikiwe na Kanisa. Nilitoa SMN kama zawadi, bure kabisa bila kujali gharama zote ambazo nimezipata kuiendesha. Nia kubwa ya kuigawa bure kwa Kanisa ni kwa sababu nilitambua itapata usimamizi mzuri zaidi, huku mimi nikibaki kuwa mshauri wa masuala ya Teknolojia. Nashukuru kuwa Kanisa, kupitia Askofu Salutaris Libena, lilikubali kuipokea na mpaka sasa tupo kwenye mchakato wa Kanisa kuipokea.
 </p>
 <p><strong>Shukrani:</strong><br>
-Siwezi kuwataja na kuwamaliza watu wote ambao wamechangia SMN kufika hapa ilipo ni wengi sana. Ila wafuatao wanastahili kutajwa: Deo Mhumbira, Bernard Mukasa, Albert Maneno, Fr. Deo Mwageni, Yudathadei Chitopela, Augustine Ruta, Martin Munywoki, Beatus Idama na wengine wengi sana ambao mara nyingi tumekuwa tukiongea kwenye simu na kubadilishana mawazo ili kuiboresha SMN. Mungu awabariki sana.</p>'
+Siwezi kuwataja na kuwamaliza watu wote ambao wamechangia SMN kufika hapa ilipo ni wengi sana. Ila wafuatao wanastahili kutajwa: Deo Mhumbira, Bernard Mukasa, Albert Maneno, Fr. Deo Mwageni, Yudathadei Chitopela, Augustine Ruta, Martin Munywoki, Beatus Idama, Thomas Mwakimata na wengine wengi sana ambao mara nyingi tumekuwa tukiongea kwenye simu na kubadilishana mawazo ili kuiboresha SMN. Mungu awabariki sana.</p>'
                     ]
                 );
     }
