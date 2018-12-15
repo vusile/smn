@@ -20,7 +20,7 @@ class UpdateAboutPage extends Migration
                         'title' => 'Historia ya Swahili Music Notes',
                         'text' => '	 	 	
 <p>Swahili Music Notes (SMN), ni tovuti inayohifadhi nota za nyimbo za Kanisa Katoliki. Ilizaliwa tarehe 1 December 2011 na mwanzilishi wake ni ndugu Vusile Terence Silonda. Kwa nini alianzisha tovuti hii? Mwenyewe anaeleza: </p>
-<img src="/images/1780713_10203261852694902_1527208734_n.jpg"/>
+<img src="/images/1780713_10203261852694902_1527208734_n.jpg"  class="img-fluid rounded mx-auto d-block border border-success" style = "border-width: 3px !important; max-width: 80%; margin: 20px;" />
 <p>
 “Kwanza kabisa, ningependa watu wafahamu kuwa mimi ni Mwanakwaya, na nilianza kuimba mwaka 2002, katika kwaya ya Vijana ya Mt. Bakhita Parokia ya Upanga.
 </p>
@@ -49,16 +49,16 @@ Kuanzia hapo, nadhani sihitaji kusema mengi. SMN imetoka kutoka nyimbo 7 – 10 
 Katika miaka 7, namshukuru Mungu, nimeweza kufanya maboresho makubwa manne kutokana na mahitaji ya watumiaji. Katika kila hatua nilifanya maboresho fulani.
 </p>
 <p>
-SMN version ya kwanza kabisa naiita <strong>“Mwanzo” (Dec 2011)</strong>: Maana ndo ulikuwa mwanzo wa safari ya SMN. SMN hii ilikuwa hafifu sana kwenye technolojia. Ilikuwa simple sana. Nyimbo zote zilikuwa zinaonekana kwenye ukurasa wa mwanzo kabisa wa nyumbani ukifungua tu SMN. Hii ilianza kuwa changamoto, nyimbo zilipoanza kuwa nyingi. Viashiria vya kama wimbo una Midi na Maneno vilianza pia kuonekana kwenye SMN hii.
-<img src="/images/SMN-1.png" />
+SMN version ya kwanza kabisa naiita <strong>“Mwanzo” (Dec 2011)</strong>: Maana ndo ulikuwa mwanzo wa safari ya SMN. SMN hii ilikuwa hafifu sana kwenye technolojia. Ilikuwa simple sana. Nyimbo zote zilikuwa zinaonekana kwenye ukurasa wa mwanzo kabisa wa nyumbani ukifungua tu SMN. Hii ilianza kuwa changamoto, nyimbo zilipoanza kuwa nyingi. Viashiria vya kama wimbo una Midi na Maneno vilianza pia kuonekana kwenye SMN hii. Mwonekano wake ni kama hapa chini:
+<img src="/images/SMN-1.png" class="img-fluid rounded mx-auto d-block border border-success" style = "border-width: 3px !important; max-width: 80%; margin: 20px;" />
 </p>
 <p>
-SMN version ya pili naiita <strong>“Mwelekeo” (June 2012)</strong>: SMN hii ndo kwanza ilianza kuonesha makundi nyimbo na kuziweka nyimbo kwenye makundi nyimbo. Pia, ilianza kuonesha nyimbo za watunzi fulani na historia za watunzi. Kwenye SMN hii pia, ndo nilianza kuboresha “search” njia ya kutafuta nyimbo maana zilianza kuwa nyingi. Pia, nikaanza kupata ushirikiano wa watu wengi kwenye ku-upload nyimbo. Pia SMN ndo ilikuwa ya kwanza kukusanya takwimu za mara ngapi wimbo umepakuliwa.
-<img src="/images/SMN-2.png"/>
+SMN version ya pili naiita <strong>“Mwelekeo” (June 2012)</strong>: SMN hii ndo kwanza ilianza kuonesha makundi nyimbo na kuziweka nyimbo kwenye makundi nyimbo. Pia, ilianza kuonesha nyimbo za watunzi fulani na historia za watunzi. Kwenye SMN hii pia, ndo nilianza kuboresha “search” njia ya kutafuta nyimbo maana zilianza kuwa nyingi. Pia, nikaanza kupata ushirikiano wa watu wengi kwenye ku-upload nyimbo. Pia SMN ndo ilikuwa ya kwanza KUKUSANYA takwimu za mara ngapi wimbo umepakuliwa. Mwonekano wake ni kama hapa chini:
+<img src="/images/SMN-2.png" class="img-fluid rounded mx-auto d-block border border-success" style = "border-width: 3px !important; max-width: 80%; margin: 20px;" />
 </p>
 <p>
-SMN version ya tatu naiita <strong>“Simu Kwanza” (May 2016)</strong>: SMN hii ndo ilikuwa ya kwanza kuweka mkazo kwenye muonekano mzuri wa SMN kwenye simu, maana 85% ya watumiaji wa SMN wanaitumia kwa kutumia simu zao za mkononi. Hivyo ilikuwa muhimu sana kufanya maboresho hayo. Pia maboresho mengine yaliyofanyika ni kwenye kupakia nyimbo na kusearch. Pamoja na kuanza kuonesha ni mara ngapi wimbo umepakuliwa (Umekuwa downloaded). Pia nilibadili mwonekano, na kuhamishia makundi nyimbo kwenye ukurasa wake, huku ukurasa wa mbele ukionesha nyimbo “zinazovuma” wiki hiyo n.k. Wadau wengi, wanaifahamu zaidi SMN hiyo.
-<img src="/images/SMN-3.png" />
+SMN version ya tatu naiita <strong>“Simu Kwanza” (May 2016)</strong>: SMN hii ndo ilikuwa ya kwanza kuweka mkazo kwenye muonekano mzuri wa SMN kwenye simu, maana 85% ya watumiaji wa SMN wanaitumia kwa kutumia simu zao za mkononi. Hivyo ilikuwa muhimu sana kufanya maboresho hayo. Pia maboresho mengine yaliyofanyika ni kwenye kupakia nyimbo na kusearch. Pamoja na kuanza KUONESHA ni mara ngapi wimbo umepakuliwa (Umekuwa downloaded). Pia nilibadili mwonekano, na kuhamishia makundi nyimbo kwenye ukurasa wake, huku ukurasa wa mbele ukionesha nyimbo “zinazovuma” wiki hiyo n.k. Wadau wengi, wanaifahamu zaidi SMN hiyo. Mwonekano wake ni kama hapa chini:
+<img src="/images/SMN-3.png" class="img-fluid rounded mx-auto d-block border border-success" style = "border-width: 3px !important; max-width: 80%; margin: 20px;"/>
 </p>
 <p>
 SMN version ya nne naiita <strong>“Mwerevu, Mjanja (Smart)” (December 2018)</strong>: SMN hii ina maboresho makubwa sana zaidi ya yanayoonekana. Ni “Overhaul” kubwa sana, kuanzia kwenye “database” inayoendesha SMN na mwonekano pia. Ndio maana maboresho yamewezekana kwenye speed, upakiaji wa nyimbo, mwonekano, kuhakiki nyimbo na kadhalika. Lakini pia SMN imepata uwezo wa kutabiri mambo mbalimbali, ikiwemo, iwapo wimbo unatumika kwenye dominika, na iwapo kama wimbo unaopakia umo tayari kwenye tovuti na mengine mengi.

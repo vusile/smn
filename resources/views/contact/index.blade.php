@@ -9,10 +9,10 @@
         <div class="col-md-8">
 
             <div class="card">
-                <div class="card-header">Simu - <small>Namba hizi si mawasiliano ya mtunzi, ni ya SMN</small></div>
+                <div class="card-header">Simu</div>
                 <div class="card-body">
-                    Tigo: +255 657 867 793 (ina WhatsApp)<br>
-                    Voda: +255 768 205 729<br>
+                    Tigo: +255 657 867 793 (ina WhatsApp) <strong><small>Namba hii si mawasiliano ya mtunzi, ni ya SMN</small></strong><br>
+                    Voda: +255 768 205 729 <strong><small>Namba hii si mawasiliano ya mtunzi, ni ya SMN</small><br>
                 </div>
             </div>
             <div class="card">
