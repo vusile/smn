@@ -55,7 +55,7 @@ class FindComposerDuplicates extends Command
                     $composer->save();
                 })
                 ->filter(function ($composer) use ($output) {
-                    return $composer->name;
+                    return strlen($composer->name) > 0;
                 })
                 ->mapWithKeys(function ($composer) use ($output) {
                     $output->writeln($composer->name . ' - ' . $composer->id);
@@ -76,10 +76,10 @@ class FindComposerDuplicates extends Command
                 ->toArray();
                
                 $count = count(explode(',', array_get($duplicates, 'duplicates')));
-                if($count > 1) {
+//                if($count > 1) {
                     DB::table('duplicates')
                         ->insert($duplicates);
-                }
+//                }
 
             });
     }
