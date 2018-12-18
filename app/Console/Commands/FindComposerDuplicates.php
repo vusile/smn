@@ -48,6 +48,7 @@ class FindComposerDuplicates extends Command
     {
         $output = new ConsoleOutput();
         Composer::orderBy('name')
+//            ->whereIn('id', [2105,2106])
             ->chunk(10, function($composers) use ($output) {
                 $duplicates = $composers->each(function ($composer) use ($output) {
                     $composer->duplicates_checked = true;
@@ -65,22 +66,27 @@ class FindComposerDuplicates extends Command
                     if(is_array($dupes) or is_bool($dupes)) {
                         $dupes = collect($composer);
                     }
-                    return [
+                    return [$composer->id => [
                         'entity_type' => 'composer',
                         'entity_id' => $composer->id,
                         'duplicates' => $dupes->sortByDesc('active_songs')
                             ->pluck('id')
                             ->implode(',')
-                    ];
+                    ]];
                 })
-                ->toArray();
-               
-                $count = count(explode(',', array_get($duplicates, 'duplicates')));
-//                if($count > 1) {
-                    DB::table('duplicates')
-                        ->insert($duplicates);
-//                }
-
+                ->each(function ($possibleDuplicate){
+                    $count = count(
+                        explode(
+                                ',',
+                                array_get($possibleDuplicate, 'duplicates')
+                            )
+                        );
+                                                        
+                    if($count > 1) {
+                        DB::table('duplicates')
+                            ->insert($possibleDuplicate);
+                    }                    
+                });
             });
     }
 }
