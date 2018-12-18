@@ -66,21 +66,27 @@ class FindSongDuplicates extends Command
                     if(is_array($dupes) or is_bool($dupes)) {
                         $dupes = collect($song);
                     }
-                    return [
+                    return [$song->id => [
                         'entity_type' => 'song',
                         'entity_id' => $song->id,
                         'duplicates' => $dupes->sortByDesc('active_songs')
                             ->pluck('id')
-                            ->implode(',')
-                    ];
+                            ->implode(',')                        
+                    ]];
                 })
-                ->toArray();
-               
-                $count = count(explode(',', array_get($duplicates, 'duplicates')));
-                if($count > 1) {
-                    DB::table('duplicates')
-                        ->insert($duplicates);
-                }
+                ->each(function ($possibleDuplicate){
+                    $count = count(
+                        explode(
+                                ',',
+                                array_get($possibleDuplicate, 'duplicates')
+                            )
+                        );
+                                                        
+                    if($count > 1) {
+                        DB::table('duplicates')
+                            ->insert($possibleDuplicate);
+                    }                    
+                });
 
             });
     }
