@@ -25,6 +25,7 @@ class DominikaController extends Controller
             ->get();
         
         $ibadaZaWikiHii = Dominika::thisWeek()
+            ->orderBy('dominika_date')
             ->get();
        
         return view(

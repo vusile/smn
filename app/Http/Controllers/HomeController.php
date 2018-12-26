@@ -29,7 +29,6 @@ class HomeController extends Controller
         
          $weekly = DB::select("SELECT Sum(Downloads) as NumOfDownloads, song_id FROM song_downloads WHERE downloaded_on >= '" . $now->startOfWeek()->format('Y-m-d') . "' and downloaded_on <= '" . $now->endOfWeek()->format('Y-m-d') . "' GROUP BY song_id ORDER BY NumOfDownloads DESC LIMIT 10");
          
-        
         $weeklySongIds = collect($weekly)
             ->pluck('song_id')
             ->toArray();
@@ -45,6 +44,7 @@ class HomeController extends Controller
                 ->get();
         
         $ibadaZaWikiHii = Dominika::thisWeek()
+            ->orderBy('dominika_date')
             ->get();
         
         return view(
