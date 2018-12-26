@@ -13,15 +13,17 @@ class ComposerMessagedEmail extends Mailable
     use Queueable, SerializesModels;
     
     public $composerEmail;
+    public $request;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(ComposerEmail $composerEmail)
+    public function __construct(ComposerEmail $composerEmail, array $request)
     {
         $this->composerEmail = $composerEmail;
+        $this->request = $request;
     }
 
     /**

@@ -13,15 +13,17 @@ class CommentPostedEmail extends Mailable
     use Queueable, SerializesModels;
     
     public $comment;
+    public $request;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Comment $comment)
+    public function __construct(Comment $comment, array $request)
     {
         $this->comment = $comment;
+        $this->request = $request;
     }
 
     /**

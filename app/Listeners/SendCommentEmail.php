@@ -29,6 +29,7 @@ class SendCommentEmail
     public function handle(CommentPosted $event)
     {
         $song = $event->comment->song;
+        $data = $event->request;
         
         $sendTo = $song->user->email;
         
@@ -41,6 +42,6 @@ class SendCommentEmail
         
         Mail::to($sendTo)
 //            ->bcc('admin@swahilimusicnotes.com')
-            ->queue(new CommentPostedEmail($event->comment));
+            ->queue(new CommentPostedEmail($event->comment, $data));
     }
 } 

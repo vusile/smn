@@ -49,6 +49,7 @@ class ContactController extends Controller
             );
             $data = $request->all();
             Mail::to('admin@swahilimusicnotes.com')
+                ->replyTo($data['email'])
                 ->queue(new SiteContact($data));
             
             Session::flash('msg', "Ujumbe wako umetumwa! Tutakujibu karibuni");

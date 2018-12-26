@@ -30,11 +30,12 @@ class SendComposerEmail
     public function handle(ComposerEmailCreated $event)
     {
         $composer = $event->composerEmail->composer;
+        $data = $event->request;
         
         $sendTo = $composer->email;
         
         Mail::to($sendTo)
 //            ->bcc('admin@swahilimusicnotes.com')
-            ->queue(new ComposerMessagedEmail($event->composerEmail));
+            ->queue(new ComposerMessagedEmail($event->composerEmail, $data));
     }
 }
