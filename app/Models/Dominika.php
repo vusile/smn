@@ -55,7 +55,7 @@ class Dominika extends Model
     {
         $now = Carbon::now()->format('Y-m-d');
         $sunday = Carbon::now()
-                ->modify("next Sunday")
+                ->addDays(14)
                 ->format('Y-m-d');
         
         return $query->whereBetween(
