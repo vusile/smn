@@ -33,10 +33,10 @@ class ComposerEmailController extends Controller
                     $customMessages
                 );
            
-
-            $composerEmail = ComposerEmail::create($request->all());
+            $data = $request->all();
+            $composerEmail = ComposerEmail::create($data);
             
-            event(new ComposerEmailCreated($composerEmail));
+            event(new ComposerEmailCreated($composerEmail, $data));
 
             $composer = Composer::find($request->input('composer_id'));
 

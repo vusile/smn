@@ -16,14 +16,16 @@ class ComposerEmailCreated
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $composerEmail;
+    public $request;
     
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(ComposerEmail $composerEmail)
+    public function __construct(ComposerEmail $composerEmail, array $request)
     {
         $this->composerEmail = $composerEmail;
+        $this->request = $request;
     }
 }

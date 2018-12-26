@@ -31,9 +31,10 @@ class CommentController extends Controller
                     $customMessages
                 );
 
-            $comment = Comment::create($request->all());
+            $data = $request->all();
+            $comment = Comment::create($data);
             
-            event(new CommentPosted($comment));
+            event(new CommentPosted($comment, $data));
 
             $song = Song::find($request->input('song_id'));
 
