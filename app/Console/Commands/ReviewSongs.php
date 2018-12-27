@@ -65,9 +65,15 @@ class ReviewSongs extends Command
                             return $query->where('mandatory', true);
                         })
                         ->get();
-                      
                         
-                    if ($reviewsCount >= ($questions->count() * 3)) {
+                    $numReviews = 3;
+                    if($song->user) {
+                        if($song->user->automatic_review) {
+                            $numReviews = 1;
+                        }
+                    }
+                    
+                    if ($reviewsCount >= ($questions->count() * $numReviews)) {
                        $approvalQuestionScores = DB::table('reviews')
                         ->select(DB::raw('count(*) as answers_count, review_question_id'))
                         ->groupBy('review_question_id')
