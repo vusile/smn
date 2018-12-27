@@ -69,10 +69,12 @@ class ReviewSongs extends Command
                         ->get();
                         
                     $numReviews = 3;
+                    $minimumNumberOfCriticalReviews = config('song.reviews.min_no_of_critical_reviews');
                     
                     if($song->user) {
                         if($song->user->automatic_review) {
                             $numReviews = 1;
+                            $minimumNumberOfCriticalReviews = 1;
                         }
                     }
                     
@@ -87,15 +89,13 @@ class ReviewSongs extends Command
                         $reject = false;
                        
                         if(!count($approvalQuestionScores)) {
-                            dd("Mmmmh");
                             $reject = true;
                         }
                         else {                                
-                            dd("Mmmmh 2");
                             foreach($questions as $question) {
                                 if(
                                      $question->critical
-                                     && $approvalQuestionScores[$question->id] < config('song.reviews.min_no_of_critical_reviews')
+                                     && $approvalQuestionScores[$question->id] < $minimumNumberOfCriticalReviews
                                 ) {
                                     $reject = true;
                                 }
