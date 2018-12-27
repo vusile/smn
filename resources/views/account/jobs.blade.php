@@ -6,10 +6,10 @@
 
 <div class="container">
     @foreach($jobs as $job)
-        @if(!str_contains($job->payload, 'UserSongRejectedEmail') and !str_contains($job->payload, 'UserSongApprovedEmail'))
+        
             <a href ="/jobs/{{$job->id}}/delete">Delete</a>
             {{ ($job->payload) }} 
-        @endif
+        
         <br><br>
     @endforeach
     {{ $jobs->links() }}
