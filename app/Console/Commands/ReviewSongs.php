@@ -67,6 +67,7 @@ class ReviewSongs extends Command
                         ->get();
                         
                     $numReviews = 3;
+                    
                     if($song->user) {
                         if($song->user->automatic_review) {
                             $numReviews = 1;
@@ -84,9 +85,11 @@ class ReviewSongs extends Command
                         $reject = false;
                        
                         if(!count($approvalQuestionScores)) {
+                            dd("Mmmmh");
                             $reject = true;
                         }
                         else {                                
+                            dd("Mmmmh 2");
                             foreach($questions as $question) {
                                 if(
                                      $question->critical
