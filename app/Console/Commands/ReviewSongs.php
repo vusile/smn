@@ -55,6 +55,8 @@ class ReviewSongs extends Command
            })
            ->chunk(50, function($songs){
                foreach ($songs as $song) {
+                   
+                   echo $song->id;
                    $reviewsCount = DB::table('reviews')
                         ->where('song_id', $song->id)
                         ->count();
