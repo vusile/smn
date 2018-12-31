@@ -109,7 +109,7 @@ class SongController extends Controller
         $otherSongsCount = $song->composer->songs->count(); 
         
         if($otherSongsCount > 1) {
-            $limit = ($otherSongsCount - 1) < 10 ? 0 : 10;  
+            $limit = ($otherSongsCount - 1) < 11 ? 0 : 10;  
             $otherSongs = $song
                 ->composer
                 ->songs    
