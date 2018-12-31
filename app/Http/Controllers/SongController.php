@@ -105,11 +105,16 @@ class SongController extends Controller
     protected function getOtherSongs(Song $song)
     {
         $otherSongs = null;
-        
-        $otherSongsCount = $song->composer->songs->count(); 
+        $otherSongsCount = $song
+                ->composer
+                ->songs
+                ->filter(function ($value) use ($song) {
+                    return ($value->id != $song->id) && ($value->status == 1);
+                })
+                ->count(); 
         
         if($otherSongsCount > 1) {
-            $limit = ($otherSongsCount - 1) < 11 ? 0 : 10;  
+            $limit = $otherSongsCount < 10 ? 0 : 10;  
             $otherSongs = $song
                 ->composer
                 ->songs    
