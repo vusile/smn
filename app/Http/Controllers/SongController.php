@@ -109,14 +109,16 @@ class SongController extends Controller
         $otherSongsCount = $song->composer->songs->count(); 
         
         if($otherSongsCount > 1) {
-            $limit = ($otherSongsCount - 1) < 10 ? ($otherSongsCount - 1) : 10;  
+            $limit = ($otherSongsCount - 1) < 10 ? 0 : 10;  
             $otherSongs = $song
                 ->composer
-                ->songs
+                ->songs    
                 ->filter(function ($value) use ($song) {
-                    return $value->id != $song->id;
+                    return ($value->id != $song->id) && ($value->status == 1);
                 })
-                ->random($limit);
+                ->when($limit, function ($query) use ($limit) {
+                    return $query->random($limit);
+                });
         }
         
         return $otherSongs;
