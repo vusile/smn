@@ -8,12 +8,13 @@
 <div class="container">
     @foreach($dominikas as $dominika)
         <div class="row  {{$loop->index%2 == 0 ? "bg-light" : "" }} ">
-            <div class="col-lg-4" >
-                <p><a href = "/dominika-sikukuu/{{str_slug($dominika->title)}}/{{$dominika->id}}">{{ $dominika->title }}</a> - {{ $dominika->dominika_date? $dominika->dominika_date->format('d-m-Y') : '' }}</p>
+            <div class="col-lg-6" >
+                <p><a href = "/dominika-sikukuu/{{str_slug($dominika->title)}}/{{$dominika->id}}">{{ $dominika->title }}</a></p>
             </div>
             <div class="col-lg-4" >
+                <p>{{ $dominika->dominika_date? $dominika->dominika_date->format('d-m-Y') : '' }}</p>
             </div>
-            <div class="col-lg-4" >
+            <div class="col-lg-2" >
                 <p class="text-success">
 
                 </p>

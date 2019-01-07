@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dominika;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class DominikaController extends Controller
 {
@@ -18,10 +18,13 @@ class DominikaController extends Controller
         SEOMeta::setDescription($description);
         
         $dominikas = Dominika::where(
-                'year_id',
-                config('dominika.mwaka')
+                function($query) {
+                    $query->whereIn('year_id', config('dominika.mwaka'))
+                            ->orWhere('year_id', null);
+                }
+                
             )
-            ->orWhere('year_id', null)
+            ->whereDate('dominika_date', '>=', Carbon::today()->toDateString())
             ->orderBy('dominika_date')
             ->get();
         
