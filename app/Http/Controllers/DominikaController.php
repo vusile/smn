@@ -22,6 +22,7 @@ class DominikaController extends Controller
                 config('dominika.mwaka')
             )
             ->orWhere('year_id', null)
+            ->orderBy('dominika_date')
             ->get();
         
         $ibadaZaWikiHii = Dominika::thisWeek()
