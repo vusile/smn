@@ -13,6 +13,11 @@
                 <p>
                     {!! $approvalQuestion->question !!}:<br>
                     <strong>Umepata {{config('song.reviews.no_of_reviews_per_song') - $approvalQuestion->answers_count}} / {{config('song.reviews.no_of_reviews_per_song')}} </strong>
+                    
+                    @if(isset($comments[$approvalQuestion->review_question_id]))
+                        <br><br><strong>Mapendekezo</strong><br>
+                        {!! $comments[$approvalQuestion->review_question_id] !!}
+                    @endif
                 </p>
             @endif
         @endforeach

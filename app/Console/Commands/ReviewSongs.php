@@ -49,6 +49,7 @@ class ReviewSongs extends Command
     public function handle()
     {
         $songId = $this->argument('song');
+        
         Song::pending()
            ->when($songId, function ($query, $songId){
                return $query->where('id', $songId);
@@ -67,7 +68,7 @@ class ReviewSongs extends Command
                         })
                         ->get();
                         
-                    $numReviews = 3;
+                    $numReviews = config('song.reviews.no_of_reviews_per_song');
                     $minimumNumberOfCriticalReviews = config('song.reviews.min_no_of_critical_reviews');
                     
                     if($song->user) {
@@ -76,7 +77,7 @@ class ReviewSongs extends Command
                             $minimumNumberOfCriticalReviews = 1;
                         }
                     }
-                    
+        
                     if ($reviewsCount >= ($questions->count() * $numReviews)) {
                        $approvalQuestionScores = DB::table('reviews')
                         ->select(DB::raw('count(*) as answers_count, review_question_id'))
@@ -94,12 +95,16 @@ class ReviewSongs extends Command
                             foreach($questions as $question) {
                                 if(
                                      $question->critical
+                                     && !isset($approvalQuestionScores[$question->id])
+                                ) {
+                                    $reject = true;
+                                } elseif(
+                                     $question->critical
                                      && $approvalQuestionScores[$question->id] < $minimumNumberOfCriticalReviews
                                 ) {
                                     $reject = true;
                                 }
-                            }
-                           
+                            } 
                         }
                         
                         if($reject) {

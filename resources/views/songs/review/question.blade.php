@@ -6,16 +6,14 @@
         </label>
     </div>
 @endforeach
-@if ($question->has_comment)
-    <div id="cm{{$question->id}}" class = 'collapse form-group row'>
-        <label class="col-sm-12 col-form-label">Tafadhali toa maelezo zaidi:</label><br>
-        <textarea name="comment{{$question->id}}" id='comment{{$question->id}}'  rows="3"></textarea>
-    </div>
-@endif
-@if ($question->has_suggestion)
+<div id="cm{{$question->id}}" class = 'collapse form-group row'>
+    <label class="col-sm-12 col-form-label">Tafadhali toa maelezo zaidi yamsaidie aliyepakia:</label><br>
+    <textarea class="form-control" name="comment{{$question->id}}" id='comment{{$question->id}}'  rows="3"></textarea>
+</div>
+<!--@if ($question->has_suggestion)
     <div id="cm{{$question->id}}" class = 'collapse form-group row'>
         <label class="col-sm-12 col-form-label">Tafadhali toa maelezo zaidi:</label><br>
         <textarea name="suggestion{{$question->id}}" id='comment{{$question->id}}'  rows="3"></textarea>
     </div>
-@endif
+@endif-->
 <br />

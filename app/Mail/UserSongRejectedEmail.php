@@ -40,12 +40,38 @@ class UserSongRejectedEmail extends Mailable
             ->where('review_answer_id', 2)
             ->get();
         
+        $comments = [];
+        
+        foreach($approvalQuestionScores as $ap) {
+            
+            if((config('song.reviews.no_of_reviews_per_song') - $ap->answers_count) < 2) {
+                $reviewsWithComments = DB::table('reviews')
+                    ->select(DB::raw('review_question_id, comment'))
+                    ->whereNotNull('comment')    
+                    ->where('song_id', $this->song->id)
+                    ->where('review_question_id', $ap->review_question_id)
+                    ->get();   
+            
+                $counter = 1;
+                foreach($reviewsWithComments as $reviewWithComment) {
+                    $comment = '<strong>Pendekezo la ' . $counter . '.</strong> ' .$reviewWithComment->comment . "<br>";
+                    if($counter == 1) {
+                        $comments[$reviewWithComment->review_question_id] = $comment;
+                    } else {
+                        $comments[$reviewWithComment->review_question_id] .= $comment;                        
+                    }
+                    $counter+=1;             
+                }
+            }
+        }
+        
         return $this->subject('Wimbo ' . $this->song->name . ' Haujawa Reviewed')
             ->view('emails.user-song-rejected')
             ->with(
                 [
                     'song' => $this->song,
-                    'approvalQuestionScores' => $approvalQuestionScores
+                    'approvalQuestionScores' => $approvalQuestionScores,
+                    'comments' => $comments,
                 ]
             );
     }
