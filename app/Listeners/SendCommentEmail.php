@@ -40,8 +40,10 @@ class SendCommentEmail
             ];
         }
         
+        $message = (new CommentPostedEmail($event->comment, $data))
+                ->onQueue('general');
+        
         Mail::to($sendTo)
-//            ->bcc('admin@swahilimusicnotes.com')
-            ->queue(new CommentPostedEmail($event->comment, $data));
+            ->queue($message);
     }
 } 

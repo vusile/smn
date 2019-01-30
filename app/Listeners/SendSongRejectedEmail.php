@@ -30,8 +30,11 @@ class SendSongRejectedEmail
     {
         $song = $event->song;
         
+        $message = (new UserSongRejectedEmail($song))
+                ->onQueue('songs');
+        
         Mail::to($song->user->email)
             ->bcc('vusile@gmail.com')
-            ->queue(new UserSongRejectedEmail($song));
+            ->queue($message);
     }
 }

@@ -31,14 +31,21 @@ class SendSongApprovedEmail
     {
         $song = $event->song;
         
-        Mail::to($song->user->email)
-//            ->bcc('admin@swahilimusicnotes.com')
-            ->queue(new UserSongApprovedEmail($song));
+        $userMessage = (new UserSongApprovedEmail($song))
+                ->onQueue('songs');
         
-        if ($song->composer->email) {
+        Mail::to($song->user->email)
+            ->queue($userMessage);
+        
+        $composer = $song->composer;
+        
+        if ($composer->email && $composer->user_id != $song->user->id) {
+            $composerMessage = (new ComposerSongApprovedEmail($song))
+                    ->onQueue('songs');
+            
             Mail::to($song->composer->email)
                 ->bcc('admin@swahilimusicnotes.com')
-                ->queue(new ComposerSongApprovedEmail($song));
+                ->queue($composerMessage);
         }
     }
 }
