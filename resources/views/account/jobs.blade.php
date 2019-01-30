@@ -6,11 +6,12 @@
 
 <div class="container">
     @foreach($jobs as $job)
-        
+        @if(str_contains($job->payload, ['CommentPosted', 'ComposerSongApprovedEmail']) )
             <a href ="/jobs/{{$job->id}}/delete">Delete</a>
             {{ ($job->payload) }} 
         
-        <br><br>
+            <br><br>
+        @endif
     @endforeach
     {{ $jobs->links() }}
 </div>
