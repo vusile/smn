@@ -10,8 +10,8 @@ class JobController extends Controller
 {
     public function index()
     { 
-        $jobs = Job::where('payload', 'LIKE', 'CommentPosted')
-                ->orWhere('payload', 'LIKE', 'ComposerMessagedEmail')
+        $jobs = Job::where('payload', 'LIKE', '%CommentPosted%')
+                ->orWhere('payload', 'LIKE', '%ComposerMessagedEmail%')
                 ->paginate(20);
         
         return view(
