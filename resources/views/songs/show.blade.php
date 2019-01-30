@@ -78,22 +78,24 @@
         </div><!-- /row -->
 
         @foreach($song->comments->reverse() as $comment)
-            <div class="row" id='{{ $comment->id }}'>
-                <div class="col-sm-12">
-                    <div class="card">
-                      <div class="card-header">
-                        {{ $comment->name . ' ' . date("M d, Y",strtotime($comment->comment_date))}}
-                      </div>
-                      <div class="card-body">
-                        <blockquote class="blockquote mb-0">
+            @if($comment->comment == strip_tags($comment->comment))
+                <div class="row" id='{{ $comment->id }}'>
+                    <div class="col-sm-12">
+                        <div class="card">
+                          <div class="card-header">
+                            {{ $comment->name . ' ' . date("M d, Y",strtotime($comment->comment_date))}}
+                          </div>
+                          <div class="card-body">
+                            <blockquote class="blockquote mb-0">
 
-                          <footer class="blockquote-footer">{{ $comment->comment }}</footer>
-                        </blockquote>
-                      </div>
+                              <footer class="blockquote-footer">{{ $comment->comment }}</footer>
+                            </blockquote>
+                          </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <br>
+                <br>
+            @endif
         @endforeach
         <div class="row">
             <div class="col-sm-6">
