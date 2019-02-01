@@ -11,6 +11,9 @@
       gtag('config', 'UA-18823668-4');
     </script>
 
+    @if(env('APP_ENV') != 'production')
+        <meta name="robots" content="noindex,nofollow">
+    @endif
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
