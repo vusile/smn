@@ -151,6 +151,7 @@ return [
         Lab404\Impersonate\ImpersonateServiceProvider::class,
         sngrl\SphinxSearch\SphinxSearchServiceProvider::class,
         Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
 
         /*
          * Package Service Providers...

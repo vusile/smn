@@ -29,6 +29,7 @@ class Song extends Model
         'downloads',
         'views',
         'uploaded_date',
+        'allowed_to_edit',
     ];
     
     public function sluggable()
@@ -101,6 +102,15 @@ class Song extends Model
     public function getIsActiveAttribute()
     {
         if (in_array($this->status, [1, 2])) {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    public function getCanBeEditedAttribute()
+    {
+        if ($this->allowed_to_edit && $this->software_file) {
             return true;
         }
         

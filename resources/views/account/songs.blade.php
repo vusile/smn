@@ -7,7 +7,7 @@
 <div class="container">
     <form class="needs-validation" method="get" action="/search/mysongs" novalidate>
         <div class="form-group">
-            <p><strong>Tafuta wimbo kwenye akaunti yangu</strong></p>
+            <p><strong>Tafuta wimbo kwenye akaunti yako</strong></p>
             <input type="text" class="form-control" id="q" name="q" placeholder="Tafuta wimbo" value="{{request()->query('q')}}">
         </div>
         <div class="form-group row">

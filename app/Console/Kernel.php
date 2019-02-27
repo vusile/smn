@@ -5,7 +5,6 @@ namespace App\Console;
 use App\Console\Commands\CleanUpDownloadsAndViewsTable;
 use App\Console\Commands\FindComposerDuplicates;
 use App\Console\Commands\GroupOneDominikaUpdates;
-use App\Console\Commands\ReviewSongs;
 use App\Console\Commands\UpdateComposerActiveSongs;
 use App\Console\Commands\UpdateUserActiveSongs;
 use Illuminate\Console\Scheduling\Schedule;
@@ -19,12 +18,17 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        ReviewSongs::class,
         FindComposerDuplicates::class,
         UpdateComposerActiveSongs::class,
         UpdateUserActiveSongs::class,
         CleanUpDownloadsAndViewsTable::class,
         GroupOneDominikaUpdates::class
+    ];
+    
+    protected $routeMiddleware = [
+        'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
+        'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+        'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
     ];
 
     /**
@@ -36,10 +40,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('clean-up:downloads-views')->daily();
-        $schedule->command('review:songs')->everyFiveMinutes();
         $schedule->command('composers:update-active-songs')->everyTenMinutes();
         $schedule->command('users:update-active-songs')->everyTenMinutes();
-        $schedule->command('queue:work --tries=2 --queue=songs --timeout=30')->cron('*/17 * * * *');
+        $schedule->command('queue:work --tries=2 --queue=songs --timeout=10')->cron('*/17 * * * *');
     }
 
     /**
