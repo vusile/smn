@@ -119,9 +119,10 @@ class SongUploadController extends Controller
                 'name' => 'required',
                 'composer_id' => 'required',
                 'pdf' => 'required|mimes:pdf',
-                'software_file' => 'required_with:software_id',
-                'midi' => 'mimes:mid,ogx,aac,wav,mpga,mpeg',
+                'software_file' => 'required_with:allowed_to_edit',
+                'midi' => 'mimes:mid,ogx,aac,wav,mpga',
                 'categories' => 'required',
+                'software_file.required_with'  => 'Tafadhali pakia file ulilosave na software ili iweze kubadilishwa ikihitajika',
             ],
             $customMessages
         );
@@ -192,6 +193,7 @@ class SongUploadController extends Controller
             'pdf.mimes'  => 'Tafadhali upload file la PDF',
             'midi.mimes'  => 'Tafadhali upload file la Midi, MP3',
             'categories.required'  => 'Walau kundi nyimbo moja ni lazima',
+            'software_file.required_with'  => 'Tafadhali pakia file ulilosave na software ili iweze kubadilishwa ikihitajika',
         ];
 
         $this->validate(
@@ -202,6 +204,7 @@ class SongUploadController extends Controller
                 'pdf' => 'mimes:pdf',
                 'midi' => 'mimes:mid,ogx,aac,wav,mpga,mpeg',
                 'categories' => 'required',
+                'software_file' => 'required_with:allowed_to_edit',
             ],
             $customMessages
         );
@@ -211,7 +214,6 @@ class SongUploadController extends Controller
         if ($request->file('pdf')){
             $pdfName = Carbon::now()->timestamp . '-' . Str::slug($request->input('name')) . '.' . last(explode('.', $request->pdf->getClientOriginalName()));
             $pdfPath = $request->file('pdf')->storeAs('uploads/files', $pdfName);
-
             $additionalInfo['pdf'] = $pdfName;
         }
 
@@ -234,6 +236,7 @@ class SongUploadController extends Controller
             $softwareFileName = Carbon::now()->timestamp . '-' . Str::slug($request->input('name')) . '.' . last(explode('.', $request->software_file->getClientOriginalName()));
 
             $softwareFilePath = $request->file('software_file')->storeAs('uploads/files', $softwareFileName);
+            $additionalInfo['software_file'] = $softwareFileName;
         }
 
         if ($request->file('nota_original')) {
@@ -255,6 +258,13 @@ class SongUploadController extends Controller
 
         $song->categories()
             ->sync($request->input('categories'));
+
+
+        if($request->get('return')) {
+            return redirect()->route(
+                'song-review.index'
+            );
+        }
 
         return redirect()->route(
             'song-upload.dominika',

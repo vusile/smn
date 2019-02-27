@@ -6,9 +6,9 @@
         </label>
     </div>
 @endforeach
-<div id="cm{{$question->id}}" class = 'collapse form-group row'>
+<div id="cm{{$question->id}}" class = 'form-group row'>
     <label class="col-sm-12 col-form-label">Tafadhali toa maelezo zaidi yamsaidie aliyepakia:</label><br>
-    <textarea class="form-control" name="comment{{$question->id}}" id='comment{{$question->id}}'  rows="3"></textarea>
+    <textarea class="form-control" name="comment{{$question->id}}" id='comment{{$question->id}}'  rows="2"></textarea>
 </div>
 <!--@if ($question->has_suggestion)
     <div id="cm{{$question->id}}" class = 'collapse form-group row'>

@@ -85,7 +85,7 @@ return [
     ],
 
     /*
-     * When set to true, the required permission names are added to the exception
+     * When set to true, the required permission names are added to the exceptions
      * message. This could be considered an information leak in some contexts, so
      * the default setting is false here for optimum safety.
      */

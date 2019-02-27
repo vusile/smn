@@ -3,129 +3,125 @@
 namespace App\Http\Controllers;
 
 use App\Models\Song;
+use App\Services\SongService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class SongReviewController extends Controller
 {
+    /*
+     * @var SongService
+     */
+    protected $songService;
+
+    public function __construct(SongService $songService)
+    {
+        $this->songService = $songService;
+    }
+
     public function index()
     {
+        $user = auth()->user();
+
         $questions = DB::table('review_questions')
-            ->where('review_level', auth()->user()->review_level)
             ->get();
-        
+
         $answers = DB::table('review_answers')
                 ->get();
-         
+
         $nameQuestions = $questions->filter(function($question) {
             return $question->field == 'name';
         });
-        
+
         $pdfQuestions = $questions->filter(function($question) {
             return $question->field == 'pdf';
         });
-        
+
         $midiQuestions = $questions->filter(function($question) {
             return $question->field == 'midi';
         });
-        
+
         $composerQuestions = $questions->filter(function($question) {
             return $question->field == 'composer_id';
         });
-        
+
         $categoriesQuestions = $questions->filter(function($question) {
             return $question->field == 'categories';
         });
-        
-        $songsUserHasReviewed = DB::table('reviews')
-            ->where('user_id', auth()->user()->id)
-            ->pluck('song_id')
-            ->all();
-        
 
-        $mandatoryQuestions = $questions->filter(function ($question){
-            return $question->mandatory;
-        })->count();
-                
-        $songsAlredyInReviewProcess = DB::table('reviews')
-            //->whereNotIn('song_id', $songsUserHasReviewed)
-            ->select(DB::raw('count(*) as answered, song_id, user_id'))
-            ->get()
-            ->filter(function ($review) use ($mandatoryQuestions) {
-                return $review->answered < ($mandatoryQuestions * config('song.reviews.no_of_reviews_per_song'));
-            })
-            ->pluck('song_id')
-            ->toArray();
-           
-        
-        /*$toReview = array_diff(
-                $songsAlredyInReviewProcess,
-                $songsUserHasReviewed
-            );*/
-        
-        if(!head($songsAlredyInReviewProcess)){
-            $songsAlredyInReviewProcess = null;
-        }
-        
-        if(!head($songsUserHasReviewed)){
-            $songsUserHasReviewed = null;
-        }
-        
+        $dominikaQuestions = $questions->filter(function($question) {
+            return $question->field == 'dominika';
+        });
+
+        $assignedToUsers = DB::table('reviewer_songs')
+                ->where('user_id', $user->id)
+                ->get()
+                ->pluck('song_id')
+                ->toArray();
+
+
         $song = Song::pending()
             ->has('categories')
-            ->whereNotIn('user_id', [auth()->user()->id])
-            ->when($songsUserHasReviewed, function($query, $songsUserHasReviewed) {
-                return $query->whereNotIn(
-                    'id',
-                    $songsUserHasReviewed
-                );
-            })
-            ->when($songsAlredyInReviewProcess, function($query, $songsAlredyInReviewProcess) {
-                return $query->whereIn(
-                    'id',
-                    $songsAlredyInReviewProcess
-                );
-            })
-//            ->inRandomOrder()
+            ->whereNotIn('user_id', [$user->id])
+            ->whereIn('id', $assignedToUsers)
             ->first();
-        
-        if ($song) {
-//            session(['no_songs_to_review' => true]);
-            return view(
-                'songs.review.index',
-                compact(
-                    'song',
-                    'nameQuestions',
-                    'pdfQuestions',
-                    'composerQuestions',
-                    'midiQuestions',
-                    'categoriesQuestions',
-                    'answers'
-                )
-            );
-        } else {
-            session(['no_songs_to_review' => true]);
-            return redirect('/upload/song');
-        }     
+
+        if(!$song) {
+            $song = Song::pending()
+                ->has('categories')
+                ->whereNotIn('user_id', [$user->id])
+                ->first();
+
+
+            DB::table('reviewer_songs')
+                    ->insert(
+                        [
+                            'song_id' => $song->id,
+                            'user_id' => $user->id
+                        ]
+
+                    );
+        }
+
+        $parts = null;
+
+        if($song->dominikas) {
+            $parts = $this->songService->determinePartOfMass($song);
+        }
+
+        return view(
+            'songs.review.index',
+            compact(
+                'song',
+                'nameQuestions',
+                'pdfQuestions',
+                'composerQuestions',
+                'midiQuestions',
+                'categoriesQuestions',
+                'dominikaQuestions',
+                'answers',
+                'parts'
+            )
+        );
     }
-    
+
     public function store(Request $request)
     {
         $song = Song::find($request->input('song_id'));
         $questions = DB::table('review_questions')
             ->where('review_level', auth()->user()->review_level)
             ->get();
-        
+
         $customMessages = [];
-        
+
         foreach($questions as $question) {
             if(!$song->midi && $question->field == 'midi') {
                 continue;
             }
             $customMessages['answer' . $question->id . '.required'] = 'Tafadhali jibu maswali yote';
         }
-        
+
         foreach($questions as $question) {
             if(!$song->midi && $question->field == 'midi') {
                 continue;
@@ -133,29 +129,20 @@ class SongReviewController extends Controller
 
             $validations['answer' . $question->id] = 'required';
         }
-  
+
         $this->validate(
             $request,
             $validations,
             $customMessages
         );
-        
+
         $reviews = [];
-        
-        
-        $iDontKnows = 0;
+
         foreach ($questions as $question) {
             if (($question->field == 'midi') && !$song->midi) {
                 continue;
             }
-            
-            if(
-                $question->critical
-                && $request->input('answer' . $question->id) == 3
-            ) {
-                $iDontKnows += 1; 
-            }
-            
+
             $reviews[] = [
                 'user_id' => auth()->user()->id,
                 'song_id' => $song->id,
@@ -167,15 +154,23 @@ class SongReviewController extends Controller
                 'updated_at' => Carbon::now()->toDateString(),
             ];
         }
-        
-        if(!$iDontKnows) {
-            $res = DB::table('reviews')
-                ->insert($reviews);
-        }
-        
-        $reviewedSongs = session('songs_reviewed', 0);
-        session(['songs_reviewed' => $reviewedSongs + 1]);
-        
-        return redirect()->route('song-review.index');
+
+        DB::table('reviews')
+            ->insert($reviews);
+
+
+        $songReviews = DB::table('reviews')
+            ->join('review_questions', 'reviews.review_question_id', '=', 'review_questions.id')
+            ->join('review_answers', 'reviews.review_answer_id', '=', 'review_answers.id')
+            ->where('song_id', $song->id)
+            ->get();
+
+        return view(
+            'songs.review.preview',
+            compact(
+                'song',
+                'songReviews'
+            )
+        );
     }
 }

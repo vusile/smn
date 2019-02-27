@@ -70,14 +70,14 @@ Route::get('/auth/{provider}', 'Auth\SocialAuthController@redirectToProvider');
 Route::get('/auth/{provider}/callback', 'Auth\SocialAuthController@handleProviderCallback');
 
 Route::middleware(['auth'])->group(function () {
-    Route::group(['middleware' => ['review.songs']], function() {
-        Route::get('/upload/song', 'SongUploadController@index')
-            ->name('song-upload.index');
+    Route::get('/upload/song', 'SongUploadController@index')
+        ->name('song-upload.index');
+    Route::group(['middleware' => ['permission:kuhakiki']], function () {
+        Route::get('/akaunti/review-nyimbo/', 'SongReviewController@index')
+            ->name('song-review.index');
+        Route::post('/akaunti/review-nyimbo/store', 'SongReviewController@store')
+            ->name('song-review.store');
     });
-    Route::get('/akaunti/review-nyimbo/', 'SongReviewController@index')
-        ->name('song-review.index');
-    Route::post('/akaunti/review-nyimbo/store', 'SongReviewController@store')
-        ->name('song-review.store');
     Route::get('/upload/details', 'SongUploadController@details');
     Route::post('/upload/store', 'SongUploadController@store');
     Route::post('/upload/update', 'SongUploadController@update');
@@ -121,6 +121,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/dominikas', 'Admin\DominikaController@index')->name('admin-doninika-index');
     Route::get('/admin/dominikas/{dominika}', 'Admin\DominikaController@show')->name('admin-doninika-show');
     Route::post('/admin/dominikas/delete/{dominika}', 'Admin\DominikaController@delete')->name('admin-doninika-delete');
+    Route::group(['middleware' => ['role:super admin|admin']], function () {
+        Route::get('/users', 'AdminUserController@index');
+        Route::get('/assign-role/{role}/{user}', 'AdminUserController@assign');
+        Route::get('/remove-role/{role}/{user}', 'AdminUserController@remove');
+        Route::get('/users/search', 'AdminUserController@index');
+    });
 });
 Auth::routes();
 

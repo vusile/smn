@@ -116,8 +116,18 @@
                                 </li>
                                 <li><a href="/akaunti/watunzi">Watunzi</a>
                                 </li>
-                                <li><a href="/akaunti/review-nyimbo">Review Nyimbo</a>
+                                @can('kuhakiki')
+                                <li><a href="/akaunti/review-nyimbo">Hakiki Nyimbo</a>
                                 </li>
+                                @endcan
+                                @can('kutoa ithibati')
+                                <li><a href="/akaunti/review-nyimbo">Toa Ithibati</a>
+                                </li>
+                                @endcan
+                                @role('super admin', 'admin')
+                                <li><a href="/akaunti/review-nyimbo">Toa Ithibati</a>
+                                </li>
+                                @endrole
                                 <li><a href="/logout">Logout</a>
                                 </li>
 <!--                                <li><a data-toggle="collapse" data-target="#Miscellaneousmob" href="#">App views</a>
@@ -149,8 +159,18 @@
                         </li>
                         <li><a href="/akaunti/watunzi"><i class="notika-icon notika-support"></i> Watunzi</a>
                         </li>
-                        <li><a href="/akaunti/review-nyimbo"><i class="notika-icon notika-form"></i> Review Nyimbo</a>
-                        </li>
+                        @can('kuhakiki')
+                            <li><a href="/akaunti/review-nyimbo"><i class="notika-icon notika-form"></i> Hakiki Nyimbo</a>
+                            </li>
+                        @endcan
+                        @can('kutoa ithibati')
+                            <li><a href="/akaunti/review-nyimbo"><i class="notika-icon notika-form"></i> Toa Ithibati</a>
+                            </li>
+                        @endcan
+                        <!--@role('super admin', 'admin')-->
+                            <li><a href="/users"><i class="notika-icon notika-form"></i> Users</a>
+                            </li>
+                        <!--@endrole-->
                         <li><a href="/logout"><i class="notika-icon notika-right-arrow"></i> Logout</a>
                         </li>
 <!--                        <li><a href="#Appviews"><i class="notika-icon notika-app"></i> App views</a>
