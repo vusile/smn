@@ -80,18 +80,23 @@ class SongReviewController extends Controller
             ->inRandomOrder()
             ->first();
         
-        return view(
-            'songs.review.index',
-            compact(
-                'song',
-                'nameQuestions',
-                'pdfQuestions',
-                'composerQuestions',
-                'midiQuestions',
-                'categoriesQuestions',
-                'answers'
-            )
-        );
+        if ($song) {
+            return view(
+                'songs.review.index',
+                compact(
+                    'song',
+                    'nameQuestions',
+                    'pdfQuestions',
+                    'composerQuestions',
+                    'midiQuestions',
+                    'categoriesQuestions',
+                    'answers'
+                )
+            );
+        } else {
+            session(['no_songs_to_review' => true]);
+            redirect('/upload/song');
+        }     
     }
     
     public function store(Request $request)

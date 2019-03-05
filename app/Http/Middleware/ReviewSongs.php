@@ -25,8 +25,12 @@ class ReviewSongs
                 ->groupBy('song_id')
                 ->get();
 
-            if ($reviewedToday->count() < config('song.reviews.no_of_songs_to_review')) {
-                 return redirect('/akaunti/review-nyimbo');
+            $noSongsToReview = session('no_songs_to_review', false);
+            if (
+                $reviewedToday->count() < config('song.reviews.no_of_songs_to_review')
+                && !$noSongsToReview
+            ) {
+                return redirect('/akaunti/review-nyimbo');
             }
         }
                 
