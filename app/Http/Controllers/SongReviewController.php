@@ -95,7 +95,7 @@ class SongReviewController extends Controller
             );
         } else {
             session(['no_songs_to_review' => true]);
-            redirect('/upload/song');
+            return redirect('/upload/song');
         }     
     }
     
