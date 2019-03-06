@@ -64,7 +64,7 @@ class SongController extends Controller
                 header("Cache-Control: public");
                 header("Content-Description: File Transfer");
                 header("Content-Type: audio/midi");
-                header("Content-Disposition: attachment; filename='". $song->midi ."'");
+                header("Content-Disposition: attachment; filename=". $song->midi);
                 header("Content-Transfer-Encoding: binary");
                 header("Content-Length: " . filesize($path));
                 readfile($path);
