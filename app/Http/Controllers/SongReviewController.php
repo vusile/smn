@@ -81,6 +81,7 @@ class SongReviewController extends Controller
             ->first();
         
         if ($song) {
+            session(['no_songs_to_review' => true]);
             return view(
                 'songs.review.index',
                 compact(
