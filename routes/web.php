@@ -59,7 +59,7 @@ Route::get('/nyimbozajumapilinasikukuu/ratiba/{slug}/{dominika}', function ($slu
 Route::get('/dominika-sikukuu/{slug}/{dominika}', 'DominikaController@show');
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
-Route::post('/register-user', 'Auth\RegisterController@create')->name('register-user');
+Route::post('/register', 'Auth\RegisterController@create')->name('register');
 Route::get('/logout', 'Auth\LoginController@logout');
 Route::post('/password/forgot', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('password.reset');
