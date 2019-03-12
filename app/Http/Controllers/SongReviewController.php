@@ -91,6 +91,91 @@ class SongReviewController extends Controller
         }
 
         return view(
+            'songs.review.no-questions',
+            compact(
+                'song',
+                'nameQuestions',
+                'pdfQuestions',
+                'composerQuestions',
+                'midiQuestions',
+                'categoriesQuestions',
+                'dominikaQuestions',
+                'parts'
+            )
+        );
+    }
+
+    public function withQuestions()
+    {
+        $user = auth()->user();
+
+        $questions = DB::table('review_questions')
+            ->get();
+
+        $answers = DB::table('review_answers')
+                ->get();
+
+        $nameQuestions = $questions->filter(function($question) {
+            return $question->field == 'name';
+        });
+
+        $pdfQuestions = $questions->filter(function($question) {
+            return $question->field == 'pdf';
+        });
+
+        $midiQuestions = $questions->filter(function($question) {
+            return $question->field == 'midi';
+        });
+
+        $composerQuestions = $questions->filter(function($question) {
+            return $question->field == 'composer_id';
+        });
+
+        $categoriesQuestions = $questions->filter(function($question) {
+            return $question->field == 'categories';
+        });
+
+        $dominikaQuestions = $questions->filter(function($question) {
+            return $question->field == 'dominika';
+        });
+
+        $assignedToUsers = DB::table('reviewer_songs')
+                ->where('user_id', $user->id)
+                ->get()
+                ->pluck('song_id')
+                ->toArray();
+
+
+        $song = Song::pending()
+            ->has('categories')
+            ->whereNotIn('user_id', [$user->id])
+            ->whereIn('id', $assignedToUsers)
+            ->first();
+
+        if(!$song) {
+            $song = Song::pending()
+                ->has('categories')
+                ->whereNotIn('user_id', [$user->id])
+                ->first();
+
+
+            DB::table('reviewer_songs')
+                    ->insert(
+                        [
+                            'song_id' => $song->id,
+                            'user_id' => $user->id
+                        ]
+
+                    );
+        }
+
+        $parts = null;
+
+        if($song->dominikas) {
+            $parts = $this->songService->determinePartOfMass($song);
+        }
+
+        return view(
             'songs.review.index',
             compact(
                 'song',
@@ -106,9 +191,31 @@ class SongReviewController extends Controller
         );
     }
 
+    public function ithibati_review(Request $request)
+    {
+        $song = Song::find($request->input('song_id'));
+
+        if($request->get('can_get_ithibati')) {
+            $song->status = 6;
+            $song->save();
+
+            return redirect()->route(
+                'song-review.index'
+            );
+
+        } else {
+            return redirect()->route(
+                'song-review.with-questions'
+            );
+        }
+    }
+
     public function store(Request $request)
     {
         $song = Song::find($request->input('song_id'));
+        $song->status = 5;
+        $song->save();
+
         $questions = DB::table('review_questions')
             ->where('review_level', auth()->user()->review_level)
             ->get();
@@ -163,6 +270,7 @@ class SongReviewController extends Controller
             ->join('review_questions', 'reviews.review_question_id', '=', 'review_questions.id')
             ->join('review_answers', 'reviews.review_answer_id', '=', 'review_answers.id')
             ->where('song_id', $song->id)
+            ->where('user_id', auth()->user()->id)
             ->get();
 
         return view(
