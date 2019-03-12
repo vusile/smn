@@ -81,6 +81,9 @@ Route::middleware(['auth'])->group(function () {
             ->name('song-review.store');
         Route::post('/akaunti/review-nyimbo/ithibati-review', 'SongReviewController@ithibati_review')
             ->name('song-review.ithibati-review');
+        
+        Route::get('/akaunti/review-uhakiki/', 'SongReviewController@reviewUhakiki')
+            ->name('song-review.review-uhakiki');
     });
     Route::get('/upload/details', 'SongUploadController@details');
     Route::post('/upload/store', 'SongUploadController@store');
