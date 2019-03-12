@@ -109,18 +109,23 @@
                     </div>
                 </div>
                 <br><br>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-check form-check-inline">
-                              <input class="form-check-input" name="allowed_to_edit" type="checkbox" id="allowed_to_edit" value="1">
-                              <label style="color:red" class="form-check-label" for="allowed_to_edit">Natoa Ruhusa kamati ya uhakiki/ithibati kubadili / kuboresha wimbo iwapo itahitajika</label>
+                @if(!request()->get('return'))
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" name="allowed_to_edit" type="checkbox" id="allowed_to_edit" value="1">
+                                  <label style="color:red" class="form-check-label" for="allowed_to_edit">Natoa Ruhusa kamati ya uhakiki/ithibati kubadili / kuboresha wimbo iwapo itahitajika</label>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endif
                 <div class="form-group row">
                     <div class="col-sm-10">
+                        @if(request()->get('return'))
+                            <input type="hidden" name="return" value="{{ request()->get('return') }}">
+                        @endif
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="song_id" value="{{ $song->id }}">
                         <button type="submit" class="btn btn-primary">Endelea >></button>

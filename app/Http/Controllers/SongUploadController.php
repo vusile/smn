@@ -124,13 +124,13 @@ class SongUploadController extends Controller
             $customMessages
         );
 
-        $pdfName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->software_file->getClientOriginalName()));
+        $pdfName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->pdf->getClientOriginalName()));
         $pdfPath = $request->file('pdf')->storeAs('uploads/files', $pdfName);
         
 //        $pdfName = getFileNameFromPath($pdfPath);
         
         if ($request->file('midi')) {
-            $midiName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->software_file->getClientOriginalName()));
+            $midiName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->midi->getClientOriginalName()));
             $midiPath = $request->file('midi')->storeAs('uploads/files', $midiName);
             
 //            $midiName = getFileNameFromPath($midiPath); 
@@ -215,25 +215,15 @@ class SongUploadController extends Controller
         $additionalInfo = [];
         
         if ($request->file('pdf')){
-            $pdfName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->software_file->getClientOriginalName()));
+            $pdfName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->pdf->getClientOriginalName()));
             $pdfPath = $request->file('pdf')->storeAs('uploads/files', $pdfName);
             
             $additionalInfo['pdf'] = $pdfName;
         }
         
         if ($request->file('midi')) {
-            $midiName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->software_file->getClientOriginalName()));
+            $midiName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->midi->getClientOriginalName()));
             $midiPath = $request->file('midi')->storeAs('uploads/files', $midiName);
-            
-//            $midiName = getFileNameFromPath($midiPath); 
-//            
-//            if(str_contains($midiName, 'mpga')){
-//                $midiName = head(explode('.', $midiName)) . '.mp3';
-//                Storage::move(
-//                    $midiPath,
-//                    'uploads/files/' . $midiName
-//                );
-//            }
             
             $additionalInfo['midi'] = $midiName;
         }
@@ -256,7 +246,7 @@ class SongUploadController extends Controller
         Song::where('id', $request->input('song_id'))
             ->update(
                 array_replace(
-                    $request->except(['categories', '_token', 'song_id']),
+                    $request->except(['categories', '_token', 'song_id', 'return']),
                     $additionalInfo
                 )
             );
@@ -265,7 +255,6 @@ class SongUploadController extends Controller
         
         $song->categories()
             ->sync($request->input('categories'));
-        
         
         if($request->get('return')) {
             return redirect()->route(

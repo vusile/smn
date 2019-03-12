@@ -75,8 +75,12 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['middleware' => ['permission:kuhakiki']], function () {
         Route::get('/akaunti/review-nyimbo/', 'SongReviewController@index')
             ->name('song-review.index');
+        Route::get('/akaunti/review-nyimbo/with-questions', 'SongReviewController@withQuestions')
+            ->name('song-review.with-questions');
         Route::post('/akaunti/review-nyimbo/store', 'SongReviewController@store')
             ->name('song-review.store');
+        Route::post('/akaunti/review-nyimbo/ithibati-review', 'SongReviewController@ithibati_review')
+            ->name('song-review.ithibati-review');
     });
     Route::get('/upload/details', 'SongUploadController@details');
     Route::post('/upload/store', 'SongUploadController@store');
