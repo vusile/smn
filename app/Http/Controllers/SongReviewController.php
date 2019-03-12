@@ -216,6 +216,11 @@ class SongReviewController extends Controller
         $song->status = 5;
         $song->save();
 
+
+        DB::table('reviews')
+            ->where('song_id', $song->id)
+            ->delete();
+
         $questions = DB::table('review_questions')
             ->where('review_level', auth()->user()->review_level)
             ->get();
@@ -265,6 +270,20 @@ class SongReviewController extends Controller
         DB::table('reviews')
             ->insert($reviews);
 
+
+        return redirect()->route(
+            'song-review.review-uhakiki',
+                [
+                    'song_id' => $song->id,
+                ]
+        );
+
+
+    }
+
+    public function reviewUhakiki()
+    {
+        $song = Song::find(request()->get('song_id'));
 
         $songReviews = DB::table('reviews')
             ->join('review_questions', 'reviews.review_question_id', '=', 'review_questions.id')
