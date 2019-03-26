@@ -116,12 +116,11 @@
                                 </li>
                                 @endcan
                                 @can('kutoa ithibati')
-                                <li><a href="/akaunti/review-nyimbo">Toa Ithibati</a>
+                                <li><a href="/akaunti/toa-ithibati">Toa Ithibati</a>
                                 </li>
                                 @endcan
                                 @role('super admin', 'admin')
-                                <li><a href="/akaunti/review-nyimbo">Toa Ithibati</a>
-                                </li>
+                                <li><a href="/users"><i class="notika-icon notika-form"></i> Users</a></li>
                                 @endrole
                                 <li><a href="/logout">Logout</a>
                                 </li>
@@ -159,7 +158,7 @@
                             </li>
                         @endcan
                         @can('kutoa ithibati')
-                            <li><a href="/akaunti/review-nyimbo"><i class="notika-icon notika-form"></i> Toa Ithibati</a>
+                            <li><a href="/akaunti/toa-ithibati"><i class="notika-icon notika-form"></i> Toa Ithibati</a>
                             </li>
                         @endcan
                         <!--@role('super admin', 'admin')-->

@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 
-class UserSongRejectedEmail extends Mailable
+class IthibatiRejectedEmail extends Mailable
 {
     use Queueable, SerializesModels;
     
@@ -32,29 +32,16 @@ class UserSongRejectedEmail extends Mailable
      */
     public function build()
     {
-        $comments = [];
-        
-        $failedReviews = DB::table('reviews')
-            ->join('review_questions', 'review_questions.id', '=', 'reviews.review_question_id')
+        $failedReviews = DB::table('ithibati_songs')
             ->where('song_id', $this->song->id)
-            ->where('review_answer_id', 2)
             ->get();   
-
-        foreach($failedReviews as $failedReview) {
-            
-            if($failedReview->comment) {                
-                $comment = '<strong>Pendekezo:</strong> ' .$failedReview->comment . "<br>";
-                $comments[$failedReview->review_question_id] = $comment;     
-            }
-        }
         
-        return $this->subject('Wimbo ' . $this->song->name . ' Haujawa Reviewed')
-            ->view('emails.user-song-rejected')
+        return $this->subject('Wimbo ' . $this->song->name . ' Umekosa Ithibati')
+            ->view('emails.ithibati-rejected')
             ->with(
                 [
                     'song' => $this->song,
                     'failedReviews' => $failedReviews,
-                    'comments' => $comments,
                 ]
             );
     }

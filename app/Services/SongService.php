@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Events\IthibatiApproved;
+use App\Events\IthibatiRejected;
 use App\Events\SongApproved;
 use App\Events\SongRejected;
 use App\Models\Song;
@@ -72,5 +74,20 @@ class SongService
         $song->save();
         
         event(new SongRejected($song));
+    }
+    
+    public function notifyIthibati(Song $song, $approved = false)
+    {
+        $song->ithibati_notification_sent_date = Carbon::now()->format('Y-m-d');
+        $song->save();
+        
+        if($approved) {
+            echo "approved";
+            event(new IthibatiApproved($song));
+        }
+        else {
+            echo "denied";
+            event(new IthibatiRejected($song));   
+        }
     }
 }

@@ -107,7 +107,28 @@
 
                     </div>
                 </div>
-                <br><br>
+                <br>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" name="fit_for_liturgy" type="checkbox" id="allowed_to_edit" value="1">
+                              <label class="form-check-label" for="fit_for_liturgy">Wimbo huu unafaa kuimbwa kwenye ibada ya misa</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                                <br>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" name="for_recording" type="checkbox" id="for_recording" value="1" >
+                              <label class="form-check-label" for="for_recording">Wimbo huu utatumika kwenye album (Utarekodiwa)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group">
                     <div class="row">
                         <div class="col-lg-12">

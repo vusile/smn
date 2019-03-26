@@ -2,11 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Events\SongRejected;
-use App\Mail\UserSongRejectedEmail;
+use App\Events\IthibatiRejected;
+use App\Mail\IthibatiRejectedEmail;
 use Illuminate\Support\Facades\Mail;
 
-class SendSongRejectedEmail
+class SendIthibatiRejectedEmail
 {
     /**
      * Create the event listener.
@@ -24,11 +24,11 @@ class SendSongRejectedEmail
      * @param  SongRejected  $event
      * @return void
      */
-    public function handle(SongRejected $event)
+    public function handle(IthibatiRejected $event)
     {
         $song = $event->song;
         
-        $message = (new UserSongRejectedEmail($song))
+        $message = (new IthibatiRejectedEmail($song))
                 ->onQueue('songs');
         
         Mail::to($song->user->email)

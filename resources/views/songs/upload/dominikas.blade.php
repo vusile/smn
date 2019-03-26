@@ -40,7 +40,11 @@
             @endif
             
             @if($parts->count())
-            <h2>Nyimbo zenye maneno kama huu hutumika:</h2>
+            @if($songHasDominikas)
+                <h2>Wimbo huu hutumika:</h2>
+            @else
+                <h2>Nyimbo zenye maneno kama huu hutumika:</h2>
+            @endif
             <form class="needs-validation" method="post" action="/upload/dominika" id="upload-song-details" novalidate>
                 @foreach($dominikas as $id => $name)
                     @if(isset($parts[$id]))
@@ -63,9 +67,15 @@
                     <div class="col-sm-10">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="song_id" value="{{$song->id}}">
-                        <button type="submit" class="btn btn-primary">Na huu pia hutumika hivyo</button>
-                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#dominika-form" aria-expanded="false" aria-controls="dominika-form">Hutumika na Dominika nyingine pia</button>
-                        <button type="submit" class="btn btn-primary" formaction="/upload/remove-dominika">Hautumiki kwenye dominika</button>
+                        
+                        @if($songHasDominikas)
+                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#dominika-form" aria-expanded="false" aria-controls="dominika-form">Badili / Hutumika na Dominika nyingine pia</button>
+                            <button type="submit" class="btn btn-primary" formaction="/upload/remove-dominika">Hautumiki kwenye dominika</button>
+                        @else
+                            <button type="submit" class="btn btn-primary">Na huu pia hutumika hivyo</button>
+                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#dominika-form" aria-expanded="false" aria-controls="dominika-form">Hutumika na Dominika nyingine pia</button>
+                            <button type="submit" class="btn btn-primary" formaction="/upload/remove-dominika">Hautumiki kwenye dominika</button>
+                        @endif
                     </div>
                 </div>
             </form>

@@ -29,19 +29,25 @@
                 @endforeach
                 
                 <br>
-                @if($song->midi)
-                    <h4 class = 'alert-success'><strong>Midi: </strong></h4>
-                    @foreach($midiQuestions as $question)
-                        @include('songs.review.question')
-                    @endforeach
-                    <br>
-                @endif
+
+                <h4 class = 'alert-success'><strong>Ibada: </strong></h4>
+                @foreach($fitForLiturgyQuestions as $question)
+                    @include('songs.review.question')
+                @endforeach
+                <br>
+
                 <h4 class = 'alert-success'><strong>Jina la wimbo: </strong> {{ $song->name }}</h4>
                 @foreach($nameQuestions as $question)
                     @include('songs.review.question')
                 @endforeach
-   
-           
+                
+                 @if($song->fit_for_liturgy)
+                    <h4 class = 'alert-success'><strong>Wimbo Unafaa kuimbwa kwenye ibada: Ndio</strong></h4>
+                    @foreach($fitForLiturgyQuestions as $question)
+                        @include('songs.review.question')
+                    @endforeach
+                    <br>
+                @endif
                 
                 <br>
                 <h4 class = 'alert-success'><strong>Mtunzi: </strong> {{ $song->composer->name }}</h4>

@@ -12,7 +12,6 @@ use App\Services\SongService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class SongUploadController extends Controller
 {
@@ -196,7 +195,7 @@ class SongUploadController extends Controller
             'pdf.mimes'  => 'Tafadhali upload file la PDF',
             'midi.mimes'  => 'Tafadhali upload file la Midi, MP3',
             'categories.required'  => 'Walau kundi nyimbo moja ni lazima',
-            'software_file.required_with'  => 'Tafadhali pakia file ulilosave na software ili iweze kubadilishwa ikihitajika',
+//            'software_file.required_with'  => 'Tafadhali pakia file ulilosave na software ili iweze kubadilishwa ikihitajika',
         ];
         
         $this->validate(
@@ -207,7 +206,7 @@ class SongUploadController extends Controller
                 'pdf' => 'mimes:pdf',
                 'midi' => 'mimes:mid,ogx,aac,wav,mpga',
                 'categories' => 'required',
-                'software_file' => 'required_with:allowed_to_edit',
+//                'software_file' => 'required_with:allowed_to_edit',
             ],
             $customMessages
         );
@@ -215,6 +214,7 @@ class SongUploadController extends Controller
         $additionalInfo = [];
         
         if ($request->file('pdf')){
+           
             $pdfName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->pdf->getClientOriginalName()));
             $pdfPath = $request->file('pdf')->storeAs('uploads/files', $pdfName);
             
@@ -242,7 +242,7 @@ class SongUploadController extends Controller
             $originalFileName = getFileNameFromPath($originalFilePath); 
             $additionalInfo['software_file'] = $originalFileName;
         }
-
+       
         Song::where('id', $request->input('song_id'))
             ->update(
                 array_replace(
@@ -255,6 +255,20 @@ class SongUploadController extends Controller
         
         $song->categories()
             ->sync($request->input('categories'));
+        
+        if($request->get('fit_for_liturgy')) {
+           $song->fit_for_liturgy = true;
+        } else {
+           $song->fit_for_liturgy = false;            
+        }
+        
+        if($request->get('for_recording')) {
+           $song->for_recording = true;
+        } else {
+           $song->for_recording = false;            
+        }
+        
+        $song->save();
         
         if($request->get('return')) {
             return redirect()->route(
@@ -276,14 +290,23 @@ class SongUploadController extends Controller
             ->pluck('title', 'id')
             ->toArray();
         
-        $parts = $this->songService->similarSongsWithDominika($song->name);
+        $parts = collect($this->songService->determinePartOfMass($song));
+        
+        $songHasDominikas = false;
+              
+        if (!$parts) {
+            $parts = $this->songService->similarSongsWithDominika($song->name);
+        } else {
+            $songHasDominikas = true;
+        }
         
         return view(
             'songs.upload.dominikas',
             compact(
                 'song',
                 'dominikas',
-                'parts'
+                'parts',
+                'songHasDominikas'
             )      
         );
     }
