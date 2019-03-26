@@ -85,6 +85,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/akaunti/review-uhakiki/', 'SongReviewController@reviewUhakiki')
             ->name('song-review.review-uhakiki');
     });
+    Route::group(['middleware' => ['permission:kutoa ithibati']], function () {
+        Route::get('/akaunti/toa-ithibati', 'IthibatiController@index')
+            ->name('song-review.hakiki-ithibati');
+        
+        Route::post('/akaunti/toa-ithibati/store', 'IthibatiController@store')
+            ->name('song-review.toa-ithibati');
+    });
     Route::get('/upload/details', 'SongUploadController@details');
     Route::post('/upload/store', 'SongUploadController@store');
     Route::post('/upload/update', 'SongUploadController@update');

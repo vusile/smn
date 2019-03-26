@@ -8,21 +8,21 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class ReviewSongs extends Command
+class IthibatiReviewSongs extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'review:songs {song?}';
+    protected $signature = 'ithibati-review:songs {song?}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Review Songs';
+    protected $description = 'Ithibati Review Songs';
     
     /**
      *
@@ -50,22 +50,26 @@ class ReviewSongs extends Command
     {
         $songId = $this->argument('song');
         
-        Song::pending()
+        Song::withIthibati()
+           ->whereNull('ithibati_notification_sent_date')
            ->when($songId, function ($query, $songId){
                return $query->where('id', $songId);
            })
            ->chunk(50, function($songs){
                foreach ($songs as $song) {
-     
-                   $reviewsCount = DB::table('reviews')
-                        ->where('song_id', $song->id)
-                        ->count();  
+                   $this->songService->notifyIthibati($song, true);
+               }
+           }
+        );
         
-                    if ($reviewsCount) {
-                        Log::info('song rejected - ' .$song->id);
-                        $this->songService->rejectSong($song);
-                       
-                   }
+        Song::withNoIthibati()
+           ->whereNull('ithibati_notification_sent_date')     
+           ->when($songId, function ($query, $songId){
+               return $query->where('id', $songId);
+           })
+           ->chunk(50, function($songs){
+               foreach ($songs as $song) {
+                   $this->songService->notifyIthibati($song);
                }
            }
         );

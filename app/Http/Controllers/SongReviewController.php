@@ -42,6 +42,11 @@ class SongReviewController extends Controller
             return $question->field == 'midi';
         });
 
+
+        $fitForLiturgyQuestions = $questions->filter(function($question) {
+            return $question->field == 'fit_for_liturgy';
+        });
+
         $composerQuestions = $questions->filter(function($question) {
             return $question->field == 'composer_id';
         });
@@ -100,6 +105,7 @@ class SongReviewController extends Controller
                 'midiQuestions',
                 'categoriesQuestions',
                 'dominikaQuestions',
+                'fitForLiturgyQuestions',
                 'parts'
             )
         );
@@ -125,6 +131,10 @@ class SongReviewController extends Controller
 
         $midiQuestions = $questions->filter(function($question) {
             return $question->field == 'midi';
+        });
+
+        $fitForLiturgyQuestions = $questions->filter(function($question) {
+            return $question->field == 'fit_for_liturgy';
         });
 
         $composerQuestions = $questions->filter(function($question) {
@@ -185,6 +195,7 @@ class SongReviewController extends Controller
                 'midiQuestions',
                 'categoriesQuestions',
                 'dominikaQuestions',
+                'fitForLiturgyQuestions',
                 'answers',
                 'parts'
             )
@@ -194,6 +205,15 @@ class SongReviewController extends Controller
     public function ithibati_review(Request $request)
     {
         $song = Song::find($request->input('song_id'));
+
+        $validations['can_get_ithibati'] = 'required';
+        $customMessages['can_get_ithibati.required'] = 'Tafadhali jibu kama wimbo unafaa kupewa ithibati au la. <a href = "/akaunti/review-nyimbo#yes_can_get_ithibati">Bofya hapa ujibu</a>';
+
+        $this->validate(
+            $request,
+            $validations,
+            $customMessages
+        );
 
         if($request->get('can_get_ithibati')) {
             $song->status = 6;
@@ -213,29 +233,25 @@ class SongReviewController extends Controller
     public function store(Request $request)
     {
         $song = Song::find($request->input('song_id'));
-        $song->status = 5;
-        $song->save();
-
 
         DB::table('reviews')
             ->where('song_id', $song->id)
             ->delete();
 
         $questions = DB::table('review_questions')
-            ->where('review_level', auth()->user()->review_level)
             ->get();
 
         $customMessages = [];
 
         foreach($questions as $question) {
-            if(!$song->midi && $question->field == 'midi') {
+            if($question->field == 'midi') {
                 continue;
             }
             $customMessages['answer' . $question->id . '.required'] = 'Tafadhali jibu maswali yote';
         }
 
         foreach($questions as $question) {
-            if(!$song->midi && $question->field == 'midi') {
+            if($question->field == 'midi') {
                 continue;
             }
 
@@ -251,8 +267,19 @@ class SongReviewController extends Controller
         $reviews = [];
 
         foreach ($questions as $question) {
-            if (($question->field == 'midi') && !$song->midi) {
+            if (($question->field == 'midi')) {
                 continue;
+            }
+
+
+            if (($question->field == 'fit_for_liturgy')) {
+                if($request->input('answer' . $question->id) == 1) {
+                    $song->fit_for_liturgy = true;
+                } else {
+                    $song->fit_for_liturgy = false;
+                }
+
+                $song->save();
             }
 
             $reviews[] = [
@@ -277,8 +304,6 @@ class SongReviewController extends Controller
                     'song_id' => $song->id,
                 ]
         );
-
-
     }
 
     public function reviewUhakiki()

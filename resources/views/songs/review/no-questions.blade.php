@@ -10,6 +10,10 @@
             <div class="alert alert-success" role="alert">
                 Unahakiki wimbo Unaitwa: <strong>{{$song->name}}</strong> umetungwa na <strong>{{$song->composer->name}}</strong>. Tafadhali pakua nota zake, kisha ujibu maswali yanayofuata.
                 <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf/{{$song->pdf}}" target="_blank" role="button">Pakua Nota Uhakiki</a>
+                @if($song->for_recording)
+                    <br><br>
+                    <strong>MUHIMU:</strong> Wimbo huu utatumika kwenye kurekodi Album
+                @endif
                 @if($song->can_be_edited)
                     <br><br>
                     <strong>MUHIMU:</strong> Aliyepakia, <strong>KATOA</strong> ruhusa wimbo urekebishwe ikihitajika
@@ -23,7 +27,7 @@
                 <div class="alert alert-danger">
                     <ul>
                         @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
+                            <li>{!! $error !!}</li>
                         @endforeach
                     </ul>
                 </div>
@@ -55,6 +59,13 @@
                     @include('songs.review.question')
                 @endforeach
                 <br>
+                @if($song->fit_for_liturgy)
+                    <h4 class = 'alert-success'><strong>Wimbo Unafaa kuimbwa kwenye ibada: Ndio</strong> - <strong><a href="/edit-song/{{ $song->id }}#fit_for_liturgy">Badili/Boresha</a></strong></h4>
+                    @foreach($fitForLiturgyQuestions as $question)
+                        @include('songs.review.question')
+                    @endforeach
+                    <br>
+                @endif
                 <h4 class = 'alert-success'><strong>Makundi Nyimbo: </strong> {{ $song->categories->pluck('title')->implode(' | ') }} - <strong><a href="/edit-song/{{ $song->id }}?return=review#categories">Badili/Boresha makundi nyimbo</a></strong></h4>
                 <strong>Maswali ya kuzingatia</strong><br>
                 @foreach($categoriesQuestions as $question)
@@ -81,9 +92,9 @@
                         <div class="col-lg-12">
                             <div class="form-check form-check-inline">
                               <input class="form-check-input" name="can_get_ithibati" type="radio" id="yes_can_get_ithibati" value="1">
-                              <label class="form-check-label" for="can_get_ithibati">Unafaa kupewa ithibati</label>
+                              <label class="form-check-label" for="yes_can_get_ithibati">Unafaa kupewa ithibati</label>
                               <br><input class="form-check-input" name="can_get_ithibati" type="radio" id="no_cant_get_ithibati" value="0">
-                              <label class="form-check-label" for="can_get_ithibati">Haufai kupewa ithibati</label>
+                              <label class="form-check-label" for="no_cant_get_ithibati">Haufai kupewa ithibati</label>
                             </div>
                         </div>
                     </div>

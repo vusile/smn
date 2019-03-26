@@ -23,7 +23,7 @@
             @endif
 
             <form class="needs-validation" method="post" action="/akaunti/review-nyimbo/store" id="review-form" novalidate enctype='multipart/form-data'>
-<<<<<<< HEAD
+
                 <h4 class = 'alert-success'><strong>PDF: </strong> <a class="btn btn-primary" href="{{downloadLink($song, 'pdf')}}" target="_blank" role="button">Pakua Nota Uhakiki</a></h4>
                 @foreach($pdfQuestions as $question)
                     @include('songs.review.question')
@@ -33,27 +33,30 @@
                     <h4><strong><a href="/song/download/{{ $song->id }}/software/{{$song->software_file}}">Pakua File Ubadili</a></strong></h4>
                     <h4><strong><a href="/edit-song/{{ $song->id }}?return=review?return=review#pdf">Pakia PDF, midi na file jipya</a></strong></h4>
                 @endif
-=======
-                <h4 class = 'alert-success'><strong>PDF: </strong></h4>
-                @foreach($pdfQuestions as $question)
+
+                <br>
+
+                <h4 class = 'alert-success'><strong>Ibada: </strong></h4>
+                @foreach($fitForLiturgyQuestions as $question)
                     @include('songs.review.question')
                 @endforeach
-
->>>>>>> Progress
                 <br>
-                @if($song->midi)
-                    <h4 class = 'alert-success'><strong>Midi: </strong></h4>
-                    @foreach($midiQuestions as $question)
-                        @include('songs.review.question')
-                    @endforeach
-                    <br>
-                @endif
+
                 <h4 class = 'alert-success'><strong>Jina la wimbo: </strong> {{ $song->name }}</h4>
                 @foreach($nameQuestions as $question)
                     @include('songs.review.question')
                 @endforeach
 
                 <h4><strong><a href="/edit-song/{{ $song->id }}?return=review#name">Badili/Boresha jina la wimbo</a></strong></h4>
+
+
+                 @if($song->fit_for_liturgy)
+                    <h4 class = 'alert-success'><strong>Wimbo Unafaa kuimbwa kwenye ibada: Ndio</strong></h4>
+                    @foreach($fitForLiturgyQuestions as $question)
+                        @include('songs.review.question')
+                    @endforeach
+                    <br>
+                @endif
 
                 <br>
                 <h4 class = 'alert-success'><strong>Mtunzi: </strong> {{ $song->composer->name }}</h4>

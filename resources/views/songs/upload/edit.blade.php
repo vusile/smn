@@ -108,13 +108,36 @@
                         </div>
                     </div>
                 </div>
-                <br><br>
+                <br>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" name="fit_for_liturgy" type="checkbox" id="fit_for_liturgy" value="1" @if($song->fit_for_liturgy) checked="checked" @endif>
+                              <label class="form-check-label" for="fit_for_liturgy">Wimbo huu unafaa kuimbwa kwenye ibada ya misa</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                <br>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" name="for_recording" type="checkbox" id="for_recording" value="true" @if($song->for_recording) checked="checked" @endif>
+                              <label class="form-check-label" for="for_recording">Wimbo huu utatumika kwenye album (Utarekodiwa)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
                 @if(!request()->get('return'))
                     <div class="form-group">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-check form-check-inline">
-                                  <input class="form-check-input" name="allowed_to_edit" type="checkbox" id="allowed_to_edit" value="1">
+                                  <input class="form-check-input" name="allowed_to_edit" type="checkbox" id="allowed_to_edit" value="true" @if($song->allowed_to_edit) checked="checked" @endif>
                                   <label style="color:red" class="form-check-label" for="allowed_to_edit">Natoa Ruhusa kamati ya uhakiki/ithibati kubadili / kuboresha wimbo iwapo itahitajika</label>
                                 </div>
                             </div>

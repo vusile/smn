@@ -31,6 +31,9 @@ class Song extends Model
         'views',
         'uploaded_date',
         'allowed_to_edit',
+        'fit_for_liturgy',
+        'for_recording',
+        'ithibati_number',
     ];
     
     public function sluggable()
@@ -102,7 +105,7 @@ class Song extends Model
     
     public function getIsActiveAttribute()
     {
-        if (in_array($this->status, [1, 2])) {
+        if (in_array($this->status, [1, 2, 8])) {
             return true;
         }
         
@@ -120,12 +123,32 @@ class Song extends Model
     
     public function scopeApproved($query)
     {
-        return $query->whereIn('status', [1, 2]);
+        return $query->whereIn('status', [1, 2, 8, 9]);
     }
     
     public function scopePending($query)
     {
         return $query->whereIn('status', [4]);
+    }
+    
+    public function scopeDenied($query)
+    {
+        return $query->whereIn('status', [5]);
+    }
+    
+    public function scopeWaitingForIthibati($query)
+    {
+        return $query->whereIn('status', [6]);
+    }
+    
+    public function scopeWithIthibati($query)
+    {
+        return $query->whereIn('status', [7,8]);
+    }
+    
+    public function scopeWithNoIthibati($query)
+    {
+        return $query->whereIn('status', [9]);
     }
     
     public function scopeOwnedBy($query, $user)
