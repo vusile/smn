@@ -119,9 +119,9 @@
                                 <li><a href="/akaunti/toa-ithibati">Toa Ithibati</a>
                                 </li>
                                 @endcan
-                                @role('super admin', 'admin')
+                                @if(auth()->user()->hasAnyRole(['super admin', 'admin']))
                                 <li><a href="/users"><i class="notika-icon notika-form"></i> Users</a></li>
-                                @endrole
+                                @endif
                                 <li><a href="/logout">Logout</a>
                                 </li>
 <!--                                <li><a data-toggle="collapse" data-target="#Miscellaneousmob" href="#">App views</a>
@@ -161,10 +161,10 @@
                             <li><a href="/akaunti/toa-ithibati"><i class="notika-icon notika-form"></i> Toa Ithibati</a>
                             </li>
                         @endcan
-                        @role('super admin', 'admin')
+                        @if(auth()->user()->hasAnyRole(['super admin', 'admin']))
                             <li><a href="/users"><i class="notika-icon notika-form"></i> Users</a>
                             </li>
-                        @endrole
+                        @endif
                         <li><a href="/logout"><i class="notika-icon notika-right-arrow"></i> Logout</a>
                         </li>
 <!--                        <li><a href="#Appviews"><i class="notika-icon notika-app"></i> App views</a>
