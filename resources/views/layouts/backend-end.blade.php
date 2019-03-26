@@ -161,10 +161,10 @@
                             <li><a href="/akaunti/toa-ithibati"><i class="notika-icon notika-form"></i> Toa Ithibati</a>
                             </li>
                         @endcan
-                        <!--@role('super admin', 'admin')-->
+                        @role('super admin', 'admin')
                             <li><a href="/users"><i class="notika-icon notika-form"></i> Users</a>
                             </li>
-                        <!--@endrole-->
+                        @endrole
                         <li><a href="/logout"><i class="notika-icon notika-right-arrow"></i> Logout</a>
                         </li>
 <!--                        <li><a href="#Appviews"><i class="notika-icon notika-app"></i> App views</a>
