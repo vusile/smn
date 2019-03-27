@@ -23,7 +23,7 @@ class CreateRolesAndPermissions extends Migration
         
         $ithibatiRole->givePermissionTo($ithibati);
         $uhakikiRole->givePermissionTo($uhakiki);
-//        $adminRole->syncPermissions([$ithibati, $uhakiki]);
+        $adminRole->syncPermissions([$ithibati, $uhakiki]);
         $superAdminRole->syncPermissions([$ithibati, $uhakiki]);
     }
 
