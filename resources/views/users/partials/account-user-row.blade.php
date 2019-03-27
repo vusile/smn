@@ -29,7 +29,7 @@
     <div class="col-lg-4" >
         <p class="text-success">
             @if(auth()->user()->hasAnyRole(['super admin']))
-                <a href = 'impersonate/{{$user->id}}'>Impersonate</a>
+                <a href = '/impersonate/{{$user->id}}'>Impersonate</a>
             @endif
         </p>
     </div>
