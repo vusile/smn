@@ -78,7 +78,7 @@
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                     <div class="logo-area">
-                        <h1>Karibu {{auth()->user()->name}}</h1>
+                        <h1>Karibu {{auth()->user()->first_name}}</h1>
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
