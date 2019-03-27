@@ -76,12 +76,12 @@
                         <a href="/"><img src="/images/swahili-music-notes-logo-site.png" alt="" /></a>
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="logo-area">
                         <h1>Karibu {{auth()->user()->first_name}}</h1>
                     </div>
                 </div>
-                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="header-top-menu">
                         <ul class="nav navbar-nav notika-top-nav">
                            <li class="nav-item dropdown">
