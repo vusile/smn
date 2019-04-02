@@ -45,24 +45,32 @@ class SearchController extends Controller
             $composersTotal = $composers->count();
         }
 
-       
         $songs = $this->searchService
             ->search(request()->query('st'), 'songs');
-       
-        if($songs) {            
-            $songs = Song::approved()
-                    ->whereIn(
-                        'id',
-                        $songs->pluck('id')->toArray()
-                    )
-                    ->get();
+
+        if($songs) {
+            $songs = $songs->filter(function($song){
+                return in_array($song->status, [1,2,7,8]);
+            });
+            
+            $composerNames = Composer::whereIn(
+                    'id',
+                    $songs->pluck('composer_id')->toArray()
+                )
+                ->pluck('name', 'id');
             
             $songsTotal = $songs->count();
         }
         
         return view(
             'search.index',
-            compact('songs', 'composers', 'composersTotal', 'songsTotal')
+            compact(
+                'songs',
+                'composers',
+                'composersTotal',
+                'songsTotal',
+                'composerNames'
+            )
         );
     }
     

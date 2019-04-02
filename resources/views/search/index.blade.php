@@ -17,8 +17,8 @@
 @if($songs)
     <div class="container">
         <h2>Nyimbo zilizopatikana</h2>
-        @foreach($songs->sortBy('name') as $song)
-            @include('songs.partials.song-row')
+        @foreach($songs as $song)
+            @include('songs.partials.song-search-row')
         @endforeach
     </div>
 @endif

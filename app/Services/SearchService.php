@@ -11,18 +11,6 @@ class SearchService
     {
         $sphinx = new SphinxSearch();
         
-        if($index == 'songs') {
-        dd ($sphinx
-            ->search(
-                utf8_encode($searchString),
-                $index
-            )
-            ->limit(1000)
-            ->setMatchMode(SphinxClient::SPH_MATCH_ALL)
-            ->setRankingMode(SphinxClient::SPH_SORT_RELEVANCE)
-            ->get());            
-        }
-        
         return $sphinx
             ->search(
                 utf8_encode($searchString),
@@ -32,7 +20,6 @@ class SearchService
             ->setMatchMode(SphinxClient::SPH_MATCH_ALL)
             ->setRankingMode(SphinxClient::SPH_SORT_RELEVANCE)
             ->get();
-
     }
     
     public function userSearch($searchString, $index = null)
