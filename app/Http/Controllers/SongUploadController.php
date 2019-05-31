@@ -230,6 +230,11 @@ class SongUploadController extends Controller
                 $song->save();
             }
             if($song->status == 5) {
+
+                DB::table('reviews')
+                    ->where('song_id', $song->id)
+                    ->delete();
+
                 $song->status = 4;
                 $song->save();
             }
