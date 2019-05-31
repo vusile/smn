@@ -83,6 +83,7 @@ class SongReviewController extends Controller
             $song = Song::pending()
                 ->has('categories')
                 ->whereNotIn('user_id', [$user->id])
+                ->whereNotIn('id', $hasBeenReviewed)
                 ->first();
 
             if($song) {
