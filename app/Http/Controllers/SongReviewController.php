@@ -65,7 +65,7 @@ class SongReviewController extends Controller
                 ->pluck('song_id')
                 ->toArray();
 
-        $hasBeenReviewed = DB::table('reviewers')
+        $hasBeenReviewed = DB::table('reviews')
                 ->where('user_id', $user->id)
                 ->get()
                 ->pluck('song_id')
