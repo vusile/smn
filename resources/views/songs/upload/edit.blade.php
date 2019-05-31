@@ -82,8 +82,9 @@
                 </div>
 
                 @if($song->software_file)
-                    <br><p><strong>File la software: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/software" role="button">Download File la Software Uhakiki</a></p>
+                    <br><p><strong>File la software: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/software/{{$song->software_file}}" role="button">Download File la Software Uhakiki</a></p>
                 @endif
+               
                                 
                 <div class="form-group">
                     <div class ="col">

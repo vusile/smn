@@ -98,11 +98,25 @@ class SongController extends Controller
             case 'original':
                 $path = storage_path('app/public/' . config('song.files.paths.midi') . $song->nota_original);
                 return Storage::download($path);
+                
+                $originalFile = $song->nota_original;
+                return response()->file(
+                    storage_path('app/public/' . config('song.files.paths.pdf') . $originalFile),
+                    [
+                        'Content-Disposition: attachment; filename="$originalFile"'
+                    ]
+                );
             break;
         
             case 'software':
-                $path = storage_path('app/public/' . config('song.files.paths.midi') . $song->software_file);
-                return Storage::download($path);
+    
+                $softwareFile = $song->software_file;
+                return response()->file(
+                    storage_path('app/public/' . config('song.files.paths.pdf') . $softwareFile),
+                    [
+                        'Content-Disposition: attachment; filename="$softwareFile"'
+                    ]
+                );
             break;
         }
     }
