@@ -65,10 +65,17 @@ class SongReviewController extends Controller
                 ->pluck('song_id')
                 ->toArray();
 
+        $hasBeenReviewed = DB::table('reviewers')
+                ->where('user_id', $user->id)
+                ->get()
+                ->pluck('song_id')
+                ->toArray();
+
 
         $song = Song::pending()
             ->has('categories')
             ->whereNotIn('user_id', [$user->id])
+            ->whereNotIn('id', $hasBeenReviewed)
             ->whereIn('id', $assignedToUsers)
             ->first();
 
