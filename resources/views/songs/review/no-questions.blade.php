@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8" >
-            @if(song)
+            @if($song)
             <br />
             <h3>Tafadhali hakiki wimbo. Tumia maswali ya mwongozo kuhakiki:</h3>
             <br />
