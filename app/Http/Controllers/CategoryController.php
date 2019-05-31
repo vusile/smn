@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Song;
 use Artesaos\SEOTools\Facades\SEOMeta;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {

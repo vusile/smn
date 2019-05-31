@@ -78,20 +78,22 @@ class SongReviewController extends Controller
                 ->whereNotIn('user_id', [$user->id])
                 ->first();
 
+            if($song) {
 
-            DB::table('reviewer_songs')
-                    ->insert(
-                        [
-                            'song_id' => $song->id,
-                            'user_id' => $user->id
-                        ]
+                DB::table('reviewer_songs')
+                        ->insert(
+                            [
+                                'song_id' => $song->id,
+                                'user_id' => $user->id
+                            ]
 
-                    );
+                        );
+            }
         }
 
         $parts = null;
 
-        if($song->dominikas) {
+        if($song && $song->dominikas) {
             $parts = $this->songService->determinePartOfMass($song);
         }
 
