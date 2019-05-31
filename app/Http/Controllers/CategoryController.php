@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Artesaos\SEOTools\Facades\SEOMeta;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -27,7 +26,6 @@ class CategoryController extends Controller
         SEOMeta::setTitle($category->seo_title ?? $category->title);
         SEOMeta::setDescription("Mkusanyiko wa nyimbo za " . $category->title);
         
-//        dd($category->songs);
         $approvedSongs = $category->approvedSongs;
         
         return view(

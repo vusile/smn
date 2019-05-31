@@ -3,6 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8" >
+            @if(song)
             <br />
             <h3>Tafadhali hakiki wimbo. Tumia maswali ya mwongozo kuhakiki:</h3>
             <br />
@@ -120,6 +121,9 @@
 
                 <button type="submit" class="btn btn-primary">Hifadhi Hakiki</button>
             </form>
+            @else
+                <h3>Hakuna wimbo unaosubiri uhakiki kwa sasa</h3>
+            @endif
         </div>
         <div class="col-lg-2"></div>
     </div>
