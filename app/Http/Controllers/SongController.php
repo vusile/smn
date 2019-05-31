@@ -79,10 +79,15 @@ class SongController extends Controller
                 $songDownload->increment('downloads');
                 $song->increment('downloads');
                 
-                $pdfName = $song->pdf;
+                
+                if(!$song->ithibati_number || request('original')) {
+                    $pdfName = $song->pdf;
+                } else {
+                    $pdfName = 'ithibati-' . $song->pdf;
+                }
                 
                 return response()->file(
-                    storage_path('app/public/' . config('song.files.paths.pdf') . $song->pdf),
+                    storage_path('app/public/' . config('song.files.paths.pdf') . $pdfName),
                     [
                         'Content-Disposition: attachment; filename="$pdfName"'
                     ]

@@ -5,10 +5,13 @@ namespace App\Models;
 use App\Models\SongDownload;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use Venturecraft\Revisionable\Revisionable;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 class Song extends Model
 {
     use Sluggable;
+    use RevisionableTrait;
     
     public $timestamps = false;
     
@@ -33,6 +36,28 @@ class Song extends Model
         'fit_for_liturgy',
         'for_recording',
         'ithibati_number',
+    ];
+    
+    public static $showChangesForFields = [
+        'categories' => 'Kundi Nyimbo',
+        'name' => 'Jina la Wimbo',
+        'composer_id' => 'Mtunzi',
+        'lyrics' => 'Maneno ya wimbo',
+        'fit_for_liturgy' => 'Inafaa kwenye liturjia',
+    ];
+    
+    protected $keepRevisionOf = ['name', 'categories', 'composer_id', 'lyrics', 'fit_for_liturgy'];
+    
+    protected $revisionFormattedFields = [
+        'fit_for_liturgy'     => 'boolean:Hapana|Ndio',
+    ];
+    
+    protected $revisionFormattedFieldNames  = [
+        'categories' => 'Kundi Nyimbo',
+        'name' => 'Jina la Wimbo',
+        'composer_id' => 'Mtunzi',
+        'lyrics' => 'Maneno ya wimbo',
+        'fit_for_liturgy' => 'Inafaa kwenye liturjia',
     ];
     
     public function sluggable()
@@ -123,6 +148,11 @@ class Song extends Model
     public function scopeApproved($query)
     {
         return $query->whereIn('status', [1, 2, 8, 9]);
+    }
+    
+    public function scopeForRecording($query)
+    {
+        return $query->whereIn('status', [7]);
     }
     
     public function scopePending($query)

@@ -73,6 +73,7 @@ class RegisterController extends Controller
             'email.unique' => 'Email hii ishatumika. Tafadhali login',
             'email.confirmed'  => 'Email haifanani na hiyo uliyoandika tena',
             'phone.unique' => 'Namba hii ishatumika. Tafadhali login au sajili kutumia namba nyingine',
+            'phone.required' => 'Namba ya simu ni lazima ujaze.',
             'password.required' => 'Password inahitajika',
             'password.confirmed'  => 'Password haifanani na hiyo uliyoandika tena',
         ];

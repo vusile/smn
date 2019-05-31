@@ -8,6 +8,20 @@
         
         Wimbo wa {{ $song->name }} uliopakia sasa upo kwenye Tovuti.<br><br>
         
+        @if($song->revisionHistory)
+            Mabadiliko yafuatayo yalifanyika:
+            
+            @foreach($song->revisionHistory as $history )
+                <li>{{ $field_mappings[$history->fieldName()] }} ilibadilishwa kutoka <strong>{{ $history->oldValue() }}</strong> kuwa <strong>{{ $history->newValue() }}</strong></li>
+            @endforeach
+            <br><br>
+        @endif
+        
+        @if($songReview->comment)
+            Aliyehakiki ameacha maoni yafuatayo:<br><br>
+            {{$songReview->comment}}
+        @endif
+        
         Tafadhali bofya link ifuatayo ili kuuona &gt; {!! songLink($song) !!}<br><br>
         
         <strong>N.B.</strong>&nbsp;Swahili Music Notes ina email ya baadhi ya watunzi. Kila unapo-upload wimbo wa mtunzi fulani, mtunzi huyo hutumiwa email kumuomba aukague, iwapo baada ya kuupitia atagundua kuwa wimbo huo una makosa, basi itanilazimu kuutoa wimbo huu kutoka kwenye site na kukujulisha marekebisho hayo ili urekebishe. Tafadhali tuwe tayari kusaidiana katika kuboresha chombo chetu.

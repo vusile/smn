@@ -189,6 +189,9 @@ class SongUploadController extends Controller
     
     public function update(Request $request)
     {
+        $songId = $request->input('song_id');
+        
+        $song = Song::find($songId);
         $customMessages = [
             'name.required' => 'Jina la wimbo ni lazima',
             'composer_id.required' => 'Jina la mtunzi ni lazima',
@@ -212,6 +215,7 @@ class SongUploadController extends Controller
         );
         
         $additionalInfo = [];
+        $revisions = [];
         
         if ($request->file('pdf')){
            
@@ -219,6 +223,16 @@ class SongUploadController extends Controller
             $pdfPath = $request->file('pdf')->storeAs('uploads/files', $pdfName);
             
             $additionalInfo['pdf'] = $pdfName;
+            
+            if($song->status == 9) {
+                $song->status = 6;
+                $song->ithibati_notification_sent_date = null;
+                $song->save();
+            }
+            if($song->status == 5) {
+                $song->status = 4;
+                $song->save();
+            }    
         }
         
         if ($request->file('midi')) {
@@ -240,18 +254,36 @@ class SongUploadController extends Controller
             $originalFilePath = $request->file('nota_original')->store('uploads/files');
             
             $originalFileName = getFileNameFromPath($originalFilePath); 
-            $additionalInfo['software_file'] = $originalFileName;
+            $additionalInfo['nota_original'] = $originalFileName;
         }
        
-        Song::where('id', $request->input('song_id'))
-            ->update(
-                array_replace(
-                    $request->except(['categories', '_token', 'song_id', 'return']),
-                    $additionalInfo
-                )
-            );
         
-        $song = Song::find($request->input('song_id'));
+        $categoriesBeforeChange = $song->categories()->pluck('title', 'url')->toArray();
+       
+//        Song::where('id', $songId)
+//            ->update(
+//                array_replace(
+//                    $request->except(['categories', '_token', 'song_id', 'return']),
+//                    $additionalInfo
+//                )
+//            );
+        
+        $song->name = $request->name;
+        $song->composer_id = $request->composer_id;
+        $song->lyrics = $request->lyrics;
+        $song->software_id = $request->software_id;
+        if ($request->file('pdf')) {
+            $song->pdf = $additionalInfo['pdf'];
+        }
+        if ($request->file('midi')) {
+            $song->midi = $additionalInfo['midi'];
+        }
+        if ($request->file('software_file')) {
+            $song->software_file = $additionalInfo['software_file'];
+        }
+        if ($request->file('nota_original')) {
+            $song->nota_original = $additionalInfo['nota_original'];
+        }
         
         $song->categories()
             ->sync($request->input('categories'));
@@ -270,6 +302,11 @@ class SongUploadController extends Controller
         
         $song->save();
         
+        $song->refresh();
+        $categoriesAfterChange = $song->categories()->pluck('title', 'url')->toArray();
+               
+        $this->saveChanges($categoriesBeforeChange, $categoriesAfterChange, $song);
+        
         if($request->get('return')) {
             return redirect()->route(
                 'song-review.index'
@@ -283,6 +320,7 @@ class SongUploadController extends Controller
             ]
         );
     }
+   
     
     public function dominika(Song $song)
     {
@@ -422,5 +460,31 @@ class SongUploadController extends Controller
                 'selectedCategories'
             )      
         );
+    }
+    
+    private function saveChanges($categoriesBeforeChange, $categoriesAfterChange, $song)
+    {
+        $categoriesChanges = array_diff($categoriesBeforeChange, $categoriesAfterChange);
+        $revisions = [];
+        
+        if(count($categoriesChanges) || count($categoriesAfterChange) != count($categoriesBeforeChange)) {
+            $revisions[] = array(
+                'revisionable_type' => 'App\Models\Song',
+                'revisionable_id' => $song->id,
+                'key' => 'categories',
+                'old_value' => implode(", ", $categoriesBeforeChange),
+                'new_value' => implode(", ", $categoriesAfterChange),
+                'user_id' => auth()->user()->id,
+                'created_at' => new \DateTime(),
+                'updated_at' => new \DateTime(),
+            );
+        }
+      
+        if(count($revisions)) {
+            DB::table('revisions')
+                ->insert($revisions);
+        }            
+        
+        return true;
     }
 }

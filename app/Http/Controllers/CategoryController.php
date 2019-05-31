@@ -27,7 +27,8 @@ class CategoryController extends Controller
         SEOMeta::setTitle($category->seo_title ?? $category->title);
         SEOMeta::setDescription("Mkusanyiko wa nyimbo za " . $category->title);
         
-        $approvedSongs = $category->songs->where('status', 1);
+//        dd($category->songs);
+        $approvedSongs = $category->approvedSongs;
         
         return view(
             'categories.show',

@@ -10,11 +10,17 @@
         <div class="row">
             <div class="col-md-4">
                 <p>
-                    <strong>Mtunzi:</strong> {{ $song->composer->name }} 
+                    <strong>Mtunzi:</strong> {{ $song->composer->name }}
+                    
+
                     
                     @if ($song->composer->has_profile) <br> > <a href="/composer/profile/{{ $song->composer->url }}/{{ $song->composer->id }}">Mfahamu Zaidi {{ $song->composer->name }} </a>@endif
                     @if ($otherSongs) <br> > <a href="/composer/songs/{{ $song->composer->url }}/{{ $song->composer->id }}">Tazama Nyimbo nyingine za {{ $song->composer->name }} </a>@endif
                 </p>
+                                     
+                @if ($song->ithibati_number)
+                    <p><strong>Namba ya Ithibati:</strong> {{ $song->ithibati_number }}</p>
+                @endif
                 <p><strong>Makundi Nyimbo:</strong> {{ $song->categories->pluck('title')->implode(' | ') }}</p>
                 @if($song->user)
                     <p><strong>Umepakiwa na:</strong> {{ $song->user->name }}</p>

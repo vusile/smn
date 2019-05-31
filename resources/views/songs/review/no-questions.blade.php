@@ -10,6 +10,16 @@
             <div class="alert alert-success" role="alert">
                 Unahakiki wimbo Unaitwa: <strong>{{$song->name}}</strong> umetungwa na <strong>{{$song->composer->name}}</strong>. Tafadhali pakua nota zake, kisha ujibu maswali yanayofuata.
                 <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf/{{$song->pdf}}" target="_blank" role="button">Pakua Nota Uhakiki</a>
+                
+                <br><br>
+                <strong>UMEPAKIWA NA:</strong> {{$song->user->name}}
+                
+                @if($song->user->phone)
+                    <br><strong>NAMBA YA SIMU YA ALIYEPAKIA:</strong> {{$song->user->phone}}
+                @endif
+                @if($song->composer->phone)
+                    <br><strong>NAMBA YA SIMU YA MTUNZI:</strong> {{$song->composer->phone}}
+                @endif
                 @if($song->for_recording)
                     <br><br>
                     <strong>MUHIMU:</strong> Wimbo huu utatumika kwenye kurekodi Album
@@ -44,6 +54,11 @@
                 @if($song->can_be_edited)
                     <h4><strong><a href="/song/download/{{ $song->id }}/software/{{$song->software_file}}">Pakua File Ubadili</a></strong></h4>
                     <h4><strong><a href="/edit-song/{{ $song->id }}?return=review#pdf">Pakia PDF, midi na file jipya</a></strong></h4>
+                    <br><div id="comment_div" class = 'form-group row'>
+                        <label class="col-sm-12 col-form-label">Kama umefanya mabadiliko kwenye PDF, tafadhali toa maelezo hapa:</label><br>
+                        <textarea class="form-control" name="comment" id='comment'  rows="2"></textarea>
+                    </div>
+                <br>
                 @endif
                 <br>
                 <h4 class = 'alert-success'><strong>Jina la wimbo: </strong> {{ $song->name }} - <strong><a href="/edit-song/{{ $song->id }}?return=review#name">Badili/Boresha jina la wimbo</a></strong></h4>

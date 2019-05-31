@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Song;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 class AccountController extends Controller
@@ -63,7 +64,7 @@ class AccountController extends Controller
         $songs = $this->getLiveSongs()
             ->paginate(20);
         
-        $status = 'Nyimbo zilizo Live';
+        $status = 'Nyimbo zilizo Live na zenye Ithibati';
         
         return view(
             'account.songs',
@@ -73,7 +74,9 @@ class AccountController extends Controller
     
     protected function getLiveSongs()
     {
-        return Song::approved()
+        return Song::where(function (Builder $query) {
+                $query->approved()->orWhere->forRecording();
+            })
             ->ownedBy(auth()->user())
             ->orderBy('id', 'desc');
     }

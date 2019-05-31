@@ -152,6 +152,7 @@ return [
         sngrl\SphinxSearch\SphinxSearchServiceProvider::class,
         Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        Venturecraft\Revisionable\RevisionableServiceProvider::class,
 
         /*
          * Package Service Providers...

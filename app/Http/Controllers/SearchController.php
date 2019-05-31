@@ -5,11 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Composer;
 use App\Models\Song;
 use App\Services\SearchService;
-use App\Services\SongService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Builder;
 
 class SearchController extends Controller
 {
@@ -45,16 +41,17 @@ class SearchController extends Controller
             $composersTotal = $composers->count();
         }
 
-       
         $songs = $this->searchService
             ->search(request()->query('st'), 'songs');
        
         if($songs) {            
-            $songs = Song::approved()
-                    ->whereIn(
+            $songs = Song::whereIn(
                         'id',
                         $songs->pluck('id')->toArray()
                     )
+                    ->where(function (Builder $query) {
+                        $query->approved()->orWhere->forRecording();
+                    })
                     ->get();
             
             $songsTotal = $songs->count();

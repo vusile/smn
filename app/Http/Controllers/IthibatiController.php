@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Song;
 use App\Services\SongService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use setasign\Fpdi\Fpdi;
+
 
 class IthibatiController extends Controller
 {
@@ -87,9 +89,12 @@ class IthibatiController extends Controller
                 $song->status = 8;
             }   
             
-            $song->ithibati_number = "TEC/KM/" . strtoupper(substr(str_shuffle(MD5(microtime())), 0, 5)) . "/" . $song->id;
+            $song->ithibati_number = config('song.ithibati.prefix') . strtoupper(substr(str_shuffle(MD5(microtime())), 0, 5)) . "/" . $song->id;
+            
+            $song->approved_date = Carbon::now()->toDateString();
             
             $path = storage_path('app/public/' . config('song.files.paths.pdf') . $song->pdf);
+            $savePath = storage_path('app/public/' . config('song.files.paths.pdf') . 'ithibati-' . $song->pdf);
             
             $pdf = new Fpdi();
             
@@ -110,7 +115,7 @@ class IthibatiController extends Controller
                 $pdf->SetXY(10, 5);
                 $pdf->Write(8, 'Namba ya Ithibati: ' . $song->ithibati_number);
                 
-                $pdf->Output($path, 'F'); 
+                $pdf->Output($savePath, 'F'); 
             }
         } else {
             $song->status = 9;
