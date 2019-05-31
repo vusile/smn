@@ -55,10 +55,7 @@
                 @if($song->can_be_edited)
                     <h4><strong><a href="/song/download/{{ $song->id }}/software/{{$song->software_file}}">Pakua File Ubadili</a></strong></h4>
                     <h4><strong><a href="/edit-song/{{ $song->id }}?return=review#pdf">Pakia PDF, midi na file jipya</a></strong></h4>
-                    <br><div id="comment_div" class = 'form-group row'>
-                        <label class="col-sm-12 col-form-label">Kama umefanya mabadiliko kwenye PDF, tafadhali toa maelezo hapa:</label><br>
-                        <textarea class="form-control" name="comment" id='comment'  rows="2"></textarea>
-                    </div>
+                    
                 <br>
                 @endif
                 <br>
@@ -101,7 +98,13 @@
                     @include('songs.review.question')
                 @endforeach
                 <br>
-                
+                @if($song->can_be_edited)
+                <div id="comment_div" class = 'form-group row'>
+                        <label class="col-sm-12 col-form-label">Kama umefanya mabadiliko kwenye PDF, tafadhali toa maelezo hapa:</label><br>
+                        <textarea class="form-control" name="comment" id='comment'  rows="2"></textarea>
+                    </div>
+                <br>
+                @endif
                 <strong>Wimbo unafaa kupewa Ithibati?</strong><br>
                 <div class="form-group">
                     <div class="row">
