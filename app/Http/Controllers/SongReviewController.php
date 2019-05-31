@@ -219,6 +219,13 @@ class SongReviewController extends Controller
             $song->status = 6;
             $song->save();
 
+
+            if($request->get('comment')) {
+                DB::table('reviewer_songs')
+                    ->where('song_id', $song->id)
+                    ->update(['comments' => $request->get('comment')]);
+            }
+
             return redirect()->route(
                 'song-review.index'
             );

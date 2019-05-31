@@ -13,7 +13,13 @@
         </p>
     </div>
     <div class="col-lg-4" >
-        <p>{{ $song->composer->name }}</p>
+        <p>
+            {{ $song->composer->name }}
+            @if ($song->ithibati_number)
+                <br><small><strong>Namba ya Ithibati:</strong> {{ $song->ithibati_number }}</small>
+            @endif
+            <br><small><strong>Pakua:</strong> <a href="/song/download/{{ $song->id }}/pdf/{{$song->pdf}}" role="button">Download Nota</a></small>
+        </p>
     </div>
     <div class="col-lg-4" >
         <p class="text-success">

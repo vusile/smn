@@ -6,9 +6,10 @@ use App\Traits\SongTrait;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use Venturecraft\Revisionable\Revisionable;
 
 
-class Composer extends Model
+class Composer extends Revisionable
 {
     use CrudTrait;
     use Sluggable;
@@ -17,6 +18,11 @@ class Composer extends Model
     public $timestamps = false;
 
     protected $fillable = ['name', 'details', 'email', 'phone', 'url', 'photo1', 'photo2', 'photo3', 'jimbo', 'parokia', 'user_id', 'mimi_ndio_huyu_mtunzi', 'added_by'];
+
+    public function identifiableName()
+    {
+        return $this->name;
+    }
 
     public function sluggable()
     {

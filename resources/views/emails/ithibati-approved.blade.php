@@ -15,6 +15,24 @@
         @else
             Wimbo huu kuanzia sasa unapatikana SMN.
         @endif
+        <br><br>
+
+        @if($showChanges)
+            Muhakiki amefanya mabadiliko yafuatayo:<br>
+            @foreach($song->revisionHistory as $history )
+                @if($history->userResponsible()->hasRole('uhakiki'))
+                <li><em>{{ $history->fieldName() }}</em>: <br>Kutoka <strong>{{ $history->oldValue() }}</strong><br>kuwa <strong>{{ $history->newValue() }}</strong></li>
+                <br>
+                @endif
+            @endforeach
+            <br><br>
+        @endif
+            
+        @if($songReview && $songReview->comments)
+            Aliyehakiki ameacha maoni yafuatayo:<br><br>
+            <em>{{$songReview->comments}}</em>
+            <br><br>
+        @endif
         
         Tafadhali bofya link ifuatayo ili kuuona &gt; {!! songLink($song) !!}<br><br>
         

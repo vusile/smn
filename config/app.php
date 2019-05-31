@@ -152,6 +152,7 @@ return [
         Propaganistas\LaravelPhone\PhoneServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         sngrl\SphinxSearch\SphinxSearchServiceProvider::class,
+        Venturecraft\Revisionable\RevisionableServiceProvider::class,
 
         /*
          * Package Service Providers...

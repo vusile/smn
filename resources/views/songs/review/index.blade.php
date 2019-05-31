@@ -10,6 +10,15 @@
             <div class="alert alert-success" role="alert">
                 Unahakiki wimbo Unaitwa: <strong>{{$song->name}}</strong> umetungwa na <strong>{{$song->composer->name}}</strong>. Tafadhali pakua nota zake, kisha ujibu maswali yanayofuata.
                 <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf/{{$song->pdf}}" target="_blank" role="button">Pakua Nota Uhakiki</a>
+                <br><br>
+                <strong>UMEPAKIWA NA:</strong> {{$song->user->name}}
+                
+                @if($song->user->phone)
+                    <br><strong>NAMBA YA SIMU YA ALIYEPAKIA:</strong> {{$song->user->phone}}
+                @endif
+                @if($song->composer->phone)
+                    <br><strong>NAMBA YA SIMU YA MTUNZI:</strong> {{$song->composer->phone}}
+                @endif
             </div>
 
             @if ($errors->any())

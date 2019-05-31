@@ -32,16 +32,16 @@ class IthibatiRejectedEmail extends Mailable
      */
     public function build()
     {
-        $failedReviews = DB::table('ithibati_songs')
+        $failedReview = DB::table('ithibati_songs')
             ->where('song_id', $this->song->id)
-            ->get();   
+            ->first();   
         
         return $this->subject('Wimbo ' . $this->song->name . ' Umekosa Ithibati')
             ->view('emails.ithibati-rejected')
             ->with(
                 [
                     'song' => $this->song,
-                    'failedReviews' => $failedReviews,
+                    'failedReview' => $failedReview,
                 ]
             );
     }

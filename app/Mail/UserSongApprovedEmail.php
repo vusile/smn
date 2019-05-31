@@ -31,7 +31,17 @@ class UserSongApprovedEmail extends Mailable
      */
     public function build()
     {
+        $songReview = DB::table('reviewer_songs')
+            ->where('song_id', $this->song->id)
+            ->get();
+        
         return $this->subject('Wimbo ' . $this->song->name . ' sasa Upo kwenye Tovuti')
-            ->view('emails.user-song-approved');
+            ->view('emails.user-song-approved')
+            ->with(
+                    [
+                        'field_mappings' => Song::$fieldMappings,
+                        'song_review' => $songReview,
+                    ]
+                );
     }
 }
