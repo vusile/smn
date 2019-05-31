@@ -132,23 +132,12 @@ class SongUploadController extends Controller
             $midiName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->midi->getClientOriginalName()));
             $midiPath = $request->file('midi')->storeAs('uploads/files', $midiName);
             
-//            $midiName = getFileNameFromPath($midiPath); 
-            
-//            if(str_contains($midiName, 'mpga')){
-//                $midiName = head(explode('.', $midiName)) . '.mp3';
-//                Storage::move(
-//                    $midiPath,
-//                    'uploads/files/' . $midiName
-//                );
-//            }
         }
         
         if ($request->file('software_file')) {          
             $softwareFileName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->software_file->getClientOriginalName()));
             
-            $softwareFilePath = $request->file('software_file')->storeAs('uploads/files', $softwareFileName);
-            
-//            $softwareFileName = getFileNameFromPath($softwareFilePath); 
+            $softwareFilePath = $request->file('software_file')->storeAs('uploads/files', $softwareFileName); 
         }
         
         if ($request->file('nota_original')) {
@@ -230,6 +219,11 @@ class SongUploadController extends Controller
                 $song->save();
             }
             if($song->status == 5) {
+                
+                DB::table('reviews')
+                    ->where('song_id', $song->id)
+                    ->delete();
+                
                 $song->status = 4;
                 $song->save();
             }    
