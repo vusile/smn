@@ -71,7 +71,8 @@ Route::get('/auth/{provider}/callback', 'Auth\SocialAuthController@handleProvide
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/upload/song', 'SongUploadController@index')
-        ->name('song-upload.index');
+        ->name('song-upload.index')
+        ->middleware(App\Http\Middleware\CheckPhone::class);
     Route::group(['middleware' => ['permission:kuhakiki']], function () {
         Route::get('/akaunti/review-nyimbo/', 'SongReviewController@index')
             ->name('song-review.index');
@@ -81,14 +82,14 @@ Route::middleware(['auth'])->group(function () {
             ->name('song-review.store');
         Route::post('/akaunti/review-nyimbo/ithibati-review', 'SongReviewController@ithibati_review')
             ->name('song-review.ithibati-review');
-        
+
         Route::get('/akaunti/review-uhakiki/', 'SongReviewController@reviewUhakiki')
             ->name('song-review.review-uhakiki');
     });
     Route::group(['middleware' => ['permission:kutoa ithibati']], function () {
         Route::get('/akaunti/toa-ithibati', 'IthibatiController@index')
             ->name('song-review.hakiki-ithibati');
-        
+
         Route::post('/akaunti/toa-ithibati/store', 'IthibatiController@store')
             ->name('song-review.toa-ithibati');
     });
@@ -141,6 +142,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/remove-role/{role}/{user}', 'AdminUserController@remove');
         Route::get('/users/search', 'AdminUserController@index');
     });
+
 });
 Auth::routes();
 
