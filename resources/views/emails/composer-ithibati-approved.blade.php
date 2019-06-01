@@ -4,9 +4,9 @@
     Wimbo Umepata Ithibati: {{ $song->name }}
 </h3>
     <p class="lead" style="margin: 0;padding: 0;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;margin-bottom: 10px;font-weight: normal;font-size: 17px;line-height: 1.6;">
-        Tumsifu Yesu Kristu {{ $song->user->first_name }},<br><br>
+        Tumsifu Yesu Kristu {{ $song->composer->name }},<br><br>
         
-        Wimbo wa {{ $song->name }} uliopakia sasa umepata Ithibati.<br><br>
+        Wimbo wako {{ $song->name }} uliopakiwa Swahili Music Notes sasa umepata Ithibati.<br><br>
         
         <strong>Namba ya Ithibati ni:</strong> {{ $song->ithibati_number }}.<br><br>
         
@@ -36,10 +36,12 @@
         
         Tafadhali bofya link ifuatayo ili kuuona &gt; {!! songLink($song) !!}<br><br>
         
+        Kama kuna shida yoyote, tafadhali jibu email hii<br><br>
+        
         Wako katika Kristu,
         
         <br><br>
-        <strong>Admin<br>
+        <strong>Kamati ya Uhakiki na Ithibati<br>
             Swahili Music Notes</strong>
     </p>
     <br />

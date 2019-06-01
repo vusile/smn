@@ -71,7 +71,8 @@ Route::get('/auth/{provider}/callback', 'Auth\SocialAuthController@handleProvide
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/upload/song', 'SongUploadController@index')
-        ->name('song-upload.index');
+        ->name('song-upload.index')
+        ->middleware(App\Http\Middleware\CheckPhone::class);
     Route::group(['middleware' => ['permission:kuhakiki']], function () {
         Route::get('/akaunti/review-nyimbo/', 'SongReviewController@index')
             ->name('song-review.index');
@@ -126,12 +127,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/jobs', 'JobController@index');
     Route::get('/jobs/{job}/delete', 'JobController@delete');
     Route::get('/comments/{comment}', 'CommentController@show');
+    Route::post('/phone-collector', 'UserController@savePhoneNumber')->name('save-number');
+    Route::get('/phone-collector', 'UserController@getPhoneNumber');
     Route::group(['middleware' => ['role:super admin|admin']], function () {
         Route::get('/users', 'AdminUserController@index');
         Route::get('/assign-role/{role}/{user}', 'AdminUserController@assign');
         Route::get('/remove-role/{role}/{user}', 'AdminUserController@remove');
         Route::get('/users/search', 'AdminUserController@index');
     });
+    
 });
 Auth::routes();
 

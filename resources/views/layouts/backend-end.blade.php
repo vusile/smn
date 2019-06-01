@@ -181,6 +181,15 @@
             </div>
         </div>
     </div>
+    <div class="container">
+        <div class="row">
+    @if (session('msg', null))
+        <div class="alert alert-success" role="alert">
+            {{session('msg', null)}}
+        </div>
+    @endif
+        </div>
+    </div>
     <!-- Main Menu area End-->
     <!-- Start Status area -->
     @section('content')

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -34,5 +35,25 @@ class UserController extends Controller
             'users.songs',
             compact('user')
         );
+    }
+    
+    public function getPhoneNumber()
+    {
+        return view(
+            'auth.get-phone'
+        );
+    }
+    
+    public function savePhoneNumber(Request $request)
+    {
+        Session::flash('msg', 'Umefanikiwa Kuweka namba yako. Endelea kupakia wimbo');
+        User::where('id', auth()->user()->id)
+            ->update(
+                [
+                    'phone' => $request->phone
+                ]
+            );
+        
+        return redirect(route('song-upload.index'));
     }
 }

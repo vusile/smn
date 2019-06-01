@@ -39,8 +39,12 @@ class SendIthibatiApprovedEmail
         
         $composer = $song->composer;
         
-        if ($composer->email && $composer->user_id != $song->user->id) {
-            $composerMessage = (new IthibatiApprovedEmail($song))
+        if (
+                $composer->email 
+                && $composer->user_id != $song->user->id 
+                && $composer->email != $song->user->email 
+        ) {
+            $composerMessage = (new IthibatiApprovedComposerEmail($song))
                     ->onQueue('songs');
             
             Mail::to($song->composer->email)
