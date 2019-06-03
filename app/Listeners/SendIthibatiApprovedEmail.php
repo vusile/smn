@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\IthibatiApproved;
 use App\Mail\IthibatiApprovedEmail;
+use App\Mail\IthibatiApprovedComposerEmail;
 use App\Mail\ComposerSongApprovedEmail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
