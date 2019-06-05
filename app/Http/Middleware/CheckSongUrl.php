@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\Song;
 use Closure;
 
-class CheckPhone
+class CheckSongUrl
 {
     /**
      * Handle an incoming request.
