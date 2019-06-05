@@ -28,7 +28,6 @@
         "setasign/fpdi-tcpdf": "^2.0",
         "sngrl/sphinxsearch": "dev-master",
         "venturecraft/revisionable": "1.*"
-
     },
     "require-dev": {
         "backpack/generators": "^3.1",

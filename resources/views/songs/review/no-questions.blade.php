@@ -16,7 +16,7 @@
                 <strong>UMEPAKIWA NA:</strong> {{$song->user->name}}
                 
                 @if($song->user->phone)
-                    <br><strong>NAMBA YA SIMU YA ALIYEPAKIA:</strong> {{$song->user->phone}}
+                <br><strong>NAMBA YA SIMU YA ALIYEPAKIA:</strong> {{$song->user->phone}}@if($song->user->has_whatsapp) - <a target="_blank" href = "https://wa.me/{{preg_replace("/[^0-9]/", "", $song->user->phone)}}">Wasiliana kwa Whatsapp</a>@endif
                 @endif
                 @if($song->composer->phone)
                     <br><strong>NAMBA YA SIMU YA MTUNZI:</strong> {{$song->composer->phone}}
