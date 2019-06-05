@@ -153,6 +153,7 @@ return [
         Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Venturecraft\Revisionable\RevisionableServiceProvider::class,
+        Propaganistas\LaravelPhone\PhoneServiceProvider::class,
 
         /*
          * Package Service Providers...

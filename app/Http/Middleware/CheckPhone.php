@@ -15,11 +15,13 @@ class CheckPhone
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->user()->phone) {
-            return $next($request);
+        if(
+            !auth()->user()->phone_verified       
+        ) {
+            return redirect('/phone-collector');
         }
         else {
-            return redirect('/phone-collector');
+            return $next($request);
         }
     }
 }

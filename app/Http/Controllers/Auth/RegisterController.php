@@ -74,6 +74,7 @@ class RegisterController extends Controller
             'email.confirmed'  => 'Email haifanani na hiyo uliyoandika tena',
             'phone.unique' => 'Namba hii ishatumika. Tafadhali login au sajili kutumia namba nyingine',
             'phone.required' => 'Namba ya simu ni lazima ujaze.',
+            'phone.phone' => 'Namba ya simu uliyoweka ina kasoro. Tafadhali soma maelezo hapo chini.',
             'password.required' => 'Password inahitajika',
             'password.confirmed'  => 'Password haifanani na hiyo uliyoandika tena',
         ];
@@ -84,7 +85,7 @@ class RegisterController extends Controller
                 'first_name' => 'required|string|max:255',
                 'last_name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users|confirmed',
-                'phone' => 'required|string|max:255|unique:users',
+                'phone' => 'required|string|max:255|unique:users|phone:AUTO',
                 'password' => 'required|string|min:6|confirmed',
             ],
             $customMessages
@@ -96,6 +97,8 @@ class RegisterController extends Controller
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'phone' => $request->phone,
+            'has_whatsapp' => $request->has_whatsapp,
+            'phone_verified' => true,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);

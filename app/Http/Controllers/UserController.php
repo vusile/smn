@@ -46,13 +46,30 @@ class UserController extends Controller
     
     public function savePhoneNumber(Request $request)
     {
-        Session::flash('msg', 'Umefanikiwa Kuweka namba yako. Endelea kupakia wimbo');
+        $customMessages = [
+            'phone.unique' => 'Namba hii ishatumika. Tafadhali login au sajili kutumia namba nyingine',
+            'phone.required' => 'Namba ya simu ni lazima ujaze.',
+            'phone.phone' => 'Namba ya simu uliyoweka ina kasoro. Tafadhali soma maelezo chini ya box la kuandikia namba.',
+        ];
+        
+        $this->validate(
+            $request,
+            [
+                'phone' => 'required|phone:AUTO|unique:users,phone,' . auth()->id(),
+            ],
+            $customMessages
+        );
+        
         User::where('id', auth()->user()->id)
             ->update(
                 [
-                    'phone' => $request->phone
+                    'phone' => $request->phone,
+                    'has_whatsapp' => $request->has_whatsapp,
+                    'phone_verified' => true,
                 ]
             );
+        
+        Session::flash('msg', 'Umefanikiwa Kuweka namba yako. Endelea kupakia wimbo');
         
         return redirect(route('song-upload.index'));
     }
