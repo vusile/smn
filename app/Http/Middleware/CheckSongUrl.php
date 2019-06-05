@@ -6,7 +6,7 @@ use App\Models\Song;
 use Closure;
 use Illuminate\Support\Arr;
 
-class CheckPhone
+class CheckSongUrl
 {
     /**
      * Handle an incoming request.
