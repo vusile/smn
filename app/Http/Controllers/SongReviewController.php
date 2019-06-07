@@ -82,6 +82,7 @@ class SongReviewController extends Controller
         if(!$song) {
             $song = Song::pending()
                 ->has('categories')
+                ->orderBy('priority_review', 'desc')
                 ->whereNotIn('user_id', [$user->id])
                 ->whereNotIn('id', $hasBeenReviewed)
                 ->first();
@@ -341,5 +342,21 @@ class SongReviewController extends Controller
                 'songReviews'
             )
         );
+    }
+
+    public function prioritize(Song $song)
+    {
+        $song->priority_review = true;
+        $song->save();
+
+        return back();
+    }
+
+    public function deprioritize(Song $song)
+    {
+        $song->priority_review = false;
+        $song->save();
+
+        return back();
     }
 }

@@ -40,6 +40,7 @@ class IthibatiController extends Controller
         
         if(!$song) {
             $song = Song::waitingForIthibati()
+                ->orderBy('priority_review', 'desc')    
                 ->has('categories')
                 ->whereNotIn('user_id', [$user->id])
                 ->first();
