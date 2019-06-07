@@ -36,6 +36,7 @@ class Song extends Model
         'fit_for_liturgy',
         'for_recording',
         'ithibati_number',
+        'priority_review',
     ];
     
     public static $showChangesForFields = [

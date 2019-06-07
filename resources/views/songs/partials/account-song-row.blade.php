@@ -3,7 +3,10 @@
         @if ($song->is_active)
         <p><span class="badge badge-pill badge-success">&nbsp;</span> {!! songLink($song, true) !!}<br>
         @else
-            <p><span class="badge badge-pill badge-warning">&nbsp;</span> {{ $song->name }}<br>
+            <p><span class="badge badge-pill badge-warning">&nbsp;</span> {{ $song->name }} 
+                @if(auth()->user()->hasAnyRole(['super admin', 'admin']) && !$song->priority_review) - <a style="color:green" href="/prioritize-review/{{$song->id}}">Kipaumbele cha Uhakiki</a>@endif
+                @if(auth()->user()->hasAnyRole(['super admin', 'admin']) && $song->priority_review) - <a style="color:red" href="/deprioritize-review/{{$song->id}}">Ondoa Kipaumbele cha Uhakiki</a>@endif
+            <br>
         @endif
             <small>
                 <a href = '/edit-song/{{$song->id}}'>Badili Wimbo</a> | 

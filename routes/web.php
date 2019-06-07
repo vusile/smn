@@ -131,6 +131,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/phone-collector', 'UserController@getPhoneNumber');
     Route::group(['middleware' => ['role:super admin|admin']], function () {
         Route::get('/users', 'AdminUserController@index');
+        Route::get('/prioritize-review/{song}', 'SongReviewController@prioritize');
+        Route::get('/deprioritize-review/{song}', 'SongReviewController@deprioritize');
+        Route::get('/users', 'AdminUserController@index');
         Route::get('/assign-role/{role}/{user}', 'AdminUserController@assign');
         Route::get('/remove-role/{role}/{user}', 'AdminUserController@remove');
         Route::get('/users/search', 'AdminUserController@index');
