@@ -65,8 +65,13 @@ class SearchController extends Controller
     
     public function searchUserSongs()
     {
-        $songs = $this->searchService
-            ->userSearch(request()->query('q'), 'songs');
+        if(auth()->user()->hasAnyRole(['super admin', 'admin'])){
+            $songs = $this->searchService
+                ->search(request()->query('q'), 'songs');
+        } else {
+            $songs = $this->searchService
+                ->userSearch(request()->query('q'), 'songs');   
+        }
         
         $status = 'Nyimbo Ulizotafuta';
         

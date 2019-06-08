@@ -77,14 +77,18 @@ class AccountController extends Controller
         return Song::where(function (Builder $query) {
                 $query->approved()->orWhere->forRecording();
             })
-            ->ownedBy(auth()->user())
+            ->when(!auth()->user()->hasAnyRole(['super admin', 'admin']), function ($query) {
+                return $query->ownedBy(auth()->user());
+            })
             ->orderBy('id', 'desc');
     }
     
     protected function getPendingSongs()
     {
-        return Song::pending()
-            ->ownedBy(auth()->user())
+        return Song::pending()            
+            ->when(!auth()->user()->hasAnyRole(['super admin', 'admin']), function ($query) {
+                return $query->ownedBy(auth()->user());
+            })
             ->orderBy('id', 'desc');
     }
 }
