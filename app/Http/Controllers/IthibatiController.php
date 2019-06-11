@@ -114,10 +114,9 @@ class IthibatiController extends Controller
                 $pdf->SetFont('Helvetica');
                 $pdf->SetFontSize(10);
                 $pdf->SetXY(10, 5);
-                $pdf->Write(8, 'Namba ya Ithibati: ' . $song->ithibati_number);
-                
-                $pdf->Output($savePath, 'F'); 
+                $pdf->Write(8, 'Namba ya Ithibati: ' . $song->ithibati_number);                
             }
+            $pdf->Output($savePath, 'F'); 
         } else {
             $song->status = 9;
             

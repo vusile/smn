@@ -74,6 +74,7 @@ class SongReviewController extends Controller
 
         $song = Song::pending()
             ->has('categories')
+            ->orderBy('priority_review', 'desc')  
             ->whereNotIn('user_id', [$user->id])
             ->whereNotIn('id', $hasBeenReviewed)
             ->whereIn('id', $assignedToUsers)
