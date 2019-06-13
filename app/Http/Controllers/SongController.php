@@ -126,5 +126,7 @@ class SongController extends Controller
                     return $query->random($limit);
                 });
         }
+
+        return $otherSongs;
     }
 }
