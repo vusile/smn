@@ -96,9 +96,6 @@ class SongController extends Controller
                 break;
             
             case 'original':
-                $path = storage_path('app/public/' . config('song.files.paths.midi') . $song->nota_original);
-                return Storage::download($path);
-                
                 $originalFile = $song->nota_original;
                 return response()->file(
                     storage_path('app/public/' . config('song.files.paths.pdf') . $originalFile),
