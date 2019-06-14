@@ -46,7 +46,9 @@ class SearchController extends Controller
             $songs = Song::whereIn(
                 'id',
                 $songs->pluck('id')->toArray()
-            )->get();
+            )
+            ->sortBy('views')
+            ->get();
 
         }
         

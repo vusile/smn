@@ -77,7 +77,7 @@ class DominikaController extends Controller
         $approvedDominikaSongs = $dominika
                 ->songs
                 ->where('status', 1)
-                ->sortBy('name');
+                ->sortBy('views');
          
         return view(
             'dominika.show',

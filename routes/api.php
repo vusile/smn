@@ -18,12 +18,6 @@ use App\Models\Song;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::get('/songs', function () {
-    return new SongCollection(Song::approved()->limit(10)
-            ->get());
-});
-
 Route::get('/wimbo/{song}', 'Api\SongController@show');
 Route::get('/nyimbo-nyingine/{song}', 'Api\SongController@otherSongs');
 Route::get('/watunzi/', 'Api\ComposerController@index');

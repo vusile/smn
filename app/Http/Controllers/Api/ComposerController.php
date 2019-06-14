@@ -41,7 +41,7 @@ class ComposerController extends Controller
     public function songs(Composer $composer)
     {  
         return new SongCollection(
-            $composer->songs->where('status', 1)
+            $composer->songs->where('status', 1)->sortBy('name')
         );
     }
     

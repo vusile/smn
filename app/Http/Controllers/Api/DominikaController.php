@@ -65,7 +65,7 @@ class DominikaController extends Controller
         $approvedDominikaSongs = $dominika
                 ->songs
                 ->where('status', 1)
-                ->sortBy('name');
+                ->sortBy('views');
          
         return [
             'mwanzo' => new SongCollection($approvedDominikaSongs->whereIn('id', $mwanzo)),
