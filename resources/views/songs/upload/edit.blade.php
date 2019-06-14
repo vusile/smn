@@ -32,7 +32,7 @@
                     )}}
                 </div>
                 
-                <p><strong>PDF: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf/{{$song->pdf}}" role="button">Download Nota Uhakiki</a></p>
+                <p><strong>PDF: </strong> <a class="btn btn-primary" href="{{downloadLink($song, 'pdf')}}" role="button">Download Nota Uhakiki</a></p>
            
                 <div class="form-group">
                     <p><strong>Pakia PDF kama unataka kubadili iliyopo:</strong></p>
@@ -40,7 +40,7 @@
                 </div>
                 
                 @if($song->midi)
-                    <br><p><strong>Midi: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/midi/{{$song->midi}}" role="button">Download Midi Uhakiki</a></p>
+                    <br><p><strong>Midi: </strong> <a class="btn btn-primary" href="{{downloadLink($song, 'midi')}}" role="button">Download Midi Uhakiki</a></p>
                 @endif
                 
                 <div class="form-group">
@@ -82,7 +82,7 @@
                 </div>
 
                 @if($song->software_file)
-                    <br><p><strong>File la software: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/software" role="button">Download File la Software Uhakiki</a></p>
+                    <br><p><strong>File la software: </strong> <a class="btn btn-primary" href="{{downloadLink($song, 'software_file')}}" role="button">Download File la Software Uhakiki</a></p>
                 @endif
                                 
                 <div class="form-group">
@@ -96,7 +96,7 @@
                 </div>
 
                 @if($song->nota_original)
-                    <br><p><strong>Original: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/original" role="button">Download Original Uhakiki</a></p>
+                    <br><p><strong>Original: </strong> <a class="btn btn-primary" href="{{downloadLink($song, 'nota_original')}}" role="button">Download Original Uhakiki</a></p>
                 @endif
                 <div class="form-group">
                     <p><strong>Je unazo nota zilizo andikwa kwa mkono wa mtunzi? Kama ndio, zipakie au ubadili zilizopo</strong></p>

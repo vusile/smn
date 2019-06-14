@@ -19,3 +19,10 @@ if (!function_exists('getFileNameFromPath')) {
         );
     }
 }
+
+if (!function_exists('downloadLink')) {
+    function downloadLink($song, string $type)
+    {
+        return  url('/') . '/song/download/' . $song->id . '/' . $type . '/' . $song->$type;
+    }
+}

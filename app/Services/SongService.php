@@ -73,4 +73,31 @@ class SongService
         
         event(new SongRejected($song));
     }
+    
+    public function getOtherSongs(Song $song)
+    {
+        $otherSongs = null;
+        $otherSongsCount = $song
+                ->composer
+                ->songs
+                ->filter(function ($value) use ($song) {
+                    return ($value->id != $song->id) && ($value->status == 1);
+                })
+                ->count(); 
+        
+        if($otherSongsCount > 1) {
+            $limit = $otherSongsCount < 10 ? 0 : 10;  
+            $otherSongs = $song
+                ->composer
+                ->songs    
+                ->filter(function ($value) use ($song) {
+                    return ($value->id != $song->id) && ($value->status == 1);
+                })
+                ->when($limit, function ($query) use ($limit) {
+                    return $query->random($limit);
+                });
+        }
+        
+        return $otherSongs;
+    }
 }

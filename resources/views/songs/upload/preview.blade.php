@@ -9,10 +9,10 @@
             <p><strong>Jina la wimbo: </strong> {{ $song->name }}</p>
             <p><strong>Mtunzi: </strong> {{ $song->composer->name }}</p>
             <p><strong>Makundi Nyimbo: </strong> {{ $song->categories->pluck('title')->implode(' | ') }}</p>
-            <p><strong>PDF: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf/{{$song->pdf}}" role="button">Download Nota Uhakiki</a></p>
+            <p><strong>PDF: </strong> <a class="btn btn-primary" href="{{downloadLink($song, 'pdf')}}" role="button">Download Nota Uhakiki</a></p>
             
             @if($song->midi)
-                <p><strong>Midi: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/midi/{{ $song->midi }}" role="button">Download Midi Uhakiki</a></p>
+                <p><strong>Midi: </strong> <a class="btn btn-primary" href="{{downloadLink($song, 'midi')}}" role="button">Download Midi Uhakiki</a></p>
             @endif
   
             @if($song->dominikas->count())
