@@ -15,17 +15,29 @@ class Song extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'composer' => $this->composer->name,
-            'views' => $this->views,
-            'downloads' => $this->downloads,
-            'lyrics' => str_replace('&nbsp;</p>', '</p>', $this->lyrics),
-            'pdf' => downloadLink($this, 'pdf'),
-            'midi' => $this->midi 
-                ? downloadLink($this, 'midi') 
-                : null,
-        ];
+        if($request->get('full')) {            
+            return [
+                'name' => $this->name,
+                'composer' => $this->composer->name,
+                'views' => $this->views,
+                'downloads' => $this->downloads,
+                'lyrics' => str_replace('&nbsp;</p>', '</p>', $this->lyrics),
+                'pdf' => downloadLink($this, 'pdf'),
+                'midi' => $this->midi 
+                    ? downloadLink($this, 'midi') 
+                    : null,
+            ];
+        } else {
+            return [
+                'id' => $this->id,
+                'name' => $this->name,
+                'composer' => $this->composer->name,
+                'views' => $this->views,
+                'downloads' => $this->downloads,
+                'midi' => $this->midi 
+                    ? downloadLink($this, 'midi') 
+                    : null,
+            ];
+        }
     }
 }
