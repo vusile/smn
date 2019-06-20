@@ -24,7 +24,7 @@ class Song extends JsonResource
                 'lyrics' => str_replace('&nbsp;</p>', '</p>', $this->lyrics),
                 'pdf' => downloadLink($this, 'pdf'),
                 'midi' => $this->midi 
-                    ? downloadLink($this, 'midi') 
+                    ? storage_path('app/public/' . config('song.files.paths.midi') . $this->midi) 
                     : null,
             ];
         } else {
@@ -35,7 +35,7 @@ class Song extends JsonResource
                 'views' => $this->views,
                 'downloads' => $this->downloads,
                 'midi' => $this->midi 
-                    ? downloadLink($this, 'midi') 
+                    ? storage_path('app/public/' . config('song.files.paths.midi') . $song->midi)
                     : null,
             ];
         }
