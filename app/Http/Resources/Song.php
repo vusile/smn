@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use App\Services\SongService;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Storage
+use Illuminate\Support\Facades\Storage;
 
 class Song extends JsonResource
 {
