@@ -35,7 +35,7 @@ class Song extends JsonResource
                 'views' => $this->views,
                 'downloads' => $this->downloads,
                 'midi' => $this->midi 
-                    ? storage_path('app/public/' . config('song.files.paths.midi') . $song->midi)
+                    ? storage_path('app/public/' . config('song.files.paths.midi') . $this->midi)
                     : null,
             ];
         }
