@@ -26,7 +26,7 @@ class Song extends JsonResource
                 'pdf' => downloadLink($this, 'pdf'),
                 'midi' => $this->midi 
                     ? Storage::url(config('song.files.paths.midi') . $this->midi) 
-                    : null,
+                    : "",
             ];
         } else {
             return [
@@ -37,7 +37,7 @@ class Song extends JsonResource
                 'downloads' => $this->downloads,
                 'midi' => $this->midi 
                     ? Storage::url(config('song.files.paths.midi') . $this->midi)
-                    : null,
+                    : "",
             ];
         }
     }
