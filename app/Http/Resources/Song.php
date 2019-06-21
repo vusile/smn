@@ -20,8 +20,8 @@ class Song extends JsonResource
             return [
                 'name' => $this->name,
                 'composer' => $this->composer->name,
-                'views' => $this->views,
-                'downloads' => $this->downloads,
+                'views' => number_format($this->views),
+                'downloads' => number_format($this->downloads),
                 'lyrics' => str_replace('&nbsp;</p>', '</p>', $this->lyrics),
                 'pdf' => downloadLink($this, 'pdf'),
                 'midi' => $this->midi 
@@ -33,8 +33,8 @@ class Song extends JsonResource
                 'id' => $this->id,
                 'name' => $this->name,
                 'composer' => $this->composer->name,
-                'views' => $this->views,
-                'downloads' => $this->downloads,
+                'views' => number_format($this->views),
+                'downloads' => number_format($this->downloads),
                 'midi' => $this->midi 
                     ? Storage::url(config('song.files.paths.midi') . $this->midi)
                     : "",
