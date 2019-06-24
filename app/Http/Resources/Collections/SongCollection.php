@@ -18,11 +18,13 @@ class SongCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data' => $this->collection
-                ->map(function($song) {
-                   return new SongResource($song);
-                }
-            )
+            'data' => [
+                'songs' => $this->collection
+                    ->map(function($song) {
+                        return new SongResource($song);
+                    }
+                )
+            ]
         ];
     }
 }
