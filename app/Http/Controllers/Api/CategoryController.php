@@ -17,7 +17,7 @@ class CategoryController extends Controller
     
     public function show(Category $category) {        
         return new SongCollection(
-            $category->songs()->where('status', 1)->sortBy('name')->paginate()
+            $category->songs()->paginate()->where('status', 1)->sortBy('name')
         );
     }
 }
