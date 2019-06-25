@@ -14,7 +14,7 @@ class SongCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            $this->collection->toArray()
+            'data' => $this->collection->toArray()
         ];
     }
 }
