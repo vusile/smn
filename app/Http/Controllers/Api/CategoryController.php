@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\Collections\CategoryCollection;
+use App\Http\Resources\CategoryCollection;
 use App\Http\Resources\SongCollection;
 use App\Models\Category;
 use App\Models\Song;
