@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Song;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,12 @@ class CategoryController extends Controller
         SEOMeta::setTitle($category->seo_title ?? $category->title);
         SEOMeta::setDescription("Mkusanyiko wa nyimbo za " . $category->title);
         
-        $approvedSongs = $category->songs->where('status', 1);
+        $approvedSongs = Song::with(
+                [
+                    'categories', 'composer'
+                ]
+            )
+                ->approved()->category($category->id)->orderBy('name')->get();
         
         return view(
             'categories.show',

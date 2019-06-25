@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\Collections\CategoryCollection;
-use App\Http\Resources\Collections\SongCollection;
+use App\Http\Resources\SongCollection;
 use App\Models\Category;
+use App\Models\Song;
 
 class CategoryController extends Controller
 {
@@ -17,7 +18,13 @@ class CategoryController extends Controller
     
     public function show(Category $category) {        
         return new SongCollection(
-            $category->songs()->paginate()->where('status', 1)->sortBy('name')
+            Song::with(
+                [
+                    'categories', 'user', 'composer'
+                ]
+            )
+                ->whereNotNull('user_id')
+                ->approved()->category($category->id)->orderBy('name')->paginate()
         );
     }
 }

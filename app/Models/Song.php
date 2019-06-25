@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\SongDownload;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Song extends Model
 {
@@ -120,6 +121,13 @@ class Song extends Model
     public function scopeOwnedBy($query, $user)
     {
         return $query->where('user_id', $user->id);
+    }
+    
+    public function scopeCategory($query, $categoryId)
+    {
+        $ids = DB::table('song_categories')->where('category_id', $categoryId)->get()->pluck('song_id');
+        
+        return $query->whereIn('id', $ids);
     }
     
     public function scopeTopTen($query)

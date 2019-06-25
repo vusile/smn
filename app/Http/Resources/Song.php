@@ -16,29 +16,20 @@ class Song extends JsonResource
      */
     public function toArray($request)
     {
-        if($request->get('full')) {            
-            return [
-                'name' => $this->name,
-                'composer' => $this->composer->name,
-                'views' => number_format($this->views),
-                'downloads' => number_format($this->downloads),
-                'lyrics' => str_replace('&nbsp;</p>', '</p>', $this->lyrics),
-                'pdf' => downloadLink($this, 'pdf'),
-                'midi' => $this->midi 
-                    ? Storage::url(config('song.files.paths.midi') . $this->midi) 
-                    : "",
-            ];
-        } else {
-            return [
-                'id' => $this->id,
-                'name' => $this->name,
-                'composer' => $this->composer->name,
-                'views' => number_format($this->views),
-                'downloads' => number_format($this->downloads),
-                'midi' => $this->midi 
-                    ? Storage::url(config('song.files.paths.midi') . $this->midi)
-                    : "",
-            ];
-        }
+        return [
+            'name' => $this->name,
+            'composer' => $this->composer->name,
+            'uploader' => $this->user->name,
+            'categories' => $this->categories->pluck('title')->implode(' | '),
+            'views' => number_format($this->views),
+            'downloads' => number_format($this->downloads),
+            'lyrics' => str_replace('&nbsp;</p>', '</p>', $this->lyrics),
+            'pdf' => Storage::url(config('song.files.paths.midi') . $this->pdf),
+            'midi' => $this->midi 
+                ? Storage::url(config('song.files.paths.midi') . $this->midi) 
+                : "",
+            'fit_for_liturgy' => $this->fit_for_liturgy ?? null,
+            'ithibati_number' => $this->ithibati_number ?? null,
+        ];
     }
 }

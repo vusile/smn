@@ -2,12 +2,12 @@
 
 namespace App\Http\Resources\Collections;
 
-use App\Http\Resources\Song as SongResource;
-use App\Models\Song;
+use App\Http\Resources\Composer as ComposerResource;
+use App\Models\Composer;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class SongCollection extends ResourceCollection
+class ComposerCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -18,13 +18,7 @@ class SongCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data' => [
-                'songs' => $this->collection
-                    ->map(function($song) {
-                        return new SongResource($song);
-                    }
-                )
-            ]
+            'data' => ['composers' => $this->collection->toArray()] 
         ];
     }
 }
