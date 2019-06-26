@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\Collections\CategoryCollection;
+use App\Http\Resources\CategoryCollection;
 use App\Http\Resources\SongCollection;
 use App\Models\Category;
 use App\Models\Song;
@@ -24,7 +24,7 @@ class CategoryController extends Controller
                 ]
             )
                 ->whereNotNull('user_id')
-                ->approved()->category($category->id)->orderBy('name')->paginate()
+                ->approved()->category($category->id)->orderBy('name')->get()
         );
     }
 }

@@ -1,9 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Collections;
-
-use App\Http\Resources\Category as CategoryResource;
-use App\Models\Category;
+namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
@@ -18,7 +15,7 @@ class CategoryCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data' => ['categories' => $this->collection->toArray()]
+            'data' => $this->collection->toArray()
         ];
     }
 }

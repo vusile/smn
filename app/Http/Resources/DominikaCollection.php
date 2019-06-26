@@ -17,10 +17,6 @@ class DominikaCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return [
-            'data' => [
-                'dominikas' => $this->collection->toArray()
-            ] 
-        ];
+        return ['data' => $this->collection->toArray()];
     }
 }

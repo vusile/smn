@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -15,9 +14,7 @@ class SongCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data' => [
-                'songs' => $this->collection->toArray()
-            ]
+            'data' => $this->collection->toArray()
         ];
     }
 }
