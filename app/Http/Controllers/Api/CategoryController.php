@@ -24,7 +24,7 @@ class CategoryController extends Controller
                 ]
             )
                 ->whereNotNull('user_id')
-                ->approved()->category($category->id)->orderBy('name')->get()
+                ->approved()->category($category->id)->orderBy('name')->paginate()
         );
     }
 }
