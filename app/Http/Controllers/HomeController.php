@@ -15,14 +15,17 @@ class HomeController extends Controller
         $now = Carbon::now();
         
         $activeSongsCount = Song::approved()
+            ->with('composer')    
             ->count();
         
         $recentSongs = Song::approved()
+            ->with('composer')
             ->orderBy('approved_date', 'desc')
             ->limit(10)
             ->get();
         
         $topTenSongs = Song::approved()
+            ->with('composer')
             ->orderBy('downloads', 'desc')
             ->limit(10)
             ->get();
@@ -34,11 +37,13 @@ class HomeController extends Controller
             ->toArray();
                 
         $weeklyTopTenSongs = Song::whereIn('id', $weeklySongIds)
+            ->with('composer')
             ->orderBy('downloads', 'desc')    
             ->approved()
             ->get();
            
         $topTenUploaders = User::withCount('songs')
+//                ->with('songs')
                 ->orderBy('songs_count', 'desc')
                 ->limit(10)
                 ->get();

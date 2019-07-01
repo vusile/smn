@@ -7,7 +7,7 @@
 
 <div class="container">
     @include('layouts.alphabets')
-    @foreach($approvedSongs->sortBy('name') as $song)
+    @foreach($approvedSongs as $song)
         @include('songs.partials.song-row')
     @endforeach
 </div>

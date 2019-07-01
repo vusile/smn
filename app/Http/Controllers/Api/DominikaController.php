@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Resources\Collections\DominikaCollection;
+use App\Http\Resources\Collections\SongCollection;
 use App\Models\Dominika;
-use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 
@@ -12,11 +13,6 @@ class DominikaController extends Controller
     
     public function index()
     {
-        $title = "Nyimbo za Dominika na Sikukuu Zilizoamriwa";
-        $description = "Pata Nyimbo za Dominika na Sikukuu Zilizoamriwa";
-        SEOMeta::setTitle($title);
-        SEOMeta::setDescription($description);
-        
         $dominikas = Dominika::where(
                 function($query) {
                     $query->whereIn('year_id', config('dominika.mwaka'))
@@ -27,29 +23,21 @@ class DominikaController extends Controller
             ->whereDate('dominika_date', '>=', Carbon::today()->toDateString())
             ->orderBy('dominika_date')
             ->get();
-        
-        $ibadaZaWikiHii = Dominika::thisWeek()
-            ->orderBy('dominika_date')
-            ->get();
-       
-        return view(
-            'dominika.index',
-            compact(
-                'dominikas',
-                'title',
-                'description',
-                'ibadaZaWikiHii'
-            )
+            
+        return new DominikaCollection($dominikas);
+    }
+    
+    public function thisWeek()
+    {
+        return new DominikaCollection(
+            Dominika::thisWeek()
+                ->orderBy('dominika_date')
+                ->get()
         );
     }
     
-    public function show(string $url, Dominika $dominika)
-    {
-        SEOMeta::setTitle($dominika->title);
-        SEOMeta::setDescription(
-            'Nyimbo za ' . $dominika->title
-        );
-        
+    public function show(Dominika $dominika)
+    {   
         $dominikaSongs = DB::table('dominikas_songs')
                 ->where('dominika_id', $dominika->id)
                 ->get();
@@ -79,16 +67,11 @@ class DominikaController extends Controller
                 ->where('status', 1)
                 ->sortBy('views');
          
-        return view(
-            'dominika.show',
-            compact(
-                'approvedDominikaSongs',
-                'dominika',
-                'mwanzo',
-                'katikati',
-                'shangilio',
-                'antifona'
-            )
-        );
+        return [
+            'mwanzo' => new SongCollection($approvedDominikaSongs->whereIn('id', $mwanzo)),
+            'katikati' => new SongCollection($approvedDominikaSongs->whereIn('id', $katikati)),
+            'shangilio' => new SongCollection($approvedDominikaSongs->whereIn('id', $shangilio)),
+            'antifona' => new SongCollection($approvedDominikaSongs->whereIn('id', $antifona)),
+        ];
     }
 }
