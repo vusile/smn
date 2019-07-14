@@ -32,6 +32,20 @@
                     )}}
                 </div>
                 
+                @if(!$composer->composer_alive)
+                    <div class="form-group">
+                            <p><strong>Mtunzi wa wimbo huu yupo hai?</a></strong></p>
+                                <input class="form-check-input" name="composer_alive" type="radio" id="composer_alive_yes" value="yes" @if(old('composer_alive') == "yes") checked="checked" @endif>
+                                <label class="form-check-label" for="composer_alive_yes">Ndio&nbsp;&nbsp;&nbsp;&nbsp;</label>
+
+                                <input class="form-check-input" name="composer_alive" type="radio" id="composer_alive_no" value="no" @if(old('composer_alive') == "no") checked="checked" @endif>
+                                <label class="form-check-label" for="composer_alive_no">Hapana&nbsp;&nbsp;&nbsp;&nbsp;</label>
+
+                                <input class="form-check-input" name="composer_alive" type="radio" id="composer_alive_not_sure" value="sijui">
+                                <label class="form-check-label" for="composer_alive_not_sure">Sijui</label>
+                    </div>
+                @endif
+                
                 <p><strong>PDF: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf/{{$song->pdf}}" role="button">Download Nota Uhakiki</a></p>
            
                 <div class="form-group">
@@ -115,7 +129,7 @@
                         <div class="col-lg-12">
                             <div class="form-check form-check-inline">
                               <input class="form-check-input" name="fit_for_liturgy" type="checkbox" id="fit_for_liturgy" value="1" @if($song->fit_for_liturgy) checked="checked" @endif>
-                              <label class="form-check-label" for="fit_for_liturgy">Wimbo huu unafaa kuimbwa kwenye ibada ya misa</label>
+                              <label class="form-check-label" for="fit_for_liturgy">Wimbo huu unafaa kutumika kwenye ibada ya misa</label>
                             </div>
                         </div>
                     </div>

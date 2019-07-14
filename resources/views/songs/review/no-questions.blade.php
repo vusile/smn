@@ -7,7 +7,13 @@
             <br />
             <h3>Tafadhali hakiki wimbo. Tumia maswali ya mwongozo kuhakiki:</h3>
             <br />
-           
+           @if (\Session::has('message'))
+            <div class="alert alert-info" role="alert">
+                <ul>
+                    <li>{!! \Session::get('message') !!}</li>
+                </ul>
+            </div>
+           @endif
             <div class="alert alert-success" role="alert">
                 Unahakiki wimbo Unaitwa: <strong>{{$song->name}}</strong> umetungwa na <strong>{{$song->composer->name}}</strong>. Tafadhali pakua nota zake, kisha ujibu maswali yanayofuata.
                 <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf/{{$song->pdf}}" target="_blank" role="button">Pakua Nota Uhakiki</a>
@@ -32,6 +38,8 @@
                     <br><br>
                     <strong>MUHIMU:</strong> Aliyepakia, <strong>HAJATOA</strong> ruhusa wimbo urekebishwe
                 @endif
+                
+                <br><br><a class="btn btn-primary" href="/notify-delay/{{ $song->id }}" role="button">Nahitaji Muda zaidi Kuhakiki</a>
             </div>
  
             @if ($errors->any())

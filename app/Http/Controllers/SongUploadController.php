@@ -100,6 +100,19 @@ class SongUploadController extends Controller
     
     public function store(Request $request)
     {
+        if(
+            $request->input('composer_alive')
+            && in_array($request->input('composer_alive'), ['sijui', 'no'])
+        ) {
+            $request->merge(['allowed_to_edit' => 1]);
+        } else {
+            $composer = Composer::find($request->input('composer_id'));
+            
+            if($composer->composer_alive == 2) {
+                $request->merge(['allowed_to_edit' => 1]);
+            }
+        }
+            
         $customMessages = [
             'name.required' => 'Jina la wimbo ni lazima',
             'composer_id.required' => 'Jina la mtunzi ni lazima',
@@ -107,26 +120,28 @@ class SongUploadController extends Controller
             'pdf.mimes'  => 'Tafadhali upload file la PDF',
             'midi.mimes'  => 'Tafadhali upload file la Midi, MP3',
             'categories.required'  => 'Walau kundi nyimbo moja ni lazima',
+            'composer_alive.required'  => 'Tafadhali jibu kama mtunzi yupo hai',
+            'software_file.required_with'  => 'Tafadhali pakia file ulilosave na software ili iweze kubadilishwa ikihitajika. File litahitajika pia kama mtunzi wa wimbo hayupo hai au haufahamu kama yupo hai.',
+
         ];
         
         $this->validate(
             $request,
             [
                 'name' => 'required',
+                'composer_alive' => 'sometimes|required',
                 'composer_id' => 'required',
                 'pdf' => 'required|mimes:pdf',
                 'software_file' => 'required_with:allowed_to_edit',
                 'midi' => 'mimes:mid,ogx,aac,wav,mpga',
                 'categories' => 'required',
-                'software_file.required_with'  => 'Tafadhali pakia file ulilosave na software ili iweze kubadilishwa ikihitajika',
             ],
             $customMessages
         );
 
         $pdfName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->pdf->getClientOriginalName()));
         $pdfPath = $request->file('pdf')->storeAs('uploads/files', $pdfName);
-        
-//        $pdfName = getFileNameFromPath($pdfPath);
+       
         
         if ($request->file('midi')) {
             $midiName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->midi->getClientOriginalName()));
@@ -158,7 +173,7 @@ class SongUploadController extends Controller
         
         $song = Song::create(
             array_replace(
-                $request->all(),
+                $request->except(['composer_alive']),
                 $additionalInfo
             )
         );
@@ -167,6 +182,12 @@ class SongUploadController extends Controller
             ->sync($request->input('categories'));
         
         event(new SongCreated($song));
+       
+        
+        $this->composerLifeStatus(
+            $request->input('composer_alive'),
+            $request->input('composer_id')
+        );
 
         return redirect()->route(
             'song-upload.dominika',
@@ -174,6 +195,52 @@ class SongUploadController extends Controller
                 'song' => $song
             ]
         );
+    }
+    
+    private function composerLifeStatus($isAlive, $composerId)
+    {
+        if($isAlive != 'sijui') {            
+            DB::table('composers_life_status')
+                ->insert(
+                    [
+                        'user_id' => auth()->user()->id,
+                        'composer_id' => $composerId,
+                        'alive' => $isAlive
+                    ]
+                );
+        }
+        
+        $lifeStatusCheck = DB::table('composers_life_status')
+            ->where(['composer_id' => $composerId])
+            ->get();
+        
+        if($lifeStatusCheck->count() >= 10) {            
+            $yes = $lifeStatusCheck->filter(function ($lifeStatus) {
+                return $lifeStatus->alive == 'yes';
+            });
+
+            $no = $lifeStatusCheck->filter(function ($lifeStatus) {
+                return $lifeStatus->alive == 'no';
+            });
+            
+            $statusConfirmed = false;
+            if($yes->count() > $no->count()) {
+                $statusConfirmed = true;
+                $composerIsAlive = 1;
+            } elseif ($yes->count() < $no->count()) {
+                $statusConfirmed = true;
+                $composerIsAlive = 2;
+            }
+            
+            if($statusConfirmed) {
+                Composer::where('id', $composerId)
+                        ->update(['composer_alive' => $composerIsAlive]);
+                
+                DB::table('composers_life_status')
+                    ->where(['composer_id' => $composerId])
+                    ->delete();
+            }
+        }
     }
     
     public function update(Request $request)
@@ -300,6 +367,11 @@ class SongUploadController extends Controller
         $categoriesAfterChange = $song->categories()->pluck('title', 'url')->toArray();
                
         $this->saveChanges($categoriesBeforeChange, $categoriesAfterChange, $song);
+
+        $this->composerLifeStatus(
+            $request->input('composer_alive'),
+            $request->input('composer_id')
+        );
         
         if($request->get('return')) {
             return redirect()->route(
