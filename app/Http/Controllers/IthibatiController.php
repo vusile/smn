@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Song;
+use App\Models\User;
 use App\Services\SongService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -67,23 +68,43 @@ class IthibatiController extends Controller
     
     public function store(Request $request)
     {  
-        if(!$request->get('give_ithibati')) {            
-            $this->validate(
-                $request,
-                ['comment' => 'required'],
-                ['comment.required' => 'Tafadhali weka maoni ili aliyepakia aelewe kwa nini wimbo haujapata ithibati.']
+        $validationRules = [
+            'fit_for_liturgy' => 'required',
+            'give_ithibati' => 'required'
+        ];
+        
+        $validationMessages = [
+            'fit_for_liturgy.required' => 'Tafadhali chagua kama wimbo unafaa kuimbwa kwenye ibada ya misa au la',
+            'give_ithibati.required' => 'Tafadhali changua kama wimbo unapaswa kupata ithibati au la.',
+        ];
+        
+        if($request->get('give_ithibati') == 2){
+            $validationMessages = array_merge(
+                $validationMessages,
+                ['comment.required' => 'Tafadhali weka maoni ili aliyepakia aelewe kwa nini wimbo haujapata ithibati.']    
+            );
+            
+            $validationRules = array_merge(
+                $validationRules,
+                ['comment' => 'required']    
             );
         }
+        
+        $this->validate(
+            $request,
+            $validationRules,
+            $validationMessages
+        );
         
         $song = Song::find($request->input('song_id'));
        
         if($request->get('fit_for_liturgy')) {
-           $song->fit_for_liturgy = true;
+            $song->fit_for_liturgy = true;
         } else {
            $song->fit_for_liturgy = false;            
         }
         
-        if($request->get('give_ithibati')) {
+        if($request->get('give_ithibati') == 1) {
             if($song->for_recording) {            
                 $song->status = 7;
             } else {
@@ -154,5 +175,54 @@ class IthibatiController extends Controller
                 'songReviews'
             )
         );
+    }
+    
+    public function changeMtoaIthibati(Song $song) {
+        $users = User::role('ithibati')
+                ->orderBy('first_name')
+                ->get()
+                ->mapWithKeys(function ($user) {
+                    return [
+                        $user->id => $user->name, 
+                    ];
+                })
+                ->toArray();
+               
+        
+        $currentIthibati = DB::table('ithibati_songs')
+                ->where('song_id', $song->id)
+                ->first();
+        
+        $mtoaIthibati = null;
+        
+        if($currentIthibati) {
+            $mtoaIthibati = User::find($currentIthibati->user_id);
+        }
+        
+        return view(
+            'songs.ithibati.change-mtoa-ithibati',
+            compact(
+                'song',
+                'users',
+                'mtoaIthibati'
+            )
+        );        
+    }
+    
+    public function saveMtoaIthibati() {
+        
+        DB::table('ithibati_songs')
+                ->where('song_id', request()->get('song_id'))
+                ->delete();
+        
+        DB::table('ithibati_songs')
+                ->insert([
+                    'song_id' => request()->get('song_id'),
+                    'user_id' => request()->get('user_id'),
+                ]);
+        
+        return redirect('akaunti/nyimbo/pending')
+                ->with('msg', 'Umefanikiwa kubadili mtoa Ithibati');
+        
     }
 }

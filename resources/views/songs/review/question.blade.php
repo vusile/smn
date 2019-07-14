@@ -1,4 +1,10 @@
-{{$loop->iteration}}. {!! $question->question !!} <br />
+{{$loop->iteration}}. 
+
+@if($song->can_be_edited)
+    {!! $question->question !!} <br />
+@else
+    {!! $question->question_no_permission ?? $question->question  !!} <br />
+@endif
 
 @if(isset($answers))
     @foreach($answers as $answer)

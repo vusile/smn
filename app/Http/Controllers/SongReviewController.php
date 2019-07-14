@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SongReviewDelayed;
 use App\Models\Song;
+use App\Models\User;
 use App\Services\SongService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -26,9 +28,6 @@ class SongReviewController extends Controller
 
         $questions = DB::table('review_questions')
             ->get();
-
-        $answers = DB::table('review_answers')
-                ->get();
 
         $nameQuestions = $questions->filter(function($question) {
             return $question->field == 'name';
@@ -74,7 +73,7 @@ class SongReviewController extends Controller
 
         $song = Song::pending()
             ->has('categories')
-            ->orderBy('priority_review', 'desc')  
+            ->orderBy('priority_review', 'desc')
             ->whereNotIn('user_id', [$user->id])
             ->whereNotIn('id', $hasBeenReviewed)
             ->whereIn('id', $assignedToUsers)
@@ -359,5 +358,61 @@ class SongReviewController extends Controller
         $song->save();
 
         return back();
+    }
+
+
+    public function notifyDelay(Song $song)
+    {
+        event(new SongReviewDelayed($song));
+        return back()->with('message', 'Ujumbe umetumwa kwa mpakiaji'); ;
+    }
+
+    public function changeMhakiki(Song $song) {
+        $users = User::role('uhakiki')
+                ->orderBy('first_name')
+                ->get()
+                ->mapWithKeys(function ($user) {
+                    return [
+                        $user->id => $user->name,
+                    ];
+                })
+                ->toArray();
+
+
+        $currentReviewer = DB::table('reviewer_songs')
+                ->where('song_id', $song->id)
+                ->first();
+
+        $mhakiki = null;
+
+        if($currentReviewer) {
+            $mhakiki = User::find($currentReviewer->user_id);
+        }
+
+        return view(
+            'songs.review.change-mhakiki',
+            compact(
+                'song',
+                'users',
+                'mhakiki'
+            )
+        );
+    }
+
+    public function saveMhakiki() {
+
+        DB::table('reviewer_songs')
+                ->where('song_id', request()->get('song_id'))
+                ->delete();
+
+        DB::table('reviewer_songs')
+                ->insert([
+                    'song_id' => request()->get('song_id'),
+                    'user_id' => request()->get('user_id'),
+                ]);
+
+        return redirect('akaunti/nyimbo/pending')
+                ->with('msg', 'Umefanikiwa kubadili mhakiki');
+
     }
 }
