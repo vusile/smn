@@ -147,12 +147,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/users/search', 'AdminUserController@index');
     });
 
-//    Route::group(['middleware' => ['role:viongozi uhakiki']], function () {
+
+    Route::group(['middleware' => ['role:viongozi uhakiki']], function () {
+
         Route::get('/prioritize-review/{song}', 'SongReviewController@prioritize');
         Route::get('/deprioritize-review/{song}', 'SongReviewController@deprioritize');
         Route::get('/change-mhakiki/{song}', 'SongReviewController@changeMhakiki');
         Route::post('/save-mhakiki', 'SongReviewController@saveMhakiki');
-//    });
+
+    });
 
     Route::group(['middleware' => ['role:viongozi kamati muziki']], function () {
         Route::get('/change-mtoa-ithibati/{song}', 'IthibatiController@changeMtoaIthibati');
