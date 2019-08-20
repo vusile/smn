@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Collections;
+namespace App\Http\Resources;
 
 use App\Http\Resources\Dominika as DominikaResource;
 use App\Models\Dominika;
