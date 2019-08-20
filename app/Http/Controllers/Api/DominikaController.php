@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\Collections\DominikaCollection;
-use App\Http\Resources\Collections\SongCollection;
+use App\Http\Resources\DominikaCollection;
+use App\Http\Resources\SongCollection;
 use App\Models\Dominika;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
