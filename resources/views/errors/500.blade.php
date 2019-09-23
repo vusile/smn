@@ -43,7 +43,7 @@
   <body>
     <div class="container">
       <div class="content">
-        <div class="title">500 - Swahili Music Notes</div>
+        <div class="title">500<br>Swahili Music Notes</div>
         <div class="quote">Kuna shida kidogo kwenye tovuti hii. Tafadhali tupe muda.</div>
         <div class="explanation">
           <br>
