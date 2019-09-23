@@ -43,15 +43,15 @@
   <body>
     <div class="container">
       <div class="content">
-        <div class="title"><img scr="http://www.swahilimusicnotes.com/images/swahili-music-notes-logo-site.png" /></div>
-        <div class="quote">It's not you, it's me.</div>
+        <div class="title">500 - Swahili Music Notes</div>
+        <div class="quote">Kuna shida kidogo kwenye tovuti hii. Tafadhali tupe muda.</div>
         <div class="explanation">
           <br>
           <small>
             <?php
-              $default_error_message = "An internal server error has occurred. If the error persists please contact the development team.";
+//              $default_error_message = "An internal server error has occurred. If the error persists please contact the development team.";
             ?>
-            {!! isset($exception)? ($exception->getMessage()?$exception->getMessage():$default_error_message): $default_error_message !!}
+            <!--{!! isset($exception)? ($exception->getMessage()?$exception->getMessage():$default_error_message): $default_error_message !!}-->
          </small>
        </div>
       </div>
