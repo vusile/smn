@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>{{ config('backpack.base.project_name') }} Error 400</title>
+    <title>Swahili Music Notes Error 400</title>
 
     <link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
 
@@ -43,15 +43,15 @@
   <body>
     <div class="container">
       <div class="content">
-        <div class="title">400</div>
-        <div class="quote">Bad request.</div>
+        <div class="title">400<br>Ukurasa huo haupo</div>
+        <div class="quote">Pole sana. Ukurasa unaoutafuta hapo.</div>
         <div class="explanation">
           <br>
           <small>
             <?php
               $default_error_message = "Please return to <a href='".url('')."'>our homepage</a>.";
             ?>
-            {!! isset($exception)? ($exception->getMessage()?$exception->getMessage():$default_error_message): $default_error_message !!}
+            <!--{!! isset($exception)? ($exception->getMessage()?$exception->getMessage():$default_error_message): $default_error_message !!}-->
          </small>
        </div>
       </div>
