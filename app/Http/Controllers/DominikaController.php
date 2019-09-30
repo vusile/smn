@@ -82,13 +82,6 @@ class DominikaController extends Controller
                 ->whereIn('id', $dominikaSongs->pluck('song_id')->all())
                 ->orderBy('views')
                 ->get();
-        
-//        dd($approvedDominikaSongs);
-        
-//        $approvedDominikaSongs = $dominika
-//                ->songs
-//                ->where('status', 1)
-//                ->sortBy('views');
          
         return view(
             'dominika.show',
