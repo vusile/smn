@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dominika;
+use App\Models\Song;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
@@ -74,10 +75,20 @@ class DominikaController extends Controller
                 ->pluck('song_id')
                 ->all();
         
-        $approvedDominikaSongs = $dominika
-                ->songs
-                ->where('status', 1)
-                ->sortBy('views');
+        
+        $approvedDominikaSongs = Song::approved()
+                ->select('id', 'name', 'url', 'views', 'downloads', 'composer_id')
+                ->with('composer:id,name')
+                ->whereIn('id', $dominikaSongs->pluck('song_id')->all())
+                ->orderBy('views')
+                ->get();
+        
+//        dd($approvedDominikaSongs);
+        
+//        $approvedDominikaSongs = $dominika
+//                ->songs
+//                ->where('status', 1)
+//                ->sortBy('views');
          
         return view(
             'dominika.show',
