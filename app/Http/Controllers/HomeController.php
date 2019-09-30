@@ -19,7 +19,8 @@ class HomeController extends Controller
             ->count();
         
         $recentSongs = Song::approved()
-            ->with('composer')
+            ->select('url', 'id', 'name', 'composer_id')             
+            ->with('composer:id,name')
             ->orderBy('approved_date', 'desc')
             ->limit(10)
             ->get();
@@ -37,18 +38,20 @@ class HomeController extends Controller
             ->toArray();
                 
         $weeklyTopTenSongs = Song::whereIn('id', $weeklySongIds)
-            ->with('composer')
+            ->select('url', 'id', 'name', 'composer_id')             
+            ->with('composer:id,name')
+            ->orderBy('approved_date', 'desc')
             ->orderBy('downloads', 'desc')    
             ->approved()
             ->get();
            
         $topTenUploaders = User::withCount('songs')
-//                ->with('songs')
                 ->orderBy('songs_count', 'desc')
                 ->limit(10)
                 ->get();
         
         $ibadaZaWikiHii = Dominika::thisWeek()
+            ->select('title', 'id', 'dominika_date')    
             ->orderBy('dominika_date')
             ->get();
         

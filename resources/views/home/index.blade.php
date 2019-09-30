@@ -54,7 +54,7 @@
                 <ul class="list-unstyled mt-3 mb-4">
                     @foreach($topTenUploaders as $user)
                     <li style="margin-bottom: 10px;">{{ $user->first_name . ' ' . $user->last_name }}
-                        <br>Nyimbo {{ number_format($user->songs()->approved()->count()) }}
+                        <br>Nyimbo {{ number_format($user->songs_count) }}
                     </li>
                     @endforeach
                 </ul>
