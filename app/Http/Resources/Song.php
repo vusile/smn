@@ -2,12 +2,21 @@
 
 namespace App\Http\Resources;
 
-use App\Services\SongService;
+use App\Http\Resources\Comment;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 
 class Song extends JsonResource
 {
+    /*
+     * @var bool
+     */
+    protected $showAll; 
+    
+    public function __construct($resource, $showAll = false) {
+        parent::__construct($resource);
+        $this->showAll = $showAll;
+    }
     /**
      * Transform the resource into an array.
      *
@@ -20,17 +29,29 @@ class Song extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'composer' => $this->composer->name,
-            'uploader' => $this->user->name,
-            'categories' => $this->categories->pluck('title')->implode(' | '),
             'views' => number_format($this->views),
             'downloads' => number_format($this->downloads),
-            'lyrics' => str_replace('&nbsp;</p>', '</p>', $this->lyrics),
-            'pdf' => Storage::url(config('song.files.paths.midi') . $this->pdf),
             'midi' => $this->midi 
                 ? Storage::url(config('song.files.paths.midi') . $this->midi) 
                 : "",
-            'fit_for_liturgy' => $this->fit_for_liturgy ?? null,
             'ithibati_number' => $this->ithibati_number ?? null,
+            $this->mergeWhen($this->showAll, [
+                'pdf' => Storage::url(config('song.files.paths.midi') . $this->pdf),
+                'categories' => $this->categories->pluck('title')->implode(' | '),
+                'lyrics' => str_replace('&nbsp;</p>', '</p>', $this->lyrics),
+                'comments' => Comment::collection($this->comments($this->comments)),
+                'fit_for_liturgy' => $this->fit_for_liturgy ?? null,
+                'uploader' => $this->user->name,
+            ]),
         ];
+    }
+    
+    private function comments($comments)
+    {
+        return $comments
+                ->reverse()
+                ->filter(function ($comment) {
+                    return $comment->comment == strip_tags($comment->comment);
+                });
     }
 }
