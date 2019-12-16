@@ -77,7 +77,7 @@ class SongReviewController extends Controller
                     $toReview
                 );
             })
-            ->inRandomOrder()
+//            ->inRandomOrder()
             ->first();
         
         if ($song) {
