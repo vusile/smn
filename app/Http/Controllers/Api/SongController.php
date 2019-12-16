@@ -42,7 +42,7 @@ class SongController extends Controller
         $songView->increment('views');
         $song->increment('views');
 
-        return new SongResource($song);
+        return new SongResource($song, true);
     }
     
     public function otherSongs(Song $song)
