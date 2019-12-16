@@ -98,16 +98,12 @@ class GroupOneDominikaUpdates extends Command
             148 => ["dominika_date" => "2020-08-15", "rangi" => "Nyeupe"], //Kupalizwa Mbinguni Bikira Maria
             149 => ["dominika_date" => "2020-11-01", "rangi" => "Nyeupe"], //Watakatifu Wote
             150 => ["dominika_date" => "2020-11-02", "rangi" => "Urujuani"], //Marehemu Wote
-            151 => ["dominika_date" => "2020-11-22", "rangi" => "Nyeupe"], //Sherehe ya Bwana Wetu Yesu Kristu Mfalme Mwaka A
-            169 => ["dominika_date" => "2020-11-29", "rangi" => "Urujuani"], // Mwaka A", //Dominika ya 1 ya Majilio
-            154 => ["dominika_date" => "2020-12-06", "rangi" => "Urujuani"], // Mwaka A", //Dominika ya 2 ya Majilio
-            157 => ["dominika_date" => "2020-12-13", "rangi" => "Urujuani"], // Mwaka A", //Dominika ya 3 ya Majilio
-            160 => ["dominika_date" => "2020-12-20", "rangi" => "Urujuani"], // Mwaka A", //Dominika ya 4 ya Majilio
-            164 => ["dominika_date" => "2020-12-24", "rangi" => "Nyeupe"], //Kuzaliwa kwa Bwana (Mkesha)
-            165 => ["dominika_date" => "2020-12-24", "rangi" => "Nyeupe"], //Kuzaliwa kwa Bwana (Misa ya Usiku)
-            166 => ["dominika_date" => "2020-12-25", "rangi" => "Nyeupe"], //Kuzaliwa kwa Bwana (Misa ya Alfajiri)
-            167 => ["dominika_date" => "2020-12-25", "rangi" => "Nyeupe"], //Kuzaliwa kwa Bwana (Misa ya Mchana)
-            168 => ["dominika_date" => "2020-12-27", "rangi" => "Nyeupe"], //Familia Takatifu
+            160 => ["dominika_date" => "2019-12-22", "rangi" => "Urujuani"], // Mwaka A", //Dominika ya 4 ya Majilio
+            164 => ["dominika_date" => "2019-12-24", "rangi" => "Nyeupe"], //Kuzaliwa kwa Bwana (Mkesha)
+            165 => ["dominika_date" => "2019-12-24", "rangi" => "Nyeupe"], //Kuzaliwa kwa Bwana (Misa ya Usiku)
+            166 => ["dominika_date" => "2019-12-25", "rangi" => "Nyeupe"], //Kuzaliwa kwa Bwana (Misa ya Alfajiri)
+            167 => ["dominika_date" => "2019-12-25", "rangi" => "Nyeupe"], //Kuzaliwa kwa Bwana (Misa ya Mchana)
+            168 => ["dominika_date" => "2019-12-29", "rangi" => "Nyeupe"], //Familia Takatifu
             172 => ["dominika_date" => "2020-12-08", "rangi" => "Nyeupe"], //Sherehe ya Bikira Maria mkingiwa dhambi ya asili
             173 => ["dominika_date" => "2020-03-19", "rangi" => "Nyeupe"], //Yosefu Mume wa Bikira Maria
             174 => ["dominika_date" => "2020-03-25", "rangi" => "Nyeupe"], //Kupashwa habari ya kuzaliwa kwa Bwana
