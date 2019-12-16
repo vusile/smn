@@ -51,7 +51,7 @@ class HomeController extends Controller
                 ->get();
         
         $ibadaZaWikiHii = Dominika::thisWeek()
-            ->select('title', 'id', 'dominika_date')    
+            ->select('title', 'id', 'dominika_date', 'rangi')    
             ->orderBy('dominika_date')
             ->get();
         
