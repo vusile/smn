@@ -196,14 +196,20 @@ class ComposerController extends Controller
     
     public function account()
     {   
-        $composers = Composer::where('user_id', auth()->user()->id)
+        $me = Composer::where('user_id', auth()->user()->id)
             ->orderBy('name')
             ->whereNotNull('name')
-            ->paginate(20);       
+            ->paginate(20);
+        
+        $composers = Composer::where('added_by', auth()->user()->id)
+            ->orderBy('name')
+            ->whereNotNull('name')
+            ->paginate(20);
+       
         
         return view(
             'account.composers',
-            compact('composers')
+            compact('me', 'composers')
         );
     }
 }
