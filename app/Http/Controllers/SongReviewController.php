@@ -160,7 +160,8 @@ class SongReviewController extends Controller
         
         echo $iDontKnows;
         
-        if(!$iDontKnows) {  
+        if(!$iDontKnows) {
+            dd($reviews);
             $res = DB::table('reviews')
                 ->insert($reviews);
             
