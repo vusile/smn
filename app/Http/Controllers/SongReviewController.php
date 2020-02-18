@@ -158,7 +158,10 @@ class SongReviewController extends Controller
             ];
         }
         
-        if(!$iDontKnows) {            
+        echo $iDontKnows;
+        
+        if(!$iDontKnows) {  
+            dd("We made it here");
             DB::table('reviews')
                 ->insert($reviews);
         }
