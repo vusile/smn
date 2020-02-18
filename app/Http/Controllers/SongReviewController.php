@@ -150,7 +150,7 @@ class SongReviewController extends Controller
                 'user_id' => auth()->user()->id,
                 'song_id' => $song->id,
                 'review_question_id' =>  $question->id,
-                'review_answer_id' => $request->input('answer' . $question->id),
+                'review_answer_id' => (int) $request->input('answer' . $question->id),
                 'suggestion' => $request->input('suggestion' . $question->id),
                 'comment' => $request->input('comment' . $question->id),
                 'created_at' => Carbon::now()->toDateString(),
