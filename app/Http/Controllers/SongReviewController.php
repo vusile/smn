@@ -158,14 +158,9 @@ class SongReviewController extends Controller
             ];
         }
         
-        echo $iDontKnows;
-        
         if(!$iDontKnows) {
-            //dd($reviews);
             $res = DB::table('reviews')
                 ->insert($reviews);
-            
-            dd($res);
         }
         
         $reviewedSongs = session('songs_reviewed', 0);
