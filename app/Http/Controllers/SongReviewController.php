@@ -49,7 +49,7 @@ class SongReviewController extends Controller
         })->count();
                 
         $songsAlredyInReviewProcess = DB::table('reviews')
-            ->whereNotIn('song_id', $songsUserHasReviewed)
+            \\->whereNotIn('song_id', $songsUserHasReviewed)
             ->select(DB::raw('count(*) as answered, song_id, user_id'))
             ->get()
             ->filter(function ($review) use ($mandatoryQuestions) {
