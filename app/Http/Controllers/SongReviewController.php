@@ -59,22 +59,32 @@ class SongReviewController extends Controller
             ->toArray();
            
         
-        $toReview = array_diff(
+        /*$toReview = array_diff(
                 $songsAlredyInReviewProcess,
                 $songsUserHasReviewed
-            );
+            );*/
         
-        if(!head($toReview)){
-            $toReview = null;
+        if(!head($songsAlredyInReviewProcess)){
+            $songsAlredyInReviewProcess = null;
+        }
+        
+        if(!head($songsUserHasReviewed)){
+            $songsUserHasReviewed = null;
         }
         
         $song = Song::pending()
             ->has('categories')
             ->whereNotIn('user_id', [auth()->user()->id])
-            ->when($toReview, function($query, $toReview) {
+            ->when($songsUserHasReviewed, function($query, $songsUserHasReviewed) {
+                return $query->whereNotIn(
+                    'id',
+                    $songsUserHasReviewed
+                );
+            })
+            ->when($songsAlredyInReviewProcess, function($query, $songsAlredyInReviewProcess) {
                 return $query->whereIn(
                     'id',
-                    $toReview
+                    $songsAlredyInReviewProcess
                 );
             })
 //            ->inRandomOrder()
