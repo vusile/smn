@@ -24,17 +24,17 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/custom.css" crossorigin="anonymous">
-    
+
     @section('header')
     @show
-    
+
   </head>
   <body>
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
         <h5 class="my-0 mr-md-auto font-weight-normal"><img scr="/images/swahili-music-notes-logo-site.png" /></h5>
-     
+
         <div class="container">
-           
+
             <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
                 <a class="navbar-brand" href="/">
                     <img src="/images/swahili-music-notes-logo-site.png" alt="Swahili Music Notes">
@@ -70,8 +70,8 @@
 
             </nav>
         </div>
-      
-      
+
+
       @if (Auth::check())
         <a class="btn btn-outline-primary" href="/akaunti">Akaunti</a>
         &nbsp;<a class="btn btn-outline-primary" href="/logout">Logout</a>
@@ -89,6 +89,11 @@
         @if (session('msg', null))
             <div class="alert alert-success" role="alert">
                 {{session('msg', null)}}
+            </div>
+        @endif
+        @if (session('error', null))
+            <div class="alert alert-danger" role="alert">
+                {{session('error', null)}}
             </div>
         @endif
     </div>

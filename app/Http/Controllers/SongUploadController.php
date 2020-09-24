@@ -14,18 +14,19 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
+
 class SongUploadController extends Controller
 {
     /*
      * @var SongService
      */
     protected $songService;
-    
+
     /*
      * @var SearchService
      */
     protected $searchService;
-    
+
     public function __construct(
         SongService $songService,
         SearchService $searchService
@@ -33,7 +34,7 @@ class SongUploadController extends Controller
         $this->songService = $songService;
         $this->searchService = $searchService;
     }
-    
+
     public function index()
     {
         $composers = Composer::all()
@@ -45,20 +46,20 @@ class SongUploadController extends Controller
             )
             ->pluck('name', 'id')
             ->toArray();
-        
+
         return view(
             'songs.upload.index',
             compact('composers')
         );
     }
-    
+
     public function details(Request $request)
     {
         $customMessages = [
             'name.required' => 'Jina la wimbo ni lazima',
             'composer_id.required' => 'Jina la mtunzi ni lazima',
         ];
-        
+
         $this->validate(
             $request,
             [
@@ -67,26 +68,26 @@ class SongUploadController extends Controller
             ],
             $customMessages
         );
-        
+
         $composer = Composer::find(
             $request->input('composer_id')
         );
-        
-        $songName = $request->input('name'); 
+
+        $songName = $request->input('name');
         $categories = Category::orderBy('title')
                 ->get();
-        
+
         $softwares = DB::table('softwares')
                 ->get()
                 ->pluck('software_name', 'id')
                 ->toArray();
-        
+
         $duplicates = $this->searchService
             ->search(
                 $songName . ' ' . $composer->name,
                 'songs'
             );
-       
+
         return view(
             'songs.upload.details',
             compact(
@@ -95,10 +96,10 @@ class SongUploadController extends Controller
                 'categories',
                 'duplicates',
                 'softwares'
-            )      
+            )
         );
     }
-    
+
     public function store(Request $request)
     {
         $customMessages = [
@@ -109,7 +110,7 @@ class SongUploadController extends Controller
             'midi.mimes'  => 'Tafadhali upload file la Midi, MP3',
             'categories.required'  => 'Walau kundi nyimbo moja ni lazima',
         ];
-        
+
         $this->validate(
             $request,
             [
@@ -122,16 +123,14 @@ class SongUploadController extends Controller
             ],
             $customMessages
         );
-        
-        $pdfPath = $request->file('pdf')->store('uploads/files');
-        
-        $pdfName = getFileNameFromPath($pdfPath);
-        
+
+        $pdfName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->pdf->getClientOriginalName()));
+        $pdfPath = $request->file('pdf')->storeAs('uploads/files', $pdfName);
+
         if ($request->file('midi')) {
-            $midiPath = $request->file('midi')->store('uploads/files');
-            
-            $midiName = getFileNameFromPath($midiPath); 
-            
+            $midiName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->midi->getClientOriginalName()));
+            $midiPath = $request->file('midi')->storeAs('uploads/files', $midiName);
+
             if(str_contains($midiName, 'mpga')){
                 $midiName = head(explode('.', $midiName)) . '.mp3';
                 Storage::move(
@@ -140,19 +139,18 @@ class SongUploadController extends Controller
                 );
             }
         }
-        
+
         if ($request->file('software_file')) {
-            $softwareFilePath = $request->file('software_file')->store('uploads/files');
-            
-            $softwareFileName = getFileNameFromPath($softwareFilePath); 
+            $softwareFileName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->software_file->getClientOriginalName()));
+            $softwareFilePath = $request->file('software_file')->storeAs('uploads/files', $softwareFileName);
         }
-        
+
         if ($request->file('nota_original')) {
             $originalFilePath = $request->file('nota_original')->store('uploads/files');
-            
-            $originalFileName = getFileNameFromPath($originalFilePath); 
+
+            $originalFileName = getFileNameFromPath($originalFilePath);
         }
-        
+
         $additionalInfo = [
             'user_id' => auth()->user()->id,
             'pdf' => $pdfName,
@@ -162,17 +160,17 @@ class SongUploadController extends Controller
             'uploaded_date' => Carbon::now()->format('Y-m-d H:i:s'),
             'status' => 4
         ];
-        
+
         $song = Song::create(
             array_replace(
                 $request->all(),
                 $additionalInfo
             )
         );
-        
+
         $song->categories()
             ->sync($request->input('categories'));
-        
+
         event(new SongCreated($song));
 
         return redirect()->route(
@@ -182,7 +180,7 @@ class SongUploadController extends Controller
             ]
         );
     }
-    
+
     public function update(Request $request)
     {
         $customMessages = [
@@ -192,7 +190,7 @@ class SongUploadController extends Controller
             'midi.mimes'  => 'Tafadhali upload file la Midi, MP3',
             'categories.required'  => 'Walau kundi nyimbo moja ni lazima',
         ];
-        
+
         $this->validate(
             $request,
             [
@@ -204,22 +202,20 @@ class SongUploadController extends Controller
             ],
             $customMessages
         );
-        
-        $additionalInfo = [];
-        
-        if ($request->file('pdf')){
-            $pdfPath = $request->file('pdf')->store('uploads/files');
 
-            $pdfName = getFileNameFromPath($pdfPath);
-            
+        $additionalInfo = [];
+
+        if ($request->file('pdf')){
+            $pdfName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->pdf->getClientOriginalName()));
+            $pdfPath = $request->file('pdf')->storeAs('uploads/files', $pdfName);
+
             $additionalInfo['pdf'] = $pdfName;
         }
-        
+
         if ($request->file('midi')) {
-            $midiPath = $request->file('midi')->store('uploads/files');
-            
-            $midiName = getFileNameFromPath($midiPath); 
-            
+            $midiName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->midi->getClientOriginalName()));
+            $midiPath = $request->file('midi')->storeAs('uploads/files', $midiName);
+
             if(str_contains($midiName, 'mpga')){
                 $midiName = head(explode('.', $midiName)) . '.mp3';
                 Storage::move(
@@ -227,22 +223,21 @@ class SongUploadController extends Controller
                     'uploads/files/' . $midiName
                 );
             }
-            
+
             $additionalInfo['midi'] = $midiName;
         }
-        
+
         if ($request->file('software_file')) {
-            $softwareFilePath = $request->file('software_file')->store('uploads/files');
-            
-            $softwareFileName = getFileNameFromPath($softwareFilePath); 
-            $additionalInfo['software_file'] = $softwareFileName;
+            $softwareFileName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->software_file->getClientOriginalName()));
+
+            $softwareFilePath = $request->file('software_file')->storeAs('uploads/files', $softwareFileName);
         }
-        
+
         if ($request->file('nota_original')) {
             $originalFilePath = $request->file('nota_original')->store('uploads/files');
-            
-            $originalFileName = getFileNameFromPath($originalFilePath); 
-            $additionalInfo['software_file'] = $originalFileName;
+
+            $originalFileName = getFileNameFromPath($originalFilePath);
+            $additionalInfo['nota_original'] = $originalFileName;
         }
 
         Song::where('id', $request->input('song_id'))
@@ -252,12 +247,12 @@ class SongUploadController extends Controller
                     $additionalInfo
                 )
             );
-        
+
         $song = Song::find($request->input('song_id'));
-        
+
         $song->categories()
             ->sync($request->input('categories'));
-        
+
         return redirect()->route(
             'song-upload.dominika',
             [
@@ -265,41 +260,41 @@ class SongUploadController extends Controller
             ]
         );
     }
-    
+
     public function dominika(Song $song)
     {
         $dominikas = Dominika::all()
             ->pluck('title', 'id')
             ->toArray();
-        
+
         $parts = $this->songService->similarSongsWithDominika($song->name);
-        
+
         return view(
             'songs.upload.dominikas',
             compact(
                 'song',
                 'dominikas',
                 'parts'
-            )      
+            )
         );
     }
-    
+
     public function storeDominika(Request $request)
     {
         $song = Song::find($request->input('song_id'));
-       
+
         $mwanzo = $this->partsOfMass($song, $request->input('mwanzo'), 1);
         $katikati = $this->partsOfMass($song, $request->input('katikati'), 2);
         $shangilio = $this->partsOfMass($song, $request->input('shangilio'), 3);
-        $antifona = $this->partsOfMass($song, $request->input('antifona'), 4); 
-        
+        $antifona = $this->partsOfMass($song, $request->input('antifona'), 4);
+
         $song->dominikas()->sync(
                 array_merge(
                     array_merge($mwanzo,  $katikati),
                     array_merge($shangilio + $antifona)
-                ) 
+                )
             );
-        
+
         return redirect()->route(
             'song-upload.preview',
             [
@@ -307,11 +302,11 @@ class SongUploadController extends Controller
             ]
         );
     }
-    
+
     public function deleteDominika(Request $request)
     {
         $song = Song::find($request->input('song_id'));
- 
+
         DB::table('dominikas_songs')
                 ->where('song_id', $request->input('song_id'))
                 ->delete();
@@ -323,30 +318,30 @@ class SongUploadController extends Controller
             ]
         );
     }
-    
+
     public function preview(Song $song)
     {
         $parts = null;
-        
+
         if($song->dominikas) {
             $parts = $this->songService->determinePartOfMass($song);
         }
-        
+
         return view(
             'songs.upload.preview',
             compact(
                 'song',
                 'parts'
-            )      
+            )
         );
     }
-    
+
     protected function partsOfMass(
         Song $song,
         array $dominikaIds = null,
         int $partOfMassId
     ) {
-        if ($dominikaIds) {            
+        if ($dominikaIds) {
             return collect($dominikaIds)
                 ->map(function ($mwanzo) use ($partOfMassId) {
                     return [
@@ -356,10 +351,10 @@ class SongUploadController extends Controller
                 })
                 ->toArray();
         }
-        
+
         return [];
     }
-    
+
     public function edit(Song $song)
     {
         $composers = Composer::all()
@@ -371,20 +366,20 @@ class SongUploadController extends Controller
             )
             ->pluck('name', 'id')
             ->toArray();
-            
+
         $selectedCategories = $song->categories
             ->pluck('id')
             ->toArray();
-        
-        
+
+
         $categories = Category::orderBy('title')
             ->get();
-        
+
         $softwares = DB::table('softwares')
                 ->get()
                 ->pluck('software_name', 'id')
                 ->toArray();
-        
+
         return view(
             'songs.upload.edit',
             compact(
@@ -393,7 +388,7 @@ class SongUploadController extends Controller
                 'composers',
                 'softwares',
                 'selectedCategories'
-            )      
+            )
         );
     }
 }

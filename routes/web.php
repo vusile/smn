@@ -31,7 +31,7 @@ Route::get('/composer/songs/{slug}/{composer}', function ($slug, $composer) {
 });
 Route::get('/watunzi/nyimbo/{slug}/{composer}', 'ComposerController@songs');
 Route::get('/watunzi/', 'ComposerController@index');
-Route::get('/uploaders/', function() {   
+Route::get('/uploaders/', function() {
     return redirect('/wapakia-nyimbo', 301);
 });
 Route::get('/wapakia-nyimbo/', 'UserController@index');
@@ -70,9 +70,10 @@ Route::get('/auth/{provider}', 'Auth\SocialAuthController@redirectToProvider');
 Route::get('/auth/{provider}/callback', 'Auth\SocialAuthController@handleProviderCallback');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/upload/song', 'SongUploadController@index')
-        ->name('song-upload.index')
-        ->middleware('review.songs');
+    Route::group(['middleware' => ['review.songs']], function() {
+        Route::get('/upload/song', 'SongUploadController@index')
+            ->name('song-upload.index');
+    });
     Route::get('/akaunti/review-nyimbo/', 'SongReviewController@index')
         ->name('song-review.index');
     Route::post('/akaunti/review-nyimbo/store', 'SongReviewController@store')
@@ -87,8 +88,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/upload/remove-dominika/', 'SongUploadController@deleteDominika')
             ->name('song-upload.dominika.delete');
     Route::get('/upload/preview/{song}', 'SongUploadController@preview')
-            ->name('song-upload.preview');
-    Route::get('/akaunti', 'AccountController@index');
+        ->name('song-upload.preview');
+    Route::get('/akaunti', 'AccountController@index')
+        ->name('akaunti')
+        ->middleware('check_phone');
     Route::get('/akaunti/watunzi', 'ComposerController@account')
             ->name('account.composers');
     Route::get('/akaunti/nyimbo/pending', 'AccountController@pending')
@@ -111,6 +114,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/jobs', 'JobController@index');
     Route::get('/jobs/{job}/delete', 'JobController@delete');
     Route::get('/comments/{comment}', 'CommentController@show');
+    Route::post('/phone-collector', 'UserController@savePhoneNumber')->name('save-number');
+    Route::get('/phone-collector', 'UserController@getPhoneNumber');
+    Route::get('/verify-number', 'UserController@verificationForm')->name('verify-number-form');
+    Route::post('/verify-number', 'UserController@verifyNumber')->name('verify-number');
 });
 Auth::routes();
 
