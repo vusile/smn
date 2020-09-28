@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\SmsService;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -60,6 +61,7 @@ class UserController extends Controller
         } else {
             if($request->verification_code == $user->verification_code) {
                 $user->phone_verified = true;
+                $user->save();
                 Session::flash('msg', 'Umefanikiwa kujisajili kuhakiki namba yako. Tumeshaku-login. Karibu Swahili Music Notes');
                 return redirect('/');
             }
@@ -94,14 +96,20 @@ class UserController extends Controller
             $customMessages
         );
 
+        $code = rand(0001, 9999);
+
         User::where('id', auth()->user()->id)
             ->update(
                 [
                     'phone' => $request->phone,
                     'has_whatsapp' => $request->has_whatsapp,
                     'phone_verified' => false,
+                    'verification_code' => $code
                 ]
             );
+
+        $smsService = new SmsService();
+//        $smsService->sendActivationCode($user, $code);
 
         Session::flash('msg', 'Umefanikiwa kuweka namba yako. Tafadhali thibitisha namba yako ya simu kwa kuweka namba tuliyokutumia kwenye message.');
 
