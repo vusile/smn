@@ -20,11 +20,10 @@ class AccountController extends Controller
             ->where('review_question_id', 1)
             ->groupBy('user_id')
             ->get();
-        
+
         return view(
             'account.index',
             compact(
-                'composers',
                 'activeSongs',
                 'pendingSongs',
                 'views',
@@ -33,51 +32,53 @@ class AccountController extends Controller
             )
         );
     }
-    
+
     public function impersonate(User $user)
     {
         auth()->user()->impersonate($user);
     }
-    
+
     public function stopImpersonating()
     {
         auth()->user()->leaveImpersonation();
     }
-    
+
     public function pending()
     {
         $songs = $this->getPendingSongs()
             ->paginate(20);
-        
+
         $status = 'Nyimbo zinazosubiri Review';
         $count = $songs->total();
-        
+
         return view(
             'account.songs',
             compact('songs', 'status', 'count')
         );
     }
-    
+
     public function live()
     {
         $songs = $this->getLiveSongs()
             ->paginate(20);
-        
+
         $status = 'Nyimbo zilizo Live';
-        
+
+        $count = $songs->total();
+
         return view(
             'account.songs',
             compact('songs', 'status', 'count')
         );
     }
-    
+
     protected function getLiveSongs()
     {
         return Song::approved()
             ->ownedBy(auth()->user())
             ->orderBy('id', 'desc');
     }
-    
+
     protected function getPendingSongs()
     {
         return Song::pending()
