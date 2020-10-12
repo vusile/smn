@@ -12,7 +12,7 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <h2 class="card-title">{{ $blogPost->title }}</h2>
-                        <p class="card-text">{{ str_limit(strip_tags($blogPost->text), 200) }}</p>
+                        <p class="card-text">{{ Str::limit(strip_tags($blogPost->text), 200) }}</p>
                         <p><a class="btn btn-secondary" href="/blog/{{ $blogPost->url }}/{{ $blogPost->id }}" role="button">Soma Zaidi</a></p>
                     </div>
                 </div>

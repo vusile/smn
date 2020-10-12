@@ -9,7 +9,7 @@
     @foreach($dominikas as $dominika)
         <div class="row  {{$loop->index%2 == 0 ? "bg-light" : "" }} ">
             <div class="col-lg-6" >
-                <p><a href = "/dominika-sikukuu/{{str_slug($dominika->title)}}/{{$dominika->id}}">{{ $dominika->title }}</a> - {{ $dominika->rangi }}</p>
+                <p><a href = "/dominika-sikukuu/{{Str::slug($dominika->title)}}/{{$dominika->id}}">{{ $dominika->title }}</a> - {{ $dominika->rangi }}</p>
             </div>
             <div class="col-lg-4" >
                 <p>{{ $dominika->dominika_date? $dominika->dominika_date->format('d-m-Y') : '' }}</p>

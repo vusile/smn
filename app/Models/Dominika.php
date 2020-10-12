@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,12 +35,12 @@ class Dominika extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    
+
     public function songs()
     {
         return $this->belongsToMany('App\Models\Song', 'dominikas_songs');
     }
-    
+
     public function year()
     {
         return $this->belongsTo('App\Models\Year');
@@ -57,7 +57,7 @@ class Dominika extends Model
         $sunday = Carbon::now()
                 ->addDays(14)
                 ->format('Y-m-d');
-        
+
         return $query->whereBetween(
             'dominika_date',
             [

@@ -9,49 +9,50 @@ use App\Models\Composer;
 use App\Services\ComposerService;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class ComposerController extends Controller
 {
     protected $composerService;
-    
-    public function __construct(ComposerService $composerService) 
+
+    public function __construct(ComposerService $composerService)
     {
         $this->composerService = $composerService;
     }
-    
+
     public function index()
-    {   
+    {
         $composers = Composer::all()
             ->sortBy('name')
             ->filter(
                 function ($composer) {
                     return ($composer->active_songs > 0) && $composer->name;
                 }
-            );       
-        
+            );
+
         return new ComposerCollection($composers);
     }
-    
+
     public function show(Composer $composer)
     {
         return new ComposerResource($composer);
     }
-    
+
     public function songs(Composer $composer)
-    {  
+    {
         return new SongCollection(
             $composer->songs->where('status', 1)->sortBy('name')
         );
     }
-    
+
     public function create()
     {
         return view(
             'composers.create'
         );
     }
-    
+
     public function edit(Composer $composer)
     {
         return view(
@@ -59,17 +60,17 @@ class ComposerController extends Controller
             compact('composer')
         );
     }
-    
+
     public function store(Request $request)
     {
         $duplicates = $this->composerService
                 ->checkForDuplicates($request->input('name'));
-        
+
         if (!$duplicates) {
             $customMessages = [
                 'name.required' => 'Jina la mtunzi ni lazima',
             ];
-        
+
             $this->validate(
                 $request,
                 [
@@ -79,11 +80,11 @@ class ComposerController extends Controller
             );
 
             $additionalInfo = $this->uploadComposerPhotos($request);
-        
+
             if ($request->has('uploader_is_composer')) {
                 $additionalInfo['user_id'] = auth()->user()->id;
             }
-        
+
             $composer = Composer::create(
                 array_replace(
                     $request->all(),
@@ -110,7 +111,7 @@ class ComposerController extends Controller
             );
         }
     }
-    
+
     public function update(Request $request)
     {
         $customMessages = [
@@ -139,14 +140,14 @@ class ComposerController extends Controller
                 )
             );
 
-       
+
         return redirect()->route(
             'account.composers'
         );
     }
-    
+
     protected function uploadComposerPhotos($request)
-    {        
+    {
         $photos = [];
         for ($i = 1; $i < 4; $i++) {
             $photoField = "photo$i";
@@ -159,17 +160,17 @@ class ComposerController extends Controller
                 $photos[$photoField] = getFileNameFromPath($path);
             }
         }
-       
+
         return $photos;
     }
-    
+
     public function account()
-    {   
+    {
         $composers = Composer::where('user_id', auth()->user()->id)
             ->orderBy('name')
             ->whereNotNull('name')
-            ->paginate(20);       
-        
+            ->paginate(20);
+
         return view(
             'account.composers',
             compact('composers')

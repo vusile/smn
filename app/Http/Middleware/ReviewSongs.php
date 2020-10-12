@@ -18,7 +18,11 @@ class ReviewSongs
      */
     public function handle($request, Closure $next)
     {
-        if(Song::pending()->count() > 0) {            
+        if(auth()->user()->hasRole('super admin')) {
+            return $next($request);
+        }
+
+        if(Song::pending()->count() > 0) {
             $reviewedToday = DB::table('reviews')
                 ->where('user_id', auth()->user()->id)
                 ->whereDate('created_at', Carbon::now()->toDateString())
@@ -33,7 +37,7 @@ class ReviewSongs
                 return redirect('/akaunti/review-nyimbo');
             }
         }
-                
+
         return $next($request);
     }
 }

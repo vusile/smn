@@ -1,6 +1,6 @@
 <div class="row  {{$loop->index%2 == 0 ? "nk-white" : "" }} ">
     <div id="{{ substr($composer->name,0,1) }}" class="col-lg-4" >
-        <p>{{ title_case($composer->name) }}<br>
+        <p>{{ Str::title($composer->name) }}<br>
             <small>
                 <a href = '/mtunzi/edit/{{$composer->id}}'>Boresha Taarifa za Mtunzi</a>
             </small>

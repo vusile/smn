@@ -11,7 +11,7 @@
 		          <i class="fa fa-calendar"></i>
 		        </div>
 		        <input class="form-control pull-right"
-		        		id="daterangepicker-{{ str_slug($filter->name) }}"
+		        		id="daterangepicker-{{ Str::slug($filter->name) }}"
 		        		type="text"
 		        		@if ($filter->currentValue)
 							@php
@@ -26,7 +26,7 @@
 					        placeholder="{{ $date_range }}"
 						@endif
 		        		>
-		        <div class="input-group-addon daterangepicker-{{ str_slug($filter->name) }}-clear-button">
+		        <div class="input-group-addon daterangepicker-{{ Str::slug($filter->name) }}-clear-button">
 		          <a class="" href=""><i class="fa fa-times"></i></a>
 		        </div>
 		    </div>
@@ -95,7 +95,7 @@
   		}
 
 		jQuery(document).ready(function($) {
-			var dateRangeInput = $('#daterangepicker-{{ str_slug($filter->name) }}').daterangepicker({
+			var dateRangeInput = $('#daterangepicker-{{ Str::slug($filter->name) }}').daterangepicker({
 				timePicker: false,
 		        ranges: {
 		            'Today': [moment().startOf('day'), moment().endOf('day')],
@@ -129,7 +129,7 @@
 			});
 
 			// datepicker clear button
-			$(".daterangepicker-{{ str_slug($filter->name) }}-clear-button").click(function(e) {
+			$(".daterangepicker-{{ Str::slug($filter->name) }}-clear-button").click(function(e) {
 				e.preventDefault();
 				applyDateRangeFilter{{camel_case($filter->name)}}(null, null);
 			})

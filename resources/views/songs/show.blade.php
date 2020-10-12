@@ -1,6 +1,14 @@
 @extends('layouts.front-end')
 @section('header')
-    <script src="https://www.google.com/recaptcha/api.js?hl=sw" async defer></script>
+{{--    <script src="https://www.google.com/recaptcha/api.js?hl=sw" async defer></script>--}}
+
+    <script src="https://www.google.com/recaptcha/api.js?hl=sw&render={{ env('RECAPTCHA_PUBLIC_KEY') }}"></script>
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('{{ env('RECAPTCHA_PUBLIC_KEY') }}').then(function(token) {
+                document.getElementById("recaptcha_token").value = token;
+            }); });
+    </script>
 @endsection
 @section('content')
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
@@ -10,8 +18,8 @@
         <div class="row">
             <div class="col-md-4">
                 <p>
-                    <strong>Mtunzi:</strong> {{ $song->composer->name }} 
-                    
+                    <strong>Mtunzi:</strong> {{ $song->composer->name }}
+
                     @if ($song->composer->has_profile) <br> > <a href="/composer/profile/{{ $song->composer->url }}/{{ $song->composer->id }}">Mfahamu Zaidi {{ $song->composer->name }} </a>@endif
                     @if ($otherSongs) <br> > <a href="/composer/songs/{{ $song->composer->url }}/{{ $song->composer->id }}">Tazama Nyimbo nyingine za {{ $song->composer->name }} </a>@endif
                 </p>
@@ -20,27 +28,27 @@
                     <p><strong>Umepakiwa na:</strong> {{ $song->user->name }}</p>
                 @endif
                 <p><strong>Umepakuliwa mara</strong> {{ number_format($song->downloads) }} | <strong>Umetazamwa mara</strong> {{ number_format($song->views) }}</p>
-                
+
                 @if($song->dominikas->count())
                 <p>
                     <strong>Wimbo huu unaweza kutumika: </strong><br />
                     @foreach($song->dominikas as $dominika)
-                        - {{ $parts[$dominika->id]->name }} <a href = "/dominika-sikukuu/{{str_slug($dominika->title)}}/{{$dominika->id}}">{{ $dominika->title }}</a><br>
+                        - {{ $parts[$dominika->id]->name }} <a href = "/dominika-sikukuu/{{Str::slug($dominika->title)}}/{{$dominika->id}}">{{ $dominika->title }}</a><br>
                     @endforeach
                 </p>
                 @endif
-<!--                <i class="fa fa-heart-o"></i> 
+<!--                <i class="fa fa-heart-o"></i>
                 <p><a style="-moz-text-decoration-style: wavy; text-decoration: underline;" href="/favorites/addtofavorites/{{ $song->id }}">
                         Weka wimbo kwenye favorites</a></p>-->
 <!--                @if($song->place_of_composition || $song->date_of_composition)
-                    <p>Umetungwa 
-                        {{ $song->place_of_composition }} 
-                        {{   
-                            $song->date_of_composition ? ' ' . date("M d, Y",strtotime($song->date_of_composition)): '' 
-                        }} 
+                    <p>Umetungwa
+                        {{ $song->place_of_composition }}
+                        {{
+                            $song->date_of_composition ? ' ' . date("M d, Y",strtotime($song->date_of_composition)): ''
+                        }}
                     </p>
                 @endif-->
-                
+
 <a class="btn btn-primary" href="{{downloadLink($song, 'pdf')}}" role="button">Download Nota</a>
                 @if($song->midi)
                     <a class="btn btn-primary" href="{{downloadLink($song, 'midi')}}" role="button">Download Midi</a>
@@ -63,7 +71,7 @@
             </div>
             @endif
         </div>
-        
+
     </div>
     <div class="container">
         <br>
@@ -110,6 +118,7 @@
                     </div>
                 @endif
                 <form method="post" action="/comment" id="comments-form">
+                    <input type="hidden" name="recaptcha_token" id="recaptcha_token">
                     <div class="form-group">
                       <label for="name">Jina lako</label>
                       <input type="text" class="form-control" id="name" name="name" placeholder="Jina lako" required="">
@@ -129,7 +138,7 @@
                       <label for="comment">Maoni yako</label>
                       <textarea required="" class="form-control" id="comment" name="comment" rows="3" placeholder="Pongeza, Kosoa.... Uwe mstaarabu"></textarea>
                     </div>
-                    
+
                     <div class="form-group row">
                         <div class="col-md-6">
                             <div class="g-recaptcha" id="feedback-recaptcha" data-sitekey="6LfmUYAUAAAAAMRJDZX7NR784FH74RRz0brOYh4G"></div>

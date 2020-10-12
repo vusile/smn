@@ -5,13 +5,14 @@ namespace App\Console\Commands;
 use App\Models\Composer;
 use App\Services\ComposerService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
 class FindComposerDuplicates extends Command
 {
     /**
-     * @var ComposerService 
+     * @var ComposerService
      */
     protected $composerService;
     /**
@@ -62,7 +63,7 @@ class FindComposerDuplicates extends Command
                     $output->writeln($composer->name . ' - ' . $composer->id);
                     $dupes = $this->composerService
                             ->checkForDuplicates($composer->name, false);
-                    
+
                     if(is_array($dupes) or is_bool($dupes)) {
                         $dupes = collect($composer);
                     }
@@ -78,14 +79,14 @@ class FindComposerDuplicates extends Command
                     $count = count(
                         explode(
                                 ',',
-                                array_get($possibleDuplicate, 'duplicates')
+                                Arr::get($possibleDuplicate, 'duplicates')
                             )
                         );
-                                                        
+
                     if($count > 1) {
                         DB::table('duplicates')
                             ->insert($possibleDuplicate);
-                    }                    
+                    }
                 });
             });
     }

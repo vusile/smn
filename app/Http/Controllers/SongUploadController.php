@@ -10,9 +10,11 @@ use App\Models\Song;
 use App\Services\SearchService;
 use App\Services\SongService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 
 class SongUploadController extends Controller
@@ -124,11 +126,11 @@ class SongUploadController extends Controller
             $customMessages
         );
 
-        $pdfName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->pdf->getClientOriginalName()));
+        $pdfName = Carbon::now()->timestamp . '-' . Str::slug($request->input('name')) . '.' . last(explode('.', $request->pdf->getClientOriginalName()));
         $pdfPath = $request->file('pdf')->storeAs('uploads/files', $pdfName);
 
         if ($request->file('midi')) {
-            $midiName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->midi->getClientOriginalName()));
+            $midiName = Carbon::now()->timestamp . '-' . Str::slug($request->input('name')) . '.' . last(explode('.', $request->midi->getClientOriginalName()));
             $midiPath = $request->file('midi')->storeAs('uploads/files', $midiName);
 
             if(str_contains($midiName, 'mpga')){
@@ -141,7 +143,7 @@ class SongUploadController extends Controller
         }
 
         if ($request->file('software_file')) {
-            $softwareFileName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->software_file->getClientOriginalName()));
+            $softwareFileName = Carbon::now()->timestamp . '-' . Str::slug($request->input('name')) . '.' . last(explode('.', $request->software_file->getClientOriginalName()));
             $softwareFilePath = $request->file('software_file')->storeAs('uploads/files', $softwareFileName);
         }
 
@@ -162,7 +164,8 @@ class SongUploadController extends Controller
         ];
 
         $song = Song::create(
-            array_replace(
+            array_replace
+            (
                 $request->all(),
                 $additionalInfo
             )
@@ -206,14 +209,14 @@ class SongUploadController extends Controller
         $additionalInfo = [];
 
         if ($request->file('pdf')){
-            $pdfName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->pdf->getClientOriginalName()));
+            $pdfName = Carbon::now()->timestamp . '-' . Str::slug($request->input('name')) . '.' . last(explode('.', $request->pdf->getClientOriginalName()));
             $pdfPath = $request->file('pdf')->storeAs('uploads/files', $pdfName);
 
             $additionalInfo['pdf'] = $pdfName;
         }
 
         if ($request->file('midi')) {
-            $midiName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->midi->getClientOriginalName()));
+            $midiName = Carbon::now()->timestamp . '-' . Str::slug($request->input('name')) . '.' . last(explode('.', $request->midi->getClientOriginalName()));
             $midiPath = $request->file('midi')->storeAs('uploads/files', $midiName);
 
             if(str_contains($midiName, 'mpga')){
@@ -228,7 +231,7 @@ class SongUploadController extends Controller
         }
 
         if ($request->file('software_file')) {
-            $softwareFileName = Carbon::now()->timestamp . '-' . str_slug($request->input('name')) . '.' . last(explode('.', $request->software_file->getClientOriginalName()));
+            $softwareFileName = Carbon::now()->timestamp . '-' . Str::slug($request->input('name')) . '.' . last(explode('.', $request->software_file->getClientOriginalName()));
 
             $softwareFilePath = $request->file('software_file')->storeAs('uploads/files', $softwareFileName);
         }

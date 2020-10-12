@@ -5,7 +5,7 @@
 {{-- See if we're using tabs --}}
 @if ($crud->tabsEnabled())
     @include('crud::inc.show_tabbed_fields')
-    <input type="hidden" name="current_tab" value="{{ str_slug($crud->getTabs()[0], "") }}" />
+    <input type="hidden" name="current_tab" value="{{ Str::slug($crud->getTabs()[0], "") }}" />
 @else
     @include('crud::inc.show_fields', ['fields' => $fields])
 @endif
