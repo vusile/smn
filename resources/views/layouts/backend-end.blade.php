@@ -71,9 +71,14 @@
     <div class="header-top-area">
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                     <div class="logo-area">
                         <a href="/"><img src="/images/swahili-music-notes-logo-site.png" alt="" /></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="logo-area">
+                        <h1>Karibu {{auth()->user()->first_name}}</h1>
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
@@ -81,7 +86,7 @@
                         <ul class="nav navbar-nav notika-top-nav">
                            <li class="nav-item dropdown">
                                 <a href="/" aria-expanded="false" class="nav-link dropdown-toggle"><span><i class="notika-icon notika-left-arrow"></i></span> Rudi kwenye Tovuti</a>
-                               
+
                             </li>
 
                         </ul>
@@ -100,10 +105,10 @@
                         <nav id="dropdown">
                             <ul class="mobile-menu-nav">
                                 <li><a href="/akaunti">Home</a>
-                                  
+
                                 </li>
                                 <li><a href="/upload/song">Pakia Wimbo</a>
-                                    
+
                                 </li>
                                 <li><a href="/akaunti/nyimbo/live">Zipo Kwenye Tovuti</a>
                                 </li>
@@ -168,7 +173,7 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="footer-copy-right">
-                        <p>Copyright © 2018 
+                        <p>Copyright © 2018
 . All rights reserved. Template by <a href="/">SMN</a>.</p>
                     </div>
                 </div>

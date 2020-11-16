@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\SmsService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Session;
@@ -29,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/verify-number';
 
     /**
      * Create a new controller instance.
@@ -52,8 +53,9 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users|confirmed',
+            'email' => 'sometimes|nullable|email|max:255|unique:users|confirmed',
             'password' => 'required|string|min:6|confirmed',
+            'phone' => 'required','string', 'max:255', 'unique:users',
         ]);
     }
 
@@ -65,40 +67,49 @@ class RegisterController extends Controller
     protected function create()
     {
         $request = request();
-        
+
         $customMessages = [
             'first_name.required' => 'Jina la kwanza linahitajika',
             'last_name.required' => 'Jina la pili linahitajika',
-            'email.required' => 'Email inahitajika',
             'email.unique' => 'Email hii ishatumika. Tafadhali login',
             'email.confirmed'  => 'Email haifanani na hiyo uliyoandika tena',
             'phone.unique' => 'Namba hii ishatumika. Tafadhali login au sajili kutumia namba nyingine',
+            'phone.required' => 'Namba ya simu ni lazima ujaze.',
+            'phone.phone' => 'Namba ya simu uliyoweka ina kasoro. Tafadhali soma maelezo hapo chini.',
             'password.required' => 'Password inahitajika',
             'password.confirmed'  => 'Password haifanani na hiyo uliyoandika tena',
         ];
-        
+
         $this->validate(
             $request,
             [
                 'first_name' => 'required|string|max:255',
                 'last_name' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users|confirmed',
-                'phone' => 'required|string|max:255|unique:users',
+                'email' => 'sometimes|nullable|email|max:255|unique:users|confirmed',
+                'phone' => 'required|string|max:255|unique:users|phone:AUTO',
                 'password' => 'required|string|min:6|confirmed',
             ],
             $customMessages
         );
-        
-        Session::flash('msg', 'Umefanikiwa kujisajili na tumeshaku-login. Karibu Swahili Music Notes');
-       
+
+        Session::flash('msg', 'Umefanikiwa kujisajili. Tafadhali thibitisha namba yako ya simu kwa kuweka namba tuliyokutumia kwenye message.');
+
+        $code = rand(0001, 9999);
+
         $user = User::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'phone' => $request->phone,
+            'has_whatsapp' => $request->has_whatsapp,
+            'phone_verified' => false,
+            'verification_code' => $code,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-        
+
+        $smsService = new SmsService();
+        $smsService->sendActivationCode($user, $code);
+
         return $user;
     }
 }

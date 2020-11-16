@@ -10,7 +10,7 @@
             <div class="col-lg-3" style="text-align: center">
                 <a href="/makundi-nyimbo/{{ $category->url }}/{{ $category->id }}"><img  src="{{ config('categories.files.paths.icons') . $category->image }}" alt="{{ $category->title }}" width="145" height="100">
                 <p><strong>{{ $category->title }}</strong></p></a>
-                <p><a class="btn btn-secondary" href="/makundi-nyimbo/{{ $category->url }}/{{ $category->id }}" role="button">Tanzama nyimbo</a></p>
+                <p><a class="btn btn-secondary" href="/makundi-nyimbo/{{ $category->url }}/{{ $category->id }}" role="button">Tazama nyimbo</a></p>
             </div>
             @if ( ($loop->index + 1) %4 == 0 )
                 </div><div class="row">

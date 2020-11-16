@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -44,7 +44,7 @@ class Category extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    
+
     public function songs()
     {
         return $this->belongsToMany('App\Models\Song', 'song_categories');
@@ -67,7 +67,7 @@ class Category extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-    
+
     public function setImageAttribute($value)
     {
         $attribute_name = "image";

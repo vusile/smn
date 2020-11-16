@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Models\Song;
 use Closure;
+use Illuminate\Support\Arr;
 
 class CheckSongUrl
 {
@@ -17,14 +18,14 @@ class CheckSongUrl
     public function handle($request, Closure $next)
     {
         $uri = $request->path();
-        $id = array_last(
+        $id = Arr::last(
                 explode("/", $uri)
             );
-        
+
         $song = Song::find($id);
-       
+
         $correctSongUri = '/wimbo/' . $song->url . '/' . $song->id;
-       
+
         if(str_contains($correctSongUri, $uri)) {
             return $next($request);
         }

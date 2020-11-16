@@ -5,13 +5,14 @@ namespace App\Console\Commands;
 use App\Models\Song;
 use App\Services\SearchService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
 class FindSongDuplicates extends Command
 {
     /**
-     * @var SearchService 
+     * @var SearchService
      */
     protected $searchService;
     /**
@@ -62,7 +63,7 @@ class FindSongDuplicates extends Command
                     $output->writeln($search . ' - ' . $song->id);
                     $dupes = $this->searchService
                             ->search($search, 'songs');
-                    
+
                     if(is_array($dupes) or is_bool($dupes)) {
                         $dupes = collect($song);
                     }
@@ -71,21 +72,21 @@ class FindSongDuplicates extends Command
                         'entity_id' => $song->id,
                         'duplicates' => $dupes->sortByDesc('active_songs')
                             ->pluck('id')
-                            ->implode(',')                        
+                            ->implode(',')
                     ]];
                 })
                 ->each(function ($possibleDuplicate){
                     $count = count(
                         explode(
                                 ',',
-                                array_get($possibleDuplicate, 'duplicates')
+                                Arr::get($possibleDuplicate, 'duplicates')
                             )
                         );
-                                                        
+
                     if($count > 1) {
                         DB::table('duplicates')
                             ->insert($possibleDuplicate);
-                    }                    
+                    }
                 });
 
             });

@@ -8,10 +8,11 @@ use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Lab404\Impersonate\Models\Impersonate;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements CanResetPassword
 {
-    use Notifiable, Impersonate, SongTrait;
+    use Notifiable, Impersonate, SongTrait, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +20,7 @@ class User extends Authenticatable implements CanResetPassword
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'first_name', 'last_name', 'phone', 
+        'name', 'email', 'password', 'first_name', 'last_name', 'phone', 'verification_code', 'has_whatsapp', 'phone_verified',
     ];
 
     /**
@@ -30,17 +31,17 @@ class User extends Authenticatable implements CanResetPassword
     protected $hidden = [
         'password', 'remember_token',
     ];
-    
+
     public function songs()
     {
         return $this->hasMany('App\Models\Song');
     }
-    
+
     public function getNameAttribute()
     {
         return $this->first_name . " " . $this->last_name;
     }
-    
+
     /**
  * Send a password reset email to the user
  */

@@ -10,12 +10,12 @@
     @foreach($users as $user)
         <div class="row  {{$loop->index%2 == 0 ? "bg-light" : "" }} ">
             <div id="{{ substr($user->name,0,1) }}" class="col-lg-4" >
-                <p>{{ title_case($user->name) }}
+                <p>{{ Str::title($user->name) }}
 
                 </p>
             </div>
             <div class="col-lg-4" >
-                <p><a href="/wapakia-nyimbo/{{str_slug($user->name)}}/{{$user->id}}">Tazama nyimbo {{ $user->active_songs }} alizoupload</a></p>
+                <p><a href="/wapakia-nyimbo/{{Str::slug($user->name)}}/{{$user->id}}">Tazama nyimbo {{ $user->active_songs }} alizoupload</a></p>
             </div>
             <div class="col-lg-4" >
 

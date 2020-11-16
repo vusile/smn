@@ -41,20 +41,37 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    
+
     public function login(Request $request)
     {
         $password = request()->input('password');
         $user = User::where('email', request()->input('email'))
-                ->firstOrFail();
-        
-        $salt = substr($user->password, 0, 10);
-        
-        if($salt . substr(sha1($salt . $password), 0, -10) == $user->password) {
-            $user->password = Hash::make($password);
-            $user->save();
+                ->first();
+
+        if($user) {
+            $salt = substr($user->password, 0, 10);
+
+            if($salt . substr(sha1($salt . $password), 0, -10) == $user->password) {
+                $user->password = Hash::make($password);
+                $user->save();
+            }
         }
-        
+
         return $this->tlogin($request);
+    }
+
+    public function username()
+    {
+        $login = request()->input('username');
+
+        if (filter_var($login, FILTER_VALIDATE_EMAIL)) {
+            $field = 'email';
+        } else {
+            $field = 'phone';
+        }
+
+        request()->merge([$field => $login]);
+
+        return $field;
     }
 }

@@ -12,16 +12,17 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="email" class="col-sm-4 col-form-label text-md-right">Email Yako</label>
+                            <label for="username" class="col-sm-4 col-form-label text-md-right">Namba ya Simu au Email</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+                                <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required autofocus>
 
-                                @if ($errors->has('email'))
+                                @if ($errors->has('username'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('username') }}</strong>
                                     </span>
                                 @endif
+                                <small>Kama unatumia simu kulogin, tafadhali usisahau kuweka code ya nchi (ya Tanzania ni +255 au Kenya ni +254 n.k.) mfano +<strong>255</strong>711123456</small>
                             </div>
                         </div>
 
@@ -68,7 +69,7 @@
                             </div>
                         </div>
                     </form>
-                    
+
 
                 </div>
             </div>

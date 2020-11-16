@@ -1,6 +1,6 @@
 <div class="row  {{$loop->index%2 == 0 ? "bg-light" : "" }} ">
     <div id="{{ substr($composer->name,0,1) }}" class="col-lg-4" >
-        <p>{{ title_case($composer->name) }}</p>
+        <p>{{ Str::title($composer->name) }}</p>
     </div>
     <div class="col-lg-4" >
         <p><a href="/composer/songs/{{$composer->url}}/{{$composer->id}}">Tazama nyimbo zake {{ $composer->active_songs }}</a></p>
