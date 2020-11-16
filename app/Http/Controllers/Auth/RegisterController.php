@@ -71,7 +71,6 @@ class RegisterController extends Controller
         $customMessages = [
             'first_name.required' => 'Jina la kwanza linahitajika',
             'last_name.required' => 'Jina la pili linahitajika',
-//            'email.required' => 'Email inahitajika',
             'email.unique' => 'Email hii ishatumika. Tafadhali login',
             'email.confirmed'  => 'Email haifanani na hiyo uliyoandika tena',
             'phone.unique' => 'Namba hii ishatumika. Tafadhali login au sajili kutumia namba nyingine',
@@ -93,7 +92,6 @@ class RegisterController extends Controller
             $customMessages
         );
 
-//        Session::flash('msg', 'Umefanikiwa kujisajili na tumeshaku-login. Karibu Swahili Music Notes');
         Session::flash('msg', 'Umefanikiwa kujisajili. Tafadhali thibitisha namba yako ya simu kwa kuweka namba tuliyokutumia kwenye message.');
 
         $code = rand(0001, 9999);
@@ -110,7 +108,7 @@ class RegisterController extends Controller
         ]);
 
         $smsService = new SmsService();
-//        $smsService->sendActivationCode($user, $code);
+        $smsService->sendActivationCode($user, $code);
 
         return $user;
     }

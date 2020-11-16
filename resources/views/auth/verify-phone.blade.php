@@ -29,7 +29,6 @@
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <input type="text" name ='maoni' class ='maoni' />
-                                    <input type="text" name ='xyz' class ='maoni' value="{{ auth()->user()->verification_code }}" />
                                     <button type="submit" class="btn btn-primary">
                                         Hifadhi simu
                                     </button>

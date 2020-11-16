@@ -62,7 +62,7 @@ class UserController extends Controller
             if($request->verification_code == $user->verification_code) {
                 $user->phone_verified = true;
                 $user->save();
-                Session::flash('msg', 'Umefanikiwa kujisajili kuhakiki namba yako. Tumeshaku-login. Karibu Swahili Music Notes');
+                Session::flash('msg', 'Umefanikiwa kuhakiki namba yako. Tumeshaku-login. Karibu Swahili Music Notes');
                 return redirect('/');
             }
 
@@ -98,7 +98,9 @@ class UserController extends Controller
 
         $code = rand(0001, 9999);
 
-        User::where('id', auth()->user()->id)
+        $user = auth()->user();
+
+        User::where('id', $user->id)
             ->update(
                 [
                     'phone' => $request->phone,
@@ -109,7 +111,7 @@ class UserController extends Controller
             );
 
         $smsService = new SmsService();
-//        $smsService->sendActivationCode($user, $code);
+        $smsService->sendActivationCode($user, $code);
 
         Session::flash('msg', 'Umefanikiwa kuweka namba yako. Tafadhali thibitisha namba yako ya simu kwa kuweka namba tuliyokutumia kwenye message.');
 

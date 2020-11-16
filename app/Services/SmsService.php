@@ -18,7 +18,7 @@ class SmsService
         // Message parameters
         $param['username'] = config('zesha.username');
         $param['password'] = config('zesha.password');
-        $param['GSM'] = "255657867793"; // Recipient number (+ is optional)
+        $param['GSM'] = $to; // Recipient number (+ is optional)
         $param['SMSText'] = $sms; // Your SMS message
         $param['sender'] = config('zesha.sender_id');; // Your sender ID
 
