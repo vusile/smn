@@ -141,7 +141,7 @@
 
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <div class="g-recaptcha" id="feedback-recaptcha" data-sitekey="6LfmUYAUAAAAAMRJDZX7NR784FH74RRz0brOYh4G"></div>
+                            <div class="g-recaptcha" id="feedback-recaptcha" data-sitekey="{{ env('RECAPTCHA_PUBLIC_KEY') }}"></div>
 
                             @if ($errors->has('g-recaptcha-response'))
                                 <span class="invalid-feedback" role="alert">
