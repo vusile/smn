@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">Ingia</div>
 
@@ -22,9 +22,10 @@
                                         <strong>{{ $errors->first('username') }}</strong>
                                     </span>
                                 @endif
-                                <small>Kama unatumia simu kulogin, tafadhali usisahau kuweka code ya nchi (ya Tanzania ni +255 au Kenya ni +254 n.k.) mfano +<strong>255</strong>711123456</small>
                             </div>
                         </div>
+
+                        @include('auth.partials.select-country', ['labelFor' => 'login'])
 
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">Neno Siri (Password)</label>

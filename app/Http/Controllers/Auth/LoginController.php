@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Hash;
+use Propaganistas\LaravelPhone\PhoneNumber;
 
 class LoginController extends Controller
 {
@@ -45,7 +46,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $password = request()->input('password');
-        $user = User::where('email', request()->input('email'))
+        $user = User::where('email', request()->input('username'))
                 ->first();
 
         if($user) {
@@ -68,6 +69,7 @@ class LoginController extends Controller
             $field = 'email';
         } else {
             $field = 'phone';
+            $login = PhoneNumber::make($login, request()->input('phone_country'))->formatE164();
         }
 
         request()->merge([$field => $login]);

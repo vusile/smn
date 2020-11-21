@@ -1,5 +1,5 @@
 <div class="form-group row">
-    <label for="phone" class="col-md-4 col-form-label text-md-right">Namba ya simu</label>
+    <label for="phone" class="col-md-4 col-form-label text-md-right">Namba ya simu moja tu</label>
 
     <div class="col-md-6">
         <input id="phone" type="text" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ old('phone') }}" required>
@@ -9,10 +9,11 @@
                                         <strong>{{ $errors->first('phone') }}</strong>
                                     </span>
         @endif
-        <small>Weka namba moja tu, tafadhali usisahau kuweka code ya nchi (ya Tanzania ni +255 au Kenya ni +254 n.k.) mfano +<strong>255</strong>711123456 au +<strong>254</strong>711123456</small>
+        <small>Weka namba moja tu</small>
     </div>
 
 </div>
+@include('auth.partials.select-country', ['labelFor' => 'register'])
 <div class="form-group row">
     <label class="form-check-label col-md-4 col-form-label text-md-right" for="has_whatsapp">
         Namba hii ina WhatsApp

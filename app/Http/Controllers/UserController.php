@@ -7,6 +7,7 @@ use App\Services\SmsService;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Propaganistas\LaravelPhone\PhoneNumber;
 
 class UserController extends Controller
 {
@@ -98,23 +99,39 @@ class UserController extends Controller
 
         $code = rand(0001, 9999);
 
+        $phone = PhoneNumber::make($request->phone, $request->phone_country)->formatE164();
+
+        switch ($request->phone_country) {
+            case 'TZ':
+                $sendMessage = true;
+                break;
+
+            default:
+                $sendMessage = false;
+                break;
+        }
+
         $user = auth()->user();
 
         User::where('id', $user->id)
             ->update(
                 [
-                    'phone' => $request->phone,
+                    'phone' => $phone,
                     'has_whatsapp' => $request->has_whatsapp,
-                    'phone_verified' => false,
-                    'verification_code' => $code
+                    'phone_verified' => $sendMessage ? false : true,
+                    'verification_code' => $sendMessage ? $code : null,
+                    'auto_verified' => $sendMessage ? false : true,
                 ]
             );
 
-        $smsService = new SmsService();
-        $smsService->sendActivationCode($user, $code);
-
-        Session::flash('msg', 'Umefanikiwa kuweka namba yako. Tafadhali thibitisha namba yako ya simu kwa kuweka namba tuliyokutumia kwenye message.');
-
-        return redirect(route('verify-number-form'));
+        if($sendMessage) {
+            $smsService = new SmsService();
+            $smsService->sendActivationCode($user, $code);
+            Session::flash('msg', 'Umefanikiwa kuweka namba yako. Tafadhali thibitisha namba yako ya simu kwa kuweka namba tuliyokutumia kwenye message.');
+            return redirect(route('verify-number-form'));
+        } else {
+            Session::flash('msg', 'Umefanikiwa kuweka namba yako. Endelea kutumia Swahili Music Notes');
+            return redirect("/");
+        }
     }
 }
