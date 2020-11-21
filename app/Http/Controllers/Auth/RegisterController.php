@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Propaganistas\LaravelPhone\PhoneNumber;
 
 class RegisterController extends Controller
 {
@@ -67,6 +68,7 @@ class RegisterController extends Controller
     protected function create()
     {
         $request = request();
+        $sendMessage = false;
 
         $customMessages = [
             'first_name.required' => 'Jina la kwanza linahitajika',
@@ -87,6 +89,7 @@ class RegisterController extends Controller
                 'last_name' => 'required|string|max:255',
                 'email' => 'sometimes|nullable|email|max:255|unique:users|confirmed',
                 'phone' => 'required|string|max:255|unique:users|phone:AUTO',
+                'phone_country' => 'required',
                 'password' => 'required|string|min:6|confirmed',
             ],
             $customMessages
@@ -95,20 +98,37 @@ class RegisterController extends Controller
         Session::flash('msg', 'Umefanikiwa kujisajili. Tafadhali thibitisha namba yako ya simu kwa kuweka namba tuliyokutumia kwenye message.');
 
         $code = rand(0001, 9999);
+        $phone = PhoneNumber::make($request->phone, $request->phone_country)->formatE164();
+
+        switch ($request->phone_country) {
+            case 'TZ':
+                $sendMessage = true;
+                break;
+
+            default:
+                $sendMessage = false;
+                break;
+        }
 
         $user = User::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
-            'phone' => $request->phone,
+            'phone' => $phone,
             'has_whatsapp' => $request->has_whatsapp,
-            'phone_verified' => false,
+            'phone_verified' => $sendMessage ? false : true,
             'verification_code' => $code,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'auto_verified' => $sendMessage ? false : true,
         ]);
 
-        $smsService = new SmsService();
-        $smsService->sendActivationCode($user, $code);
+        if($sendMessage) {
+            $smsService = new SmsService();
+            $smsService->sendActivationCode($user, $code);
+        } else {
+            Session::flash('msg', 'Umefanikiwa kujisajili. Endelea kutumia Swahili Music Notes');
+            $this->redirectTo = "/";
+        }
 
         return $user;
     }
