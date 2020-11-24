@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
+    'failed' => 'Tumeshindwa kuipata akaunti yako. Umejisajili? Au Umesahau Password?',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
 ];
