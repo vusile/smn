@@ -113,7 +113,7 @@ class UserController extends Controller
 
         $user = auth()->user();
 
-        User::where('id', $user->id)
+        $updatedUser = User::where('id', $user->id)
             ->update(
                 [
                     'phone' => $phone,
@@ -126,7 +126,7 @@ class UserController extends Controller
 
         if($sendMessage) {
             $smsService = new SmsService();
-            $smsService->sendActivationCode($user, $code);
+            $smsService->sendActivationCode(auth()->user(), $code);
             Session::flash('msg', 'Umefanikiwa kuweka namba yako. Tafadhali thibitisha namba yako ya simu kwa kuweka namba tuliyokutumia kwenye message.');
             return redirect(route('verify-number-form'));
         } else {
