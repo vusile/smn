@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
+use Propaganistas\LaravelPhone\PhoneNumber;
 
 class SmsService
 {
@@ -40,7 +41,9 @@ class SmsService
             ]
         );
 
-        $this->sendSms($user->phone, $message);
+        //I really shouldn't need this.
+        $phone = PhoneNumber::make($user->phone, "TZ")->formatE164();
+        $this->sendSms($phone, $message);
 
         return true;
     }
