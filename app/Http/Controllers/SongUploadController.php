@@ -120,7 +120,7 @@ class SongUploadController extends Controller
                 'composer_id' => 'required',
                 'pdf' => 'required|mimes:pdf',
                 'software_file' => 'required_with:software_id',
-                'midi' => 'mimes:mid,ogx,aac,wav,mpga',
+                'midi' => 'mimes:mid,ogx,aac,wav,mpga,mpeg',
                 'categories' => 'required',
             ],
             $customMessages
@@ -200,7 +200,7 @@ class SongUploadController extends Controller
                 'name' => 'required',
                 'composer_id' => 'required',
                 'pdf' => 'mimes:pdf',
-                'midi' => 'mimes:mid,ogx,aac,wav,mpga',
+                'midi' => 'mimes:mid,ogx,aac,wav,mpga,mpeg',
                 'categories' => 'required',
             ],
             $customMessages
