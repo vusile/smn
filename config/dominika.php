@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'mwaka' => [1],
+    'mwaka' => [2],
 ];
