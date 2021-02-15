@@ -270,14 +270,13 @@ class SongUploadController extends Controller
             ->pluck('title', 'id')
             ->toArray();
 
-        $parts = $this->songService->similarSongsWithDominika($song->name);
+//        $parts = $this->songService->similarSongsWithDominika($song->name);
 
         return view(
             'songs.upload.dominikas',
             compact(
                 'song',
-                'dominikas',
-                'parts'
+                'dominikas'
             )
         );
     }
