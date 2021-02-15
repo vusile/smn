@@ -18,41 +18,41 @@ class SongController extends Controller
      * @var SongService
      */
     protected $songService;
-    
+
     public function __construct(SongService $songService)
     {
         $this->songService = $songService;
     }
-    
+
     public function show(string $slug, Song $song)
     {
         SEOMeta::setTitle('Nota za ' . $song->name . ' na ' . $song->composer->name);
         SEOMeta::setDescription($song->description);
-        
+
         $otherSongs = $this->songService->getOtherSongs($song);
-        
+
         $parts = null;
-        
+
         if($song->dominikas) {
             $parts = $this->songService->determinePartOfMass($song);
         }
-        
+
         $songView = SongView::firstOrCreate(
             [
                 'viewed_on' => Carbon::now()->format('Y-m-d'),
                 'song_id' => $song->id
             ]
         );
-        
+
         $songView->increment('views');
         $song->increment('views');
-        
+
         return view(
             'songs.show',
             compact('song', 'otherSongs', 'parts')
         );
     }
-    
+
     public function download(Song $song, string $type)
     {
         switch($type) {
@@ -68,9 +68,8 @@ class SongController extends Controller
                 header("Content-Transfer-Encoding: binary");
                 header("Content-Length: " . filesize($path));
                 readfile($path);
-                exit; 
-            break;
-            
+                exit;
+
             case 'pdf':
                 $songDownload = SongDownload::firstOrCreate(
                     ['downloaded_on' => Carbon::now()->format('Y-m-d'), 'song_id' => $song->id]
@@ -78,27 +77,23 @@ class SongController extends Controller
 
                 $songDownload->increment('downloads');
                 $song->increment('downloads');
-                
+
                 $pdfName = $song->pdf;
-                
+
                 return response()->file(
                     storage_path('app/public/' . config('song.files.paths.pdf') . $song->pdf),
                     [
                         'Content-Disposition: attachment; filename="$pdfName"'
                     ]
                 );
-                
-                break;
-            
+
             case 'nota_original':
                 $path = storage_path('app/public/' . config('song.files.paths.midi') . $song->nota_original);
                 return Storage::download($path);
-            break;
-        
+
             case 'software_file':
                 $path = storage_path('app/public/' . config('song.files.paths.midi') . $song->software_file);
                 return Storage::download($path);
-            break;
         }
     }
 }
