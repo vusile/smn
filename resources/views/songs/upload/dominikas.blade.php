@@ -1,25 +1,3 @@
-<?php
-    $mwanzo = collect($parts)
-        ->filter(function($part){
-            return $part->id == 1;
-        });
-
-    $katikati = collect($parts)
-        ->filter(function($part){
-            return $part->id == 2;
-        });
-
-    $shangilio = collect($parts)
-        ->filter(function($part){
-            return $part->id == 3;
-        });
-
-    $antifona = collect($parts)
-        ->filter(function($part){
-            return $part->id == 4;
-        });
-
-?>
 @extends('layouts.backend-end')
 @section('header')
     <link rel="stylesheet" href="/css/fastselect.min.css" />
@@ -79,7 +57,7 @@
                         {{Form::select(
                             'mwanzo[]',
                             $dominikas,
-                            $mwanzo->keys()->toArray(),
+                            [],
                             [
                                 'class' => 'form-control',
                                 'multiple' => true,
@@ -95,7 +73,7 @@
                         {{Form::select(
                             'katikati[]',
                             $dominikas,
-                            $katikati->keys()->toArray(),
+                            [],
                             [
                                 'class' => 'form-control',
                                 'multiple' => true,
@@ -111,7 +89,7 @@
                         {{Form::select(
                             'shangilio[]',
                             $dominikas,
-                            $shangilio->keys()->toArray(),
+                            [],
                             [
                                 'class' => 'form-control',
                                 'multiple' => true,
@@ -127,7 +105,7 @@
                         {{Form::select(
                             'antifona[]',
                             $dominikas,
-                            $antifona->keys()->toArray(),
+                            [],
                             [
                                 'class' => 'form-control',
                                 'multiple' => true,
