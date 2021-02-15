@@ -118,6 +118,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/phone-collector', 'UserController@getPhoneNumber');
     Route::get('/verify-number', 'UserController@verificationForm')->name('verify-number-form');
     Route::post('/verify-number', 'UserController@verifyNumber')->name('verify-number');
+    Route::get('/admin/dominikas', 'Admin\DominikaController@index')->name('admin-doninika-index');
+    Route::get('/admin/dominikas/{dominika}', 'Admin\DominikaController@show')->name('admin-doninika-show');
+    Route::post('/admin/dominikas/delete/{dominika}', 'Admin\DominikaController@delete')->name('admin-doninika-delete');
 });
 Auth::routes();
 
