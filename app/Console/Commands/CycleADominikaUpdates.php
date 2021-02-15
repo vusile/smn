@@ -5,14 +5,14 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Dominika;
 
-class GroupOneDominikaUpdates extends Command
+class CycleADominikaUpdates extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'dominika:group-one-updates';
+    protected $signature = 'dominika:dates-for-cycle-a';
 
     /**
      * The console command description.
@@ -107,25 +107,12 @@ class GroupOneDominikaUpdates extends Command
             172 => ["dominika_date" => "2020-12-08", "rangi" => "Nyeupe"], //Sherehe ya Bikira Maria mkingiwa dhambi ya asili
             173 => ["dominika_date" => "2020-03-19", "rangi" => "Nyeupe"], //Yosefu Mume wa Bikira Maria
             174 => ["dominika_date" => "2020-03-25", "rangi" => "Nyeupe"], //Kupashwa habari ya kuzaliwa kwa Bwana
+            175 => ["dominika_date" => "2021-06-11", "rangi" => "Nyeupe"], //Moyo Mtakatifu wa Yesu,
         ];
-        
+
         foreach($old as $id => $updates) {
             Dominika::where('id', $id)
                     ->update($updates);
-        }
-
-    $new = 
-        [
-            [
-                'title' => 'Moyo Mtakatifu wa Yesu',
-                'year_id' => null,
-                'dominika_date' => '2020-06-19',
-                'rangi' => 'Nyeupe'
-            ],
-        ];
-    
-        foreach($new as $dominika) {
-            Dominika::create($dominika);
         }
     }
 }

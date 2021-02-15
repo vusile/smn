@@ -4,7 +4,9 @@ namespace App\Console;
 
 use App\Console\Commands\CleanUpDownloadsAndViewsTable;
 use App\Console\Commands\FindComposerDuplicates;
-use App\Console\Commands\GroupOneDominikaUpdates;
+use App\Console\Commands\CycleADominikaUpdates;
+use App\Console\Commands\CycleBDominikaUpdates;
+use App\Console\Commands\CycleCDominikaUpdates;
 use App\Console\Commands\ReviewSongs;
 use App\Console\Commands\UpdateComposerActiveSongs;
 use App\Console\Commands\UpdateUserActiveSongs;
@@ -24,7 +26,9 @@ class Kernel extends ConsoleKernel
         UpdateComposerActiveSongs::class,
         UpdateUserActiveSongs::class,
         CleanUpDownloadsAndViewsTable::class,
-        GroupOneDominikaUpdates::class
+        CycleADominikaUpdates::class,
+        CycleBDominikaUpdates::class,
+        CycleCDominikaUpdates::class
     ];
 
     /**
