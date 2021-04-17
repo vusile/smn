@@ -190,6 +190,9 @@ class ComposerController extends Controller
             ->map( function ($song) {
                 return $song->composer;
             })
+            ->sortBy(function ($composer, $key) {
+                return $composer->name;
+            })
             ->unique('id'));
     }
 }
