@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Collections;
+namespace App\Http\Resources;
 
 use App\Http\Resources\Composer as ComposerResource;
 use App\Models\Composer;

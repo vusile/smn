@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\Collections\ComposerCollection;
-use App\Http\Resources\Collections\SongCollection;
+use App\Http\Resources\ComposerCollection;
+use App\Http\Resources\SongCollection;
 use App\Http\Resources\Composer as ComposerResource;
+use App\Models\Category;
 use App\Models\Composer;
+use App\Models\Song;
 use App\Services\ComposerService;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Http\Request;
@@ -175,5 +177,19 @@ class ComposerController extends Controller
             'account.composers',
             compact('composers')
         );
+    }
+
+    public function inCategory(Category $category)
+    {
+        return new ComposerCollection(Song::whereNotNull('user_id')
+            ->whereNotNull('composer_id')
+            ->with(['composer'])
+            ->approved()
+            ->category($category->id)
+            ->get()
+            ->map( function ($song) {
+                return $song->composer;
+            })
+            ->unique('id'));
     }
 }
