@@ -56,7 +56,7 @@
                     @include('songs.review.question')
                 @endforeach
 
-                <h4><strong><a href="/edit-song/{{ $song->id }}?return=review#name">Badili/Boresha jina la wimbo</a></strong></h4>
+{{--                <h4><strong><a href="/edit-song/{{ $song->id }}?return=review#name">Badili/Boresha jina la wimbo</a></strong></h4>--}}
 
 
                  @if($song->fit_for_liturgy)
@@ -99,7 +99,7 @@
                     @include('songs.review.question')
                 @endforeach
 
-                <h4><strong><a href="/upload/dominika/{{ $song->id }}?return=review">Badili/Boresha Dominika/Sikukuu</a></strong></h4>
+{{--                <h4><strong><a href="/upload/dominika/{{ $song->id }}?return=review">Badili/Boresha Dominika/Sikukuu</a></strong></h4>--}}
                 <br>
 
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
