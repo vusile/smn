@@ -17,10 +17,10 @@
             <div class="alert alert-success" role="alert">
                 Unahakiki wimbo Unaitwa: <strong>{{$song->name}}</strong> umetungwa na <strong>{{$song->composer->name}}</strong>. Tafadhali pakua nota zake, kisha ujibu maswali yanayofuata.
                 <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf/{{$song->pdf}}" target="_blank" role="button">Pakua Nota Uhakiki</a>
-                
+
                 <br><br>
                 <strong>UMEPAKIWA NA:</strong> {{$song->user->name}}
-                
+
                 @if($song->user->phone)
                 <br><strong>NAMBA YA SIMU YA ALIYEPAKIA:</strong> {{$song->user->phone}}@if($song->user->has_whatsapp) - <a target="_blank" href = "https://wa.me/{{preg_replace("/[^0-9]/", "", $song->user->phone)}}">Wasiliana kwa Whatsapp</a>@endif
                 @endif
@@ -38,10 +38,10 @@
                     <br><br>
                     <strong>MUHIMU:</strong> Aliyepakia, <strong>HAJATOA</strong> ruhusa wimbo urekebishwe
                 @endif
-                
+
                 <br><br><a class="btn btn-primary" href="/notify-delay/{{ $song->id }}" role="button">Nahitaji Muda zaidi Kuhakiki</a>
             </div>
- 
+
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -51,19 +51,19 @@
                     </ul>
                 </div>
             @endif
-            
+
             <form class="needs-validation" method="post" action="/akaunti/review-nyimbo/ithibati-review" id="review-form" novalidate enctype='multipart/form-data'>
                 <h4 class = 'alert-success'><strong>PDF: </strong></h4>
-                
+
                 <strong>Maswali ya kuzingatia</strong><br>
                 @foreach($pdfQuestions as $question)
                     @include('songs.review.question')
                 @endforeach
-                
+
                 @if($song->can_be_edited)
                     <h4><strong><a href="/song/download/{{ $song->id }}/software/{{$song->software_file}}">Pakua File Ubadili</a></strong></h4>
                     <h4><strong><a href="/edit-song/{{ $song->id }}?return=review#pdf">Pakia PDF, midi na file jipya</a></strong></h4>
-                    
+
                 <br>
                 @endif
                 <br>
@@ -72,7 +72,7 @@
                 @foreach($nameQuestions as $question)
                     @include('songs.review.question')
                 @endforeach
-                         
+
                 <br>
                 <h4 class = 'alert-success'><strong>Mtunzi: </strong> {{ $song->composer->name }} - <strong><a href="/edit-song/{{ $song->id }}#composer_id">Badili/Boresha jina la mtunzi</a></strong></h4>
                 <strong>Maswali ya kuzingatia</strong><br>
@@ -93,14 +93,14 @@
                     @include('songs.review.question')
                 @endforeach
                 <br>
-                
+
                 <h4 class = 'alert-success'><strong>Dominika / Sikukuu: </strong> - <strong><a href="/upload/dominika/{{ $song->id }}?return=review">Badili/Boresha dominika/sikukuu</a></strong></h4>
-                
+
                 <p>
                     @foreach($song->dominikas as $dominika)
-                        - {{ $parts[$dominika->id]->name }} <a href = "/dominika-sikukuu/{{str_slug($dominika->title)}}/{{$dominika->id}}">{{ $dominika->title }}</a><br>
+                        - {{ $parts[$dominika->id]->name }} <a href = "/dominika-sikukuu/{{Str::slug($dominika->title)}}/{{$dominika->id}}">{{ $dominika->title }}</a><br>
                     @endforeach
-                </p>                
+                </p>
                 <strong>Maswali ya kuzingatia</strong><br>
                 @foreach($dominikaQuestions as $question)
                     @include('songs.review.question')
