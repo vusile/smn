@@ -12,7 +12,7 @@
                 <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf/{{$song->pdf}}" target="_blank" role="button">Pakua Nota Uhakiki</a>
                 <br><br>
                 <strong>UMEPAKIWA NA:</strong> {{$song->user->name}}
-                
+
                 @if($song->user->phone)
                     <br><strong>NAMBA YA SIMU YA ALIYEPAKIA:</strong> {{$song->user->phone}}
                 @endif
@@ -92,7 +92,7 @@
 
                 <p>
                     @foreach($song->dominikas as $dominika)
-                        - {{ $parts[$dominika->id]->name }} <a href = "/dominika-sikukuu/{{str_slug($dominika->title)}}/{{$dominika->id}}">{{ $dominika->title }}</a><br>
+                        - {{ $parts[$dominika->id]->name }} <a href = "/dominika-sikukuu/{{Str::slug($dominika->title)}}/{{$dominika->id}}">{{ $dominika->title }}</a><br>
                     @endforeach
                 </p>
                 @foreach($dominikaQuestions as $question)
