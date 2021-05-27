@@ -26,7 +26,6 @@
         "spatie/laravel-permission": "^3.17",
         "setasign/fpdf": "^1.8",
         "setasign/fpdi-tcpdf": "^2.0",
-        "sngrl/sphinxsearch": "dev-master",
         "venturecraft/revisionable": "1.*"
     },
     "require-dev": {

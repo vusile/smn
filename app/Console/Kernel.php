@@ -4,14 +4,11 @@ namespace App\Console;
 
 use App\Console\Commands\CleanUpDownloadsAndViewsTable;
 use App\Console\Commands\FindComposerDuplicates;
-<<<<<<< HEAD
 use App\Console\Commands\CycleADominikaUpdates;
 use App\Console\Commands\CycleBDominikaUpdates;
 use App\Console\Commands\CycleCDominikaUpdates;
-use App\Console\Commands\ReviewSongs;
-=======
+//use App\Console\Commands\ReviewSongs;
 use App\Console\Commands\GroupOneDominikaUpdates;
->>>>>>> Progress
 use App\Console\Commands\UpdateComposerActiveSongs;
 use App\Console\Commands\UpdateUserActiveSongs;
 use Illuminate\Console\Scheduling\Schedule;
@@ -33,7 +30,7 @@ class Kernel extends ConsoleKernel
         CycleBDominikaUpdates::class,
         CycleCDominikaUpdates::class
     ];
-    
+
     protected $routeMiddleware = [
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
