@@ -38,10 +38,10 @@
                     @include('songs.review.question')
                 @endforeach
 
-                @if($song->can_be_edited)
-                    <h4><strong><a href="/song/download/{{ $song->id }}/software/{{$song->software_file}}">Pakua File Ubadili</a></strong></h4>
-                    <h4><strong><a href="/edit-song/{{ $song->id }}?return=review?return=review#pdf">Pakia PDF, midi na file jipya</a></strong></h4>
-                @endif
+{{--                @if($song->can_be_edited)--}}
+{{--                    <h4><strong><a href="/song/download/{{ $song->id }}/software/{{$song->software_file}}">Pakua File Ubadili</a></strong></h4>--}}
+{{--                    <h4><strong><a href="/edit-song/{{ $song->id }}?return=review?return=review#pdf">Pakia PDF, midi na file jipya</a></strong></h4>--}}
+{{--                @endif--}}
 
                 <br>
 
