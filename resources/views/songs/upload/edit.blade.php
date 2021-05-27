@@ -32,7 +32,7 @@
                     )}}
                 </div>
 
-                @if(!$composer->composer_alive)
+                @if(!$song->composer->composer_alive)
                     <div class="form-group">
                             <p><strong>Mtunzi wa wimbo huu yupo hai?</strong></p>
                                 <input class="form-check-input" name="composer_alive" type="radio" id="composer_alive_yes" value="yes" @if(old('composer_alive') == "yes") checked="checked" @endif>
