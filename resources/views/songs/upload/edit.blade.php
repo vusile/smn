@@ -5,7 +5,7 @@
         <div class="col-lg-8" >
             <br /><br />
             <h2>Badili maelezo ya wimbo</h2>
-                
+
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -15,7 +15,7 @@
                     </ul>
                 </div>
             @endif
-            
+
             <form class="needs-validation" method="post" action="/upload/update" id="upload-song-details" novalidate enctype='multipart/form-data'>
                 <div class="form-group">
                   <label for="name">Jina la wimbo</label>
@@ -28,35 +28,49 @@
                           'composer_id',
                           ['' => 'Chagua moja'] + $composers,
                           $song->composer->id,
-                          ['required'=>'required', 'class'=>"form-control"]
+                          ['required'=>'required', 'class'=>"form-control", 'id' =>'composer_id']
                     )}}
                 </div>
-                
-                <p><strong>PDF: </strong> <a class="btn btn-primary" href="{{downloadLink($song, 'pdf')}}" role="button">Download Nota Uhakiki</a></p>
-           
+
+                @if(!$song->composer->composer_alive)
+                    <div class="form-group">
+                            <p><strong>Mtunzi wa wimbo huu yupo hai?</strong></p>
+                                <input class="form-check-input" name="composer_alive" type="radio" id="composer_alive_yes" value="yes" @if(old('composer_alive') == "yes") checked="checked" @endif>
+                                <label class="form-check-label" for="composer_alive_yes">Ndio&nbsp;&nbsp;&nbsp;&nbsp;</label>
+
+                                <input class="form-check-input" name="composer_alive" type="radio" id="composer_alive_no" value="no" @if(old('composer_alive') == "no") checked="checked" @endif>
+                                <label class="form-check-label" for="composer_alive_no">Hapana&nbsp;&nbsp;&nbsp;&nbsp;</label>
+
+                                <input class="form-check-input" name="composer_alive" type="radio" id="composer_alive_not_sure" value="sijui">
+                                <label class="form-check-label" for="composer_alive_not_sure">Sijui</label>
+                    </div>
+                @endif
+
+                <p><strong>PDF: </strong> <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf/{{$song->pdf}}" role="button">Download Nota Uhakiki</a></p>
+
                 <div class="form-group">
                     <p><strong>Pakia PDF kama unataka kubadili iliyopo:</strong></p>
                     <input type="file" class="form-control-file" id="pdf" name="pdf" required="">
                 </div>
-                
+
                 @if($song->midi)
                     <br><p><strong>Midi: </strong> <a class="btn btn-primary" href="{{downloadLink($song, 'midi')}}" role="button">Download Midi Uhakiki</a></p>
                 @endif
-                
+
                 <div class="form-group">
                     <p><strong>Pakia Midi kama unataka kubadili iliyopo: <a target="_blank" href="https://www.youtube.com/watch?v=KjGTC3oJ_YA">Namna ya kutengeneza Midi</a></strong></p>
                     <input type="file" class="form-control-file" id="midi" name="midi" >
                 </div>
-                
+
                 <div class="form-group">
                     <p><strong>Maneno ya wimbo:</strong></p>
                     <textarea id="summernote" name="lyrics">
                         {{$song->lyrics}}
                     </textarea>
                 </div>
-                
-                
-                <div class="form-group">
+
+
+                <div class="form-group" id='categories'>
                     <p><strong>Makundi Nyimbo: Jaribu usizidishe 3</strong></p>
 
                     <div class="row">
@@ -66,7 +80,7 @@
                                   <input class="form-check-input" name="categories[]" type="checkbox" id="{{$category->id}}" value="{{$category->id}}" @if(in_array($category->id, $selectedCategories)) checked = 'checked' @endif >
                                   <label class="form-check-label" for="{{$category->id}}">{{$category->title}}</label>
                                 </div>
-                            </div>  
+                            </div>
                         @endforeach
                     </div>
                 </div>
@@ -84,7 +98,8 @@
                 @if($song->software_file)
                     <br><p><strong>File la software: </strong> <a class="btn btn-primary" href="{{downloadLink($song, 'software_file')}}" role="button">Download File la Software Uhakiki</a></p>
                 @endif
-                                
+
+
                 <div class="form-group">
                     <div class ="col">
                         <label for="software_file">Pakia file la software kama unataka kubadili</label>
@@ -108,9 +123,47 @@
                         </div>
                     </div>
                 </div>
-
+                <br>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" name="fit_for_liturgy" type="checkbox" id="fit_for_liturgy" value="1" @if($song->fit_for_liturgy) checked="checked" @endif>
+                              <label class="form-check-label" for="fit_for_liturgy">Wimbo huu unafaa kutumika kwenye ibada ya misa</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                <br>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" name="for_recording" type="checkbox" id="for_recording" value="1" @if($song->for_recording) checked="checked" @endif>
+                              <label class="form-check-label" for="for_recording">Wimbo huu utatumika kwenye album (Utarekodiwa)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                @if(!request()->get('return'))
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" name="allowed_to_edit" type="checkbox" id="allowed_to_edit" value="1" @if($song->allowed_to_edit) checked="checked" @endif>
+                                  <label style="color:red" class="form-check-label" for="allowed_to_edit">Natoa Ruhusa kamati ya uhakiki/ithibati kubadili / kuboresha wimbo iwapo itahitajika</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
                 <div class="form-group row">
                     <div class="col-sm-10">
+                        @if(request()->get('return'))
+                            <input type="hidden" name="return" value="{{ request()->get('return') }}">
+                        @endif
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="song_id" value="{{ $song->id }}">
                         <button type="submit" class="btn btn-primary">Endelea >></button>
@@ -119,10 +172,10 @@
             </form>
         </div>
         <div class="col-lg-2"></div>
-      
+
     </div>
 </div>
-    
+
 @section('footer')
     <!-- include summernote css/js -->
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">

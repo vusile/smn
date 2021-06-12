@@ -78,10 +78,14 @@ class SongController extends Controller
                 $songDownload->increment('downloads');
                 $song->increment('downloads');
 
-                $pdfName = $song->pdf;
+                if(!$song->ithibati_number || request('original')) {
+                    $pdfName = $song->pdf;
+                } else {
+                    $pdfName = 'ithibati-' . $song->pdf;
+                }
 
                 return response()->file(
-                    storage_path('app/public/' . config('song.files.paths.pdf') . $song->pdf),
+                    storage_path('app/public/' . config('song.files.paths.pdf') . $pdfName),
                     [
                         'Content-Disposition: attachment; filename="$pdfName"'
                     ]
@@ -95,5 +99,34 @@ class SongController extends Controller
                 $path = storage_path('app/public/' . config('song.files.paths.midi') . $song->software_file);
                 return Storage::download($path);
         }
+
+        return;
+    }
+
+    protected function getOtherSongs(Song $song)
+    {
+        $otherSongs = null;
+        $otherSongsCount = $song
+                ->composer
+                ->songs
+                ->filter(function ($value) use ($song) {
+                    return ($value->id != $song->id) && ($value->status == 1);
+                })
+                ->count();
+
+        if($otherSongsCount > 1) {
+            $limit = $otherSongsCount < 10 ? 0 : 10;
+            $otherSongs = $song
+                ->composer
+                ->songs
+                ->filter(function ($value) use ($song) {
+                    return ($value->id != $song->id) && ($value->status == 1);
+                })
+                ->when($limit, function ($query) use ($limit) {
+                    return $query->random($limit);
+                });
+        }
+
+        return $otherSongs;
     }
 }

@@ -1,0 +1,142 @@
+@extends('layouts.backend-end')
+@section('content')
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8" >
+            @if($song)
+            <br />
+            <h3>Tafadhali hakiki wimbo. Tumia maswali ya mwongozo kuhakiki:</h3>
+            <br />
+           @if (\Session::has('message'))
+            <div class="alert alert-info" role="alert">
+                <ul>
+                    <li>{!! \Session::get('message') !!}</li>
+                </ul>
+            </div>
+           @endif
+            <div class="alert alert-success" role="alert">
+                Unahakiki wimbo Unaitwa: <strong>{{$song->name}}</strong> umetungwa na <strong>{{$song->composer->name}}</strong>. Tafadhali pakua nota zake, kisha ujibu maswali yanayofuata.
+                <a class="btn btn-primary" href="/song/download/{{ $song->id }}/pdf/{{$song->pdf}}" target="_blank" role="button">Pakua Nota Uhakiki</a>
+
+                <br><br>
+                <strong>UMEPAKIWA NA:</strong> {{$song->user->name}}
+
+                @if($song->user->phone)
+                <br><strong>NAMBA YA SIMU YA ALIYEPAKIA:</strong> {{$song->user->phone}}@if($song->user->has_whatsapp) - <a target="_blank" href = "https://wa.me/{{preg_replace("/[^0-9]/", "", $song->user->phone)}}">Wasiliana kwa Whatsapp</a>@endif
+                @endif
+                @if($song->composer->phone)
+                    <br><strong>NAMBA YA SIMU YA MTUNZI:</strong> {{$song->composer->phone}}
+                @endif
+                @if($song->for_recording)
+                    <br><br>
+                    <strong>MUHIMU:</strong> Wimbo huu utatumika kwenye kurekodi Album
+                @endif
+                @if($song->can_be_edited)
+                    <br><br>
+                    <strong>MUHIMU:</strong> Aliyepakia, <strong>KATOA</strong> ruhusa wimbo urekebishwe ikihitajika
+                @else
+                    <br><br>
+                    <strong>MUHIMU:</strong> Aliyepakia, <strong>HAJATOA</strong> ruhusa wimbo urekebishwe
+                @endif
+
+                <br><br><a class="btn btn-primary" href="/notify-delay/{{ $song->id }}" role="button">Nahitaji Muda zaidi Kuhakiki</a>
+            </div>
+
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{!! $error !!}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form class="needs-validation" method="post" action="/akaunti/review-nyimbo/ithibati-review" id="review-form" novalidate enctype='multipart/form-data'>
+                <h4 class = 'alert-success'><strong>PDF: </strong></h4>
+
+                <strong>Maswali ya kuzingatia</strong><br>
+                @foreach($pdfQuestions as $question)
+                    @include('songs.review.question')
+                @endforeach
+
+                @if($song->can_be_edited)
+                    <h4><strong><a href="/song/download/{{ $song->id }}/software/{{$song->software_file}}">Pakua File Ubadili</a></strong></h4>
+                    <h4><strong><a href="/edit-song/{{ $song->id }}?return=review#pdf">Pakia PDF, midi na file jipya</a></strong></h4>
+
+                <br>
+                @endif
+                <br>
+                <h4 class = 'alert-success'><strong>Jina la wimbo: </strong> {{ $song->name }} - <strong><a href="/edit-song/{{ $song->id }}?return=review#name">Badili/Boresha jina la wimbo</a></strong></h4>
+                <strong>Maswali ya kuzingatia</strong><br>
+                @foreach($nameQuestions as $question)
+                    @include('songs.review.question')
+                @endforeach
+
+                <br>
+                <h4 class = 'alert-success'><strong>Mtunzi: </strong> {{ $song->composer->name }} - <strong><a href="/edit-song/{{ $song->id }}#composer_id">Badili/Boresha jina la mtunzi</a></strong></h4>
+                <strong>Maswali ya kuzingatia</strong><br>
+                @foreach($composerQuestions as $question)
+                    @include('songs.review.question')
+                @endforeach
+                <br>
+                @if($song->fit_for_liturgy)
+                    <h4 class = 'alert-success'><strong>Wimbo Unafaa kuimbwa kwenye ibada: Ndio</strong> - <strong><a href="/edit-song/{{ $song->id }}#fit_for_liturgy">Badili/Boresha</a></strong></h4>
+                    @foreach($fitForLiturgyQuestions as $question)
+                        @include('songs.review.question')
+                    @endforeach
+                    <br>
+                @endif
+                <h4 class = 'alert-success'><strong>Makundi Nyimbo: </strong> {{ $song->categories->pluck('title')->implode(' | ') }} - <strong><a href="/edit-song/{{ $song->id }}?return=review#categories">Badili/Boresha makundi nyimbo</a></strong></h4>
+                <strong>Maswali ya kuzingatia</strong><br>
+                @foreach($categoriesQuestions as $question)
+                    @include('songs.review.question')
+                @endforeach
+                <br>
+
+                <h4 class = 'alert-success'><strong>Dominika / Sikukuu: </strong> - <strong><a href="/upload/dominika/{{ $song->id }}?return=review">Badili/Boresha dominika/sikukuu</a></strong></h4>
+
+                <p>
+                    @foreach($song->dominikas as $dominika)
+                        - {{ $parts[$dominika->id]->name }} <a href = "/dominika-sikukuu/{{Str::slug($dominika->title)}}/{{$dominika->id}}">{{ $dominika->title }}</a><br>
+                    @endforeach
+                </p>
+                <strong>Maswali ya kuzingatia</strong><br>
+                @foreach($dominikaQuestions as $question)
+                    @include('songs.review.question')
+                @endforeach
+                <br>
+                @if($song->can_be_edited)
+                <div id="comment_div" class = 'form-group row'>
+                        <label class="col-sm-12 col-form-label">Kama umefanya mabadiliko kwenye PDF, tafadhali toa maelezo hapa:</label><br>
+                        <textarea class="form-control" name="comment" id='comment'  rows="2"></textarea>
+                    </div>
+                <br>
+                @endif
+                <strong>Wimbo unafaa kupewa Ithibati?</strong><br>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" name="can_get_ithibati" type="radio" id="yes_can_get_ithibati" value="1">
+                              <label class="form-check-label" for="yes_can_get_ithibati">Unafaa kupewa ithibati</label>
+                              <br><input class="form-check-input" name="can_get_ithibati" type="radio" id="no_cant_get_ithibati" value="0">
+                              <label class="form-check-label" for="no_cant_get_ithibati">Haufai kupewa ithibati</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="song_id" value="{{$song->id}}">
+
+                <button type="submit" class="btn btn-primary">Hifadhi Hakiki</button>
+            </form>
+            @else
+                <h3>Hakuna wimbo unaosubiri uhakiki kwa sasa</h3>
+            @endif
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+</div>
+@stop

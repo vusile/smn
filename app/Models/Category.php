@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Database\Eloquent\Model;
+use Venturecraft\Revisionable\Revisionable;
 
-class Category extends Model
+class Category extends Revisionable
 {
     use CrudTrait;
     use Sluggable;
@@ -25,6 +25,11 @@ class Category extends Model
     // protected $hidden = [];
     // protected $dates = [];
 
+    public function identifiableName()
+    {
+        return $this->title;
+    }
+    
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
@@ -48,6 +53,11 @@ class Category extends Model
     public function songs()
     {
         return $this->belongsToMany('App\Models\Song', 'song_categories');
+    }
+    
+    public function approvedSongs()
+    {
+       return $this->belongsToMany('App\Models\Song', 'song_categories')->approved();
     }
 
     /*

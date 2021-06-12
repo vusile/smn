@@ -70,14 +70,30 @@ Route::get('/auth/{provider}', 'Auth\SocialAuthController@redirectToProvider');
 Route::get('/auth/{provider}/callback', 'Auth\SocialAuthController@handleProviderCallback');
 
 Route::middleware(['auth'])->group(function () {
-    Route::group(['middleware' => ['review.songs']], function() {
-        Route::get('/upload/song', 'SongUploadController@index')
-            ->name('song-upload.index');
+    Route::get('/upload/song', 'SongUploadController@index')
+        ->name('song-upload.index')
+        ->middleware(App\Http\Middleware\CheckPhone::class);
+    Route::group(['middleware' => ['permission:kuhakiki']], function () {
+        Route::get('/notify-delay/{song}', 'SongReviewController@notifyDelay');
+        Route::get('/akaunti/review-nyimbo/', 'SongReviewController@index')
+            ->name('song-review.index');
+        Route::get('/akaunti/review-nyimbo/with-questions', 'SongReviewController@withQuestions')
+            ->name('song-review.with-questions');
+        Route::post('/akaunti/review-nyimbo/store', 'SongReviewController@store')
+            ->name('song-review.store');
+        Route::post('/akaunti/review-nyimbo/ithibati-review', 'SongReviewController@ithibati_review')
+            ->name('song-review.ithibati-review');
+
+        Route::get('/akaunti/review-uhakiki/', 'SongReviewController@reviewUhakiki')
+            ->name('song-review.review-uhakiki');
     });
-    Route::get('/akaunti/review-nyimbo/', 'SongReviewController@index')
-        ->name('song-review.index');
-    Route::post('/akaunti/review-nyimbo/store', 'SongReviewController@store')
-        ->name('song-review.store');
+    Route::group(['middleware' => ['permission:kutoa ithibati']], function () {
+        Route::get('/akaunti/toa-ithibati', 'IthibatiController@index')
+            ->name('song-review.hakiki-ithibati');
+
+        Route::post('/akaunti/toa-ithibati/store', 'IthibatiController@store')
+            ->name('song-review.toa-ithibati');
+    });
     Route::get('/upload/details', 'SongUploadController@details');
     Route::post('/upload/store', 'SongUploadController@store');
     Route::post('/upload/update', 'SongUploadController@update');
@@ -121,6 +137,31 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/dominikas', 'Admin\DominikaController@index')->name('admin-doninika-index');
     Route::get('/admin/dominikas/{dominika}', 'Admin\DominikaController@show')->name('admin-doninika-show');
     Route::post('/admin/dominikas/delete/{dominika}', 'Admin\DominikaController@delete')->name('admin-doninika-delete');
+    Route::group(['middleware' => ['role:super admin|admin']], function () {
+        Route::get('/users', 'AdminUserController@index');
+        Route::get('/prioritize-review/{song}', 'SongReviewController@prioritize');
+        Route::get('/deprioritize-review/{song}', 'SongReviewController@deprioritize');
+        Route::get('/users', 'AdminUserController@index');
+        Route::get('/assign-role/{role}/{user}', 'AdminUserController@assign');
+        Route::get('/remove-role/{role}/{user}', 'AdminUserController@remove');
+        Route::get('/users/search', 'AdminUserController@index');
+    });
+
+
+    Route::group(['middleware' => ['role:viongozi uhakiki']], function () {
+
+        Route::get('/prioritize-review/{song}', 'SongReviewController@prioritize');
+        Route::get('/deprioritize-review/{song}', 'SongReviewController@deprioritize');
+        Route::get('/change-mhakiki/{song}', 'SongReviewController@changeMhakiki');
+        Route::post('/save-mhakiki', 'SongReviewController@saveMhakiki');
+
+    });
+
+    Route::group(['middleware' => ['role:viongozi kamati muziki']], function () {
+        Route::get('/change-mtoa-ithibati/{song}', 'IthibatiController@changeMtoaIthibati');
+        Route::post('/save-mtoa-ithibati', 'IthibatiController@saveMtoaIthibati');
+    });
+
 });
 Auth::routes();
 

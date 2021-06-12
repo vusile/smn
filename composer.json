@@ -23,7 +23,10 @@
         "league/flysystem": "^1.0",
         "mvvershinin/sphinxsearch": "dev-master",
         "propaganistas/laravel-phone": "^4.2",
-        "spatie/laravel-permission": "^3.17"
+        "spatie/laravel-permission": "^3.17",
+        "setasign/fpdf": "^1.8",
+        "setasign/fpdi-tcpdf": "^2.0",
+        "venturecraft/revisionable": "1.*"
     },
     "require-dev": {
         "backpack/generators": "^3.1",

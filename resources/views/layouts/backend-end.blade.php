@@ -81,7 +81,7 @@
                         <h1>Karibu {{auth()->user()->first_name}}</h1>
                     </div>
                 </div>
-                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="header-top-menu">
                         <ul class="nav navbar-nav notika-top-nav">
                            <li class="nav-item dropdown">
@@ -116,8 +116,17 @@
                                 </li>
                                 <li><a href="/akaunti/watunzi">Watunzi</a>
                                 </li>
-                                <li><a href="/akaunti/review-nyimbo">Review Nyimbo</a>
+                                @can('kuhakiki')
+                                <li><a href="/akaunti/review-nyimbo">Hakiki Nyimbo</a>
                                 </li>
+                                @endcan
+                                @can('kutoa ithibati')
+                                <li><a href="/akaunti/toa-ithibati">Toa Ithibati</a>
+                                </li>
+                                @endcan
+                                @if(auth()->user()->hasAnyRole(['super admin', 'admin']))
+                                <li><a href="/users"><i class="notika-icon notika-form"></i> Users</a></li>
+                                @endif
                                 <li><a href="/logout">Logout</a>
                                 </li>
 <!--                                <li><a data-toggle="collapse" data-target="#Miscellaneousmob" href="#">App views</a>
@@ -149,8 +158,18 @@
                         </li>
                         <li><a href="/akaunti/watunzi"><i class="notika-icon notika-support"></i> Watunzi</a>
                         </li>
-                        <li><a href="/akaunti/review-nyimbo"><i class="notika-icon notika-form"></i> Review Nyimbo</a>
-                        </li>
+                        @can('kuhakiki')
+                            <li><a href="/akaunti/review-nyimbo"><i class="notika-icon notika-form"></i> Hakiki Nyimbo</a>
+                            </li>
+                        @endcan
+                        @can('kutoa ithibati')
+                            <li><a href="/akaunti/toa-ithibati"><i class="notika-icon notika-form"></i> Toa Ithibati</a>
+                            </li>
+                        @endcan
+                        @if(auth()->user()->hasAnyRole(['super admin', 'admin']))
+                            <li><a href="/users"><i class="notika-icon notika-form"></i> Users</a>
+                            </li>
+                        @endif
                         <li><a href="/logout"><i class="notika-icon notika-right-arrow"></i> Logout</a>
                         </li>
 <!--                        <li><a href="#Appviews"><i class="notika-icon notika-app"></i> App views</a>
@@ -160,6 +179,15 @@
                     </ul>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+    @if (session('msg', null))
+        <div class="alert alert-success" role="alert">
+            {{session('msg', null)}}
+        </div>
+    @endif
         </div>
     </div>
     <!-- Main Menu area End-->
@@ -173,7 +201,8 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="footer-copy-right">
-                        <p>Copyright © 2018
+
+                        <p>Copyright &copy {{date('Y')}}
 . All rights reserved. Template by <a href="/">SMN</a>.</p>
                     </div>
                 </div>

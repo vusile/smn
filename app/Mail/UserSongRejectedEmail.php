@@ -32,36 +32,19 @@ class UserSongRejectedEmail extends Mailable
      */
     public function build()
     {
-        $approvalQuestionScores = DB::table('reviews')
-            ->select(DB::raw('count(*) as answers_count, review_question_id, question'))
-            ->join('review_questions', 'review_questions.id', '=', 'reviews.review_question_id')
-            ->groupBy('review_question_id')
-            ->where('song_id', $this->song->id)
-            ->where('review_answer_id', 2)
-            ->get();
-        
         $comments = [];
         
-        foreach($approvalQuestionScores as $ap) {
+        $failedReviews = DB::table('reviews')
+            ->join('review_questions', 'review_questions.id', '=', 'reviews.review_question_id')
+            ->where('song_id', $this->song->id)
+            ->where('review_answer_id', 2)
+            ->get();   
+
+        foreach($failedReviews as $failedReview) {
             
-            if((config('song.reviews.no_of_reviews_per_song') - $ap->answers_count) < 2) {
-                $reviewsWithComments = DB::table('reviews')
-                    ->select(DB::raw('review_question_id, comment'))
-                    ->whereNotNull('comment')    
-                    ->where('song_id', $this->song->id)
-                    ->where('review_question_id', $ap->review_question_id)
-                    ->get();   
-            
-                $counter = 1;
-                foreach($reviewsWithComments as $reviewWithComment) {
-                    $comment = '<strong>Pendekezo la ' . $counter . '.</strong> ' .$reviewWithComment->comment . "<br>";
-                    if($counter == 1) {
-                        $comments[$reviewWithComment->review_question_id] = $comment;
-                    } else {
-                        $comments[$reviewWithComment->review_question_id] .= $comment;                        
-                    }
-                    $counter+=1;             
-                }
+            if($failedReview->comment) {                
+                $comment = '<strong>Pendekezo:</strong> ' .$failedReview->comment . "<br>";
+                $comments[$failedReview->review_question_id] = $comment;     
             }
         }
         
@@ -70,7 +53,7 @@ class UserSongRejectedEmail extends Mailable
             ->with(
                 [
                     'song' => $this->song,
-                    'approvalQuestionScores' => $approvalQuestionScores,
+                    'failedReviews' => $failedReviews,
                     'comments' => $comments,
                 ]
             );

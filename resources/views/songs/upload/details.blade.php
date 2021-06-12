@@ -15,6 +15,8 @@
             <p><strong>Jina la wimbo:</strong> {{$songName}}</p>
             <p><strong>Mtunzi:</strong> {{$composer->name}}</p>
             
+
+            
             @if($duplicates)
             <p><strong>Inaonekana wimbo unaopakia upo tayari SMN. Angalia hapa:</strong></p>
             @foreach($duplicates as $song)
@@ -41,7 +43,25 @@
             
             <form class="{{$class}} needs-validation" method="post" action="/upload/store" id="upload-song-details" novalidate enctype='multipart/form-data'>
 
-                
+            @if(!$composer->composer_alive)
+                <div class="form-group">
+                        <p><strong>Mtunzi wa wimbo huu yupo hai?</a></strong></p>
+                            <input class="form-check-input" name="composer_alive" type="radio" id="composer_alive_yes" value="yes" @if(old('composer_alive') == "yes") checked="checked" @endif>
+                            <label class="form-check-label" for="composer_alive_yes">Ndio&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                              
+                            <input class="form-check-input" name="composer_alive" type="radio" id="composer_alive_no" value="no" @if(old('composer_alive') == "no") checked="checked" @endif>
+                            <label class="form-check-label" for="composer_alive_no">Hapana&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                            
+                            <input class="form-check-input" name="composer_alive" type="radio" id="composer_alive_not_sure" value="sijui">
+                            <label class="form-check-label" for="composer_alive_not_sure">Sijui</label>
+                       
+<!--                    <div class="col-sm-4">
+                        <br>
+                        <br>
+                        <a href="/mtunzi/create?from-song=1">Mtunzi hayumo kwenye orodha</a>
+                    </div>-->
+                </div>
+            @endif
                 <div class="form-group">
                       <p><strong>Pakia PDF:</strong></p>
                       <input type="file" class="form-control-file" id="pdf" name="pdf" required="">
@@ -105,6 +125,38 @@
                             <div class ="col">
                             </div>
 
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" name="fit_for_liturgy" type="checkbox" id="allowed_to_edit" value="1">
+                              <label class="form-check-label" for="fit_for_liturgy">Wimbo huu unafaa kutumika kwenye ibada ya misa?</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                                <br>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" name="for_recording" type="checkbox" id="for_recording" value="1" >
+                              <label class="form-check-label" for="for_recording">Wimbo huu utatumika kwenye album (Utarekodiwa)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" name="allowed_to_edit" type="checkbox" id="allowed_to_edit" value="1">
+                              <label style="color:red" class="form-check-label" for="allowed_to_edit">Natoa Ruhusa kamati ya uhakiki/ithibati kubadili / kuboresha wimbo iwapo itahitajika</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

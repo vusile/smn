@@ -11,6 +11,10 @@ class SearchService
     {
         $sphinx = new SphinxSearch();
         
+        if(str_contains($searchString, config('song.ithibati.prefix'))) {
+            $searchString = str_replace("/", "", $searchString);            
+        }
+        
         return $sphinx
             ->search(
                 utf8_encode($searchString),
@@ -25,6 +29,11 @@ class SearchService
     public function userSearch($searchString, $index = null)
     {
         $sphinx = new SphinxSearch();
+        
+        if(str_contains($searchString, config('song.ithibati.prefix'))) {
+            $searchString = str_replace("/", "", $searchString);            
+        }
+        
         return $sphinx
             ->search(
                 $searchString,

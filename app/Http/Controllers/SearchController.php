@@ -5,11 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Composer;
 use App\Models\Song;
 use App\Services\SearchService;
-use App\Services\SongService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Builder;
 
 class SearchController extends Controller
 {
@@ -60,7 +56,18 @@ class SearchController extends Controller
                 )
                 ->pluck('name', 'id');
 
-            $songsTotal = $songs->count();
+
+//        if($songs) {
+//            $songs = Song::whereIn(
+//                        'id',
+//                        $songs->pluck('id')->toArray()
+//                    )
+//                    ->where(function (Builder $query) {
+//                        $query->approved()->orWhere->forRecording();
+//                    })
+//                    ->get();
+//
+//            $songsTotal = $songs->count();
         }
 
         return view(
@@ -77,9 +84,13 @@ class SearchController extends Controller
 
     public function searchUserSongs()
     {
-        $songs = $this->searchService
-            ->userSearch(request()->query('q'), 'songs');
-
+        if(auth()->user()->hasAnyRole(['super admin', 'admin'])){
+            $songs = $this->searchService
+                ->search(request()->query('q'), 'songs');
+        } else {
+            $songs = $this->searchService
+                ->userSearch(request()->query('q'), 'songs');
+        }
         $status = 'Nyimbo Ulizotafuta';
 
         $songs = Song::whereIn(
