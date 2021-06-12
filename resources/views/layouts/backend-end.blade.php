@@ -120,11 +120,15 @@
                                 </li>
                                 <li><a href="/logout">Logout</a>
                                 </li>
-<!--                                <li><a data-toggle="collapse" data-target="#Miscellaneousmob" href="#">App views</a>
-
-                                </li>
-                                <li><a data-toggle="collapse" data-target="#Pagemob" href="#">Pages</a>
-                                </li>-->
+                                @if(auth()->user()->hasAnyRole(['super admin']))
+                                    <li><a href="#Appviews"  class="dropdown-toggle" data-toggle="dropdown"><i class="notika-icon notika-app"></i> Admin Stuff</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="/admin/dominikas">Dominikas</a></li>
+                                            <li><a href="/admin/categories">Categories</a></li>
+                                            <li><a href="/users/">Users</a></li>
+                                        </ul>
+                                    </li>
+                                @endif
                             </ul>
                         </nav>
                     </div>
@@ -153,10 +157,15 @@
                         </li>
                         <li><a href="/logout"><i class="notika-icon notika-right-arrow"></i> Logout</a>
                         </li>
-<!--                        <li><a href="#Appviews"><i class="notika-icon notika-app"></i> App views</a>
-                        </li>
-                        <li><a href="#Page"><i class="notika-icon notika-support"></i> Pages</a>
-                        </li>-->
+                        @if(auth()->user()->hasAnyRole(['super admin']))
+                            <li><a href="#Appviews"  class="dropdown-toggle" data-toggle="dropdown"><i class="notika-icon notika-app"></i> Admin Stuff</a>
+                              <ul class="dropdown-menu">
+                                  <li><a href="/admin/dominikas">Dominikas</a></li>
+                                  <li><a href="/admin/categories">Categories</a></li>
+                                  <li><a href="/users/">Users</a></li>
+                              </ul>
+                            </li>
+                        @endif
                     </ul>
                 </div>
             </div>

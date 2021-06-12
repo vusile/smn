@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -40,11 +41,23 @@ class ResetPasswordController extends Controller
     {
         $this->middleware('guest');
     }
-    
+
     public function reset(Request $request)
     {
         Session::flash('msg', 'Umefanikiwa kubadili password na tumeshakulogin. Karibu tena SMN');
-        
+
         return $this->treset($request);
+    }
+
+    public function resetWithCode(Request $request, User $user)
+    {
+        Session::flash('msg', 'Umefanikiwa kubadili password na tumeshakulogin. Karibu tena SMN');
+
+        if($user->verification_code == $request->code) {
+            $this->resetPassword($user, $request->password);
+            return $this->sendResetResponse($request, null);
+        } else {
+            return $this->sendResetFailedResponse($request, null);
+        }
     }
 }

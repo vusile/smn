@@ -50,12 +50,8 @@
 @isset($actionText)
 @component('mail::subcopy')
 @lang(
-    "Kama unapata shida kubofya \":actionText\", copy na paste link hapa chini\n".
-    'kwenye browser yako: [:actionURL](:actionURL)',
-    [
-        'actionText' => $actionText,
-        'actionURL' => $actionUrl
-    ]
+    "Kama unapata shida kubofya " . $actionText . ", copy na paste link hapa chini\n".
+    "kwenye browser yako [" . $actionUrl . "](" . $actionUrl . ")"
 )
 @endcomponent
 @endisset
