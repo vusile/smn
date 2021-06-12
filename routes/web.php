@@ -61,8 +61,11 @@ Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
 Route::post('/register', 'Auth\RegisterController@create')->name('register');
 Route::get('/logout', 'Auth\LoginController@logout');
-Route::post('/password/forgot', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+//Route::post('/password/forgot', 'Auth\ForgotPasswordController@sendEmailResetInstructions');
+Route::post('/password/send-instructions', 'Auth\ForgotPasswordController@sendEmailResetInstructions')->name('password.instructions');
 Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('password.reset');
+Route::post('/password/update/{user}', 'Auth\ResetPasswordController@resetWithCode')->name('password.update.code');
+Route::get('/password-reset-code/{user}', 'Auth\ForgotPasswordController@passwordResetCode')->name('password.reset.code');
 Route::post('/comment/', 'CommentController@store');
 Route::post('/composer-email/', 'ComposerEmailController@store');
 Route::get('/search', 'SearchController@index');
@@ -118,9 +121,21 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/phone-collector', 'UserController@getPhoneNumber');
     Route::get('/verify-number', 'UserController@verificationForm')->name('verify-number-form');
     Route::post('/verify-number', 'UserController@verifyNumber')->name('verify-number');
-    Route::get('/admin/dominikas', 'Admin\DominikaController@index')->name('admin-doninika-index');
-    Route::get('/admin/dominikas/{dominika}', 'Admin\DominikaController@show')->name('admin-doninika-show');
-    Route::post('/admin/dominikas/delete/{dominika}', 'Admin\DominikaController@delete')->name('admin-doninika-delete');
+    Route::group(['middleware' => ['role:super admin']], function () {
+        Route::get('/admin/dominikas', 'Admin\DominikaController@index')->name('admin-doninika-index');
+        Route::get('/admin/dominikas/{dominika}', 'Admin\DominikaController@show')->name('admin-doninika-show');
+        Route::post('/admin/dominikas/delete/{dominika}', 'Admin\DominikaController@delete')->name('admin-doninika-delete');
+        Route::get('/admin/categories', 'Admin\CategoriesController@index')->name('admin-categories-index');
+        Route::get('/admin/categories/create/', 'Admin\CategoriesController@create')->name('admin-categories-create');
+        Route::get('/admin/categories/{category}', 'Admin\CategoriesController@edit')->name('admin-categories-edit');
+        Route::post('/admin/categories/update/{category}', 'Admin\CategoriesController@update')->name('admin-categories-update');
+        Route::post('/admin/categories/save/', 'Admin\CategoriesController@save')->name('admin-categories-save');
+        Route::get('/users', 'AdminUserController@index');
+        Route::get('/users/search', 'AdminUserController@index');
+        Route::get('/admin/users/edit/{user}', 'Admin\UserController@edit');
+        Route::post('/admin/users/update/{user}', 'Admin\UserController@update');
+        Route::post('/admin/users/change-password-request/{user}', 'Admin\UserController@changePassword');
+    });
 });
 Auth::routes();
 
