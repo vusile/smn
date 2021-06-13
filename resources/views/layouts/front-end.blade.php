@@ -91,6 +91,11 @@
                 {{session('msg', null)}}
             </div>
         @endif
+        @if (session('message', null))
+            <div class="alert alert-success" role="alert">
+                {{session('message', null)}}
+            </div>
+        @endif
         @if (session('error', null))
             <div class="alert alert-danger" role="alert">
                 {{session('error', null)}}
