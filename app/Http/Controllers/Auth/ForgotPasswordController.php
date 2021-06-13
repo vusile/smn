@@ -48,9 +48,9 @@ class ForgotPasswordController extends Controller
             $smsService = new SmsService();
             $smsService->sendActivationCode($user, $code);
 
-            return redirect('/password-reset-code/' . $user->id);
+            return redirect('/password-reset-code/' . $user->id)->with('message', 'Tumekutumia Ujumbe mfupi wenye namba itakayosaidia kubadili password yako.');
         } else {
-            $this->sendResetLinkEmail($request);
+            return $this->sendResetLinkEmail($request);
         }
     }
 
