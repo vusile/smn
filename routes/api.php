@@ -15,9 +15,9 @@ use App\Models\Song;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 Route::get('/wimbo/{song}', 'Api\SongController@show');
 Route::get('/nyimbo-nyingine/{song}', 'Api\SongController@otherSongs');
 Route::get('/watunzi/', 'Api\ComposerController@index');
