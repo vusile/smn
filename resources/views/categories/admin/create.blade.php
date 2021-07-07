@@ -16,7 +16,7 @@
                 </div>
             @endif
 
-            <form class="needs-validation" method="post" action="/admin/categories/save/" id="upload-song-details" novalidate enctype='multipart/form-data'>
+            <form class="needs-validation" method="post" action="/admin/categories/save" id="upload-song-details" novalidate enctype='multipart/form-data'>
                 <div class="form-group">
                   <label for="name">Jina la Category</label>
                   <input type="text" class="form-control" id="title" name="title" placeholder="Jina la Category" required="" value="">
