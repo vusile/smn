@@ -127,9 +127,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/admin/dominikas/delete/{dominika}', 'Admin\DominikaController@delete')->name('admin-doninika-delete');
         Route::get('/admin/categories', 'Admin\CategoriesController@index')->name('admin-categories-index');
         Route::get('/admin/categories/create/', 'Admin\CategoriesController@create')->name('admin-categories-create');
+        Route::post('/admin/categories/save/', 'Admin\CategoriesController@save')->name('admin-categories-save');
         Route::get('/admin/categories/{category}', 'Admin\CategoriesController@edit')->name('admin-categories-edit');
         Route::post('/admin/categories/update/{category}', 'Admin\CategoriesController@update')->name('admin-categories-update');
-        Route::post('/admin/categories/save/', 'Admin\CategoriesController@save')->name('admin-categories-save');
         Route::get('/users', 'AdminUserController@index');
         Route::get('/users/search', 'AdminUserController@index');
         Route::get('/admin/users/edit/{user}', 'Admin\UserController@edit');
