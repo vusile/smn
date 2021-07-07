@@ -97,14 +97,12 @@ class CategoriesController extends Controller
             $additionalInfo['image'] = $imageName;
         }
 
-         $category = new Category(
+        Category::create(
             array_merge(
                 $request->except(['category_id', '_token']),
                 $additionalInfo
             )
         );
-
-        $category->save();
 
         return redirect('/admin/categories' )
             ->with('message', 'Category mpya imegengenezwa!');
