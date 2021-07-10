@@ -166,7 +166,7 @@ class SongUploadController extends Controller
         $song = Song::create(
             array_replace
             (
-                $request->all(),
+                $request->except(['composer_alive']),
                 $additionalInfo
             )
         );
@@ -176,12 +176,63 @@ class SongUploadController extends Controller
 
         event(new SongCreated($song));
 
+        $this->composerLifeStatus(
+            $request->input('composer_alive'),
+            $request->input('composer_id')
+        );
+
         return redirect()->route(
             'song-upload.dominika',
             [
                 'song' => $song
             ]
         );
+    }
+
+    private function composerLifeStatus($isAlive, $composerId)
+    {
+        if($isAlive != 'sijui') {
+            DB::table('composers_life_status')
+                ->insert(
+                    [
+                        'user_id' => auth()->user()->id,
+                        'composer_id' => $composerId,
+                        'alive' => $isAlive
+                    ]
+                );
+        }
+
+        $lifeStatusCheck = DB::table('composers_life_status')
+            ->where(['composer_id' => $composerId])
+            ->get();
+
+        if($lifeStatusCheck->count() >= 10) {
+            $yes = $lifeStatusCheck->filter(function ($lifeStatus) {
+                return $lifeStatus->alive == 'yes';
+            });
+
+            $no = $lifeStatusCheck->filter(function ($lifeStatus) {
+                return $lifeStatus->alive == 'no';
+            });
+
+            $statusConfirmed = false;
+            if($yes->count() > $no->count()) {
+                $statusConfirmed = true;
+                $composerIsAlive = 1;
+            } elseif ($yes->count() < $no->count()) {
+                $statusConfirmed = true;
+                $composerIsAlive = 2;
+            }
+
+            if($statusConfirmed) {
+                Composer::where('id', $composerId)
+                    ->update(['composer_alive' => $composerIsAlive]);
+
+                DB::table('composers_life_status')
+                    ->where(['composer_id' => $composerId])
+                    ->delete();
+            }
+        }
     }
 
     public function update(Request $request)
