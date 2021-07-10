@@ -304,6 +304,11 @@ class SongUploadController extends Controller
 
         $song = Song::find($request->input('song_id'));
 
+        $this->composerLifeStatus(
+            $request->input('composer_alive'),
+            $request->input('composer_id')
+        );
+
         $song->categories()
             ->sync($request->input('categories'));
 
