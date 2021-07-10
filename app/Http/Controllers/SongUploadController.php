@@ -382,6 +382,11 @@ class SongUploadController extends Controller
                 ->pluck('software_name', 'id')
                 ->toArray();
 
+        $songStatuses = DB::table('song_statuses')
+            ->get()
+            ->pluck('title', 'id')
+            ->toArray();
+
         return view(
             'songs.upload.edit',
             compact(
@@ -389,7 +394,8 @@ class SongUploadController extends Controller
                 'categories',
                 'composers',
                 'softwares',
-                'selectedCategories'
+                'selectedCategories',
+                'songStatuses'
             )
         );
     }

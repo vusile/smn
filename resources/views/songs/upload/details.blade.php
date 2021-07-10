@@ -1,7 +1,7 @@
 <?php
     $class = '';
     if($duplicates && !$errors->any()) {
-       
+
         $class = 'collapse';
     }
 ?>
@@ -14,7 +14,7 @@
             <h2>Maelezo Mengine ya wimbo</h2>
             <p><strong>Jina la wimbo:</strong> {{$songName}}</p>
             <p><strong>Mtunzi:</strong> {{$composer->name}}</p>
-            
+
             @if($duplicates)
             <p><strong>Inaonekana wimbo unaopakia upo tayari SMN. Angalia hapa:</strong></p>
             @foreach($duplicates as $song)
@@ -27,8 +27,8 @@
                 <br>
                 <br>
             @endif
-            
-                            
+
+
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -38,26 +38,38 @@
                     </ul>
                 </div>
             @endif
-            
-            <form class="{{$class}} needs-validation" method="post" action="/upload/store" id="upload-song-details" novalidate enctype='multipart/form-data'>
 
-                
+            <form class="{{$class}} needs-validation" method="post" action="/upload/store" id="upload-song-details" novalidate enctype='multipart/form-data'>
+                @if(!$composer->composer_alive)
+                    <div class="form-group">
+                        <p><strong>Mtunzi wa wimbo huu yupo hai?</strong></p>
+                        <input class="form-check-input" name="composer_alive" type="radio" id="composer_alive_yes" value="yes" @if(old('composer_alive') == "yes") checked="checked" @endif>
+                        <label class="form-check-label" for="composer_alive_yes">Ndio&nbsp;&nbsp;&nbsp;&nbsp;</label>
+
+                        <input class="form-check-input" name="composer_alive" type="radio" id="composer_alive_no" value="no" @if(old('composer_alive') == "no") checked="checked" @endif>
+                        <label class="form-check-label" for="composer_alive_no">Hapana&nbsp;&nbsp;&nbsp;&nbsp;</label>
+
+                        <input class="form-check-input" name="composer_alive" type="radio" id="composer_alive_not_sure" value="sijui">
+                        <label class="form-check-label" for="composer_alive_not_sure">Sijui</label>
+                    </div>
+                @endif
+
                 <div class="form-group">
                       <p><strong>Pakia PDF:</strong></p>
                       <input type="file" class="form-control-file" id="pdf" name="pdf" required="">
                 </div>
-                
+
                 <div class="form-group">
                     <p><strong>Pakia Midi: <a target="_blank" href="https://www.youtube.com/watch?v=KjGTC3oJ_YA">Namna ya kutengeneza Midi</a></strong></p>
                     <input type="file" class="form-control-file" id="midi" name="midi" >
                 </div>
-                
+
                 <div class="form-group">
                     <p><strong>Maneno ya wimbo:</strong></p>
                     <textarea id="summernote" name="lyrics"></textarea>
                 </div>
-                
-                
+
+
                 <div class="form-group">
                     <p><strong>Makundi Nyimbo: Jaribu usizidishe 3</strong></p>
 
@@ -82,7 +94,7 @@
                         ['class'=>"form-control"]
                     ) }}
                 </div>
-                
+
                 <div class="form-group">
 
                     <div class ="col">
@@ -93,13 +105,13 @@
                     </div>
 
                 </div>
-                
+
                     <div class="form-group">
                         <p><strong>Je unazo nota zilizo andikwa kwa mkono wa mtunzi? Kama ndio, zipakie</strong></p>
                          <div class="custom-file">
 
                             <div class ="col">
-                                
+
                                 <input type="file" class="form-control-file" id="nota_original" name="nota_original" >
                             </div>
                             <div class ="col">
@@ -113,7 +125,7 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="name" value="{{$songName}}">
                         <input type="hidden" name="composer_id" value="{{$composer->id}}">
-                        <input type="hidden" name="duplicates" value="{{ implode(collect($duplicates)->keys()->all(), ',') }}" />
+                        <input type="hidden" name="duplicates" value="{{ implode(',', collect($duplicates)->keys()->all()) }}" />
 
                         <button type="submit" class="btn btn-primary">Endelea >></button>
                     </div>
@@ -121,10 +133,10 @@
             </form>
         </div>
         <div class="col-lg-2"></div>
-      
+
     </div>
 </div>
-    
+
 @section('footer')
     <!-- include summernote css/js -->
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">

@@ -33,6 +33,12 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\SongRejected' => [
             'App\Listeners\SendSongRejectedEmail',
         ],
+        'App\Events\IthibatiApproved' => [
+            'App\Listeners\SendIthibatiApprovedEmail',
+        ],
+        'App\Events\IthibatiRejected' => [
+            'App\Listeners\SendIthibatiRejectedEmail',
+        ],
     ];
 
     /**

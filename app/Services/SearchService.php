@@ -10,7 +10,11 @@ class SearchService
     public function search($searchString, $index = null)
     {
         $sphinx = new SphinxSearch();
-        
+
+        if(str_contains($searchString, config('song.ithibati.prefix'))) {
+            $searchString = str_replace("/", "", $searchString);
+        }
+
         return $sphinx
             ->search(
                 utf8_encode($searchString),
@@ -21,10 +25,15 @@ class SearchService
             ->setRankingMode(SphinxClient::SPH_SORT_RELEVANCE)
             ->get();
     }
-    
+
     public function userSearch($searchString, $index = null)
     {
         $sphinx = new SphinxSearch();
+
+        if(str_contains($searchString, config('song.ithibati.prefix'))) {
+            $searchString = str_replace("/", "", $searchString);
+        }
+
         return $sphinx
             ->search(
                 $searchString,
