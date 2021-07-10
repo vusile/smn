@@ -135,10 +135,32 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/users/edit/{user}', 'Admin\UserController@edit');
         Route::post('/admin/users/update/{user}', 'Admin\UserController@update');
         Route::post('/admin/users/change-password-request/{user}', 'Admin\UserController@changePassword');
+        Route::get('/prioritize-review/{song}', 'SongReviewController@prioritize');
+        Route::get('/deprioritize-review/{song}', 'SongReviewController@deprioritize');
+        Route::get('/assign-role/{role}/{user}', 'AdminUserController@assign');
+        Route::get('/remove-role/{role}/{user}', 'AdminUserController@remove');
+    });
+    Route::group(['middleware' => ['permission:kutoa ithibati']], function () {
+        Route::get('/akaunti/toa-ithibati', 'IthibatiController@index')
+            ->name('song-review.hakiki-ithibati');
+
+        Route::post('/akaunti/toa-ithibati/store', 'IthibatiController@store')
+            ->name('song-review.toa-ithibati');
+    });
+    Route::group(['middleware' => ['role:viongozi uhakiki']], function () {
+        Route::get('/prioritize-review/{song}', 'SongReviewController@prioritize');
+        Route::get('/deprioritize-review/{song}', 'SongReviewController@deprioritize');
+        Route::get('/change-mhakiki/{song}', 'SongReviewController@changeMhakiki');
+        Route::post('/save-mhakiki', 'SongReviewController@saveMhakiki');
+    });
+    Route::group(['middleware' => ['role:viongozi kamati muziki']], function () {
+        Route::get('/change-mtoa-ithibati/{song}', 'IthibatiController@changeMtoaIthibati');
+        Route::post('/save-mtoa-ithibati', 'IthibatiController@saveMtoaIthibati');
     });
 });
 Auth::routes();
 
+Route::get('/missing-page', 'HomeController@missingPage')->name('missing-page');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/contact', 'ContactController@index')->name('contact');
 Route::post('/contact', 'ContactController@sendEMail')->name('send-message');

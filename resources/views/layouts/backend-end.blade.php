@@ -129,6 +129,10 @@
                                         </ul>
                                     </li>
                                 @endif
+                                @can('kutoa ithibati')
+                                    <li><a href="/akaunti/toa-ithibati">Toa Ithibati</a>
+                                    </li>
+                                @endcan
                             </ul>
                         </nav>
                     </div>
@@ -166,9 +170,22 @@
                               </ul>
                             </li>
                         @endif
+                        @can('kutoa ithibati')
+                            <li><a href="/akaunti/toa-ithibati"><i class="notika-icon notika-form"></i> Toa Ithibati</a>
+                            </li>
+                        @endcan
                     </ul>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            @if (session('msg', null))
+                <div class="alert alert-success" role="alert">
+                    {{session('msg', null)}}
+                </div>
+            @endif
         </div>
     </div>
     <!-- Main Menu area End-->
@@ -182,7 +199,7 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="footer-copy-right">
-                        <p>Copyright © 2018
+                        <p>Copyright © {{date('Y')}}
 . All rights reserved. Template by <a href="/">SMN</a>.</p>
                     </div>
                 </div>

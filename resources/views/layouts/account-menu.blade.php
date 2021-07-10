@@ -26,6 +26,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/akaunti/review-nyimbo">Review Nyimbo</a>
                 </li>
+                @if(auth()->user()->hasRole('ithibati'))
+                    <li class="nav-item">
+                        <a class="nav-link" href="/akaunti/review-nyimbo">Ithibati</a>
+                    </li>
+                @endif
             </ul>
         </div>
     </nav>
