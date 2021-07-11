@@ -156,9 +156,9 @@ class SongUploadController extends Controller
         $additionalInfo = [
             'user_id' => auth()->user()->id,
             'pdf' => $pdfName,
-            'midi' => isset($midiName) ? $midiName : null,
-            'nota_original' => isset($originalFileName) ? $originalFileName : null,
-            'software_file' => isset($softwareFileName) ? $softwareFileName : null,
+            'midi' => $midiName ?? null,
+            'nota_original' => $originalFileName ?? null,
+            'software_file' => $softwareFileName ?? null,
             'uploaded_date' => Carbon::now()->format('Y-m-d H:i:s'),
             'status' => 4
         ];
@@ -297,7 +297,7 @@ class SongUploadController extends Controller
         Song::where('id', $request->input('song_id'))
             ->update(
                 array_replace(
-                    $request->except(['categories', '_token', 'song_id']),
+                    $request->except(['categories', '_token', 'song_id', 'composer_alive']),
                     $additionalInfo
                 )
             );
