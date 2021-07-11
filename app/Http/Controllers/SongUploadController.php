@@ -191,6 +191,10 @@ class SongUploadController extends Controller
 
     private function composerLifeStatus($isAlive, $composerId)
     {
+        if (!$isAlive) {
+           $isAlive = 'sijui';
+        }
+
         if($isAlive != 'sijui') {
             DB::table('composers_life_status')
                 ->insert(
