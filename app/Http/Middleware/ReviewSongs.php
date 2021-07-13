@@ -18,7 +18,7 @@ class ReviewSongs
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->user()->hasRole('super admin')) {
+        if(auth()->user()->hasRole(['super admin', 'viongozi kamati muziki']) ) {
             return $next($request);
         }
 
