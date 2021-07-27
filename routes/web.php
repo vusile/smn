@@ -101,6 +101,8 @@ Route::middleware(['auth'])->group(function () {
             ->name('account.songs.pending');
     Route::get('/akaunti/nyimbo/live', 'AccountController@live')
             ->name('account.songs.pending');
+    Route::get('/akaunti/nyimbo/others', 'AccountController@others')
+        ->name('account.songs.others');
     Route::get('/mtunzi/create', 'ComposerController@create');
     Route::post('/mtunzi/store', 'ComposerController@store');
     Route::post('/mtunzi/update', 'ComposerController@update');
@@ -157,6 +159,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/change-mtoa-ithibati/{song}', 'IthibatiController@changeMtoaIthibati');
         Route::post('/save-mtoa-ithibati', 'IthibatiController@saveMtoaIthibati');
     });
+    Route::post('/delete/{song}', 'SongUploadController@delete')
+        ->name('delete-song')
+        ->middleware('can_delete');
+    Route::get('/delete-reason/{song}', 'SongUploadController@deleteReason')
+        ->name('delete-reason')
+        ->middleware('can_delete');
 });
 Auth::routes();
 

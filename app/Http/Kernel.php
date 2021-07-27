@@ -59,6 +59,7 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'review.songs' => \App\Http\Middleware\ReviewSongs::class,
         'check_phone' => \App\Http\Middleware\CheckPhone::class,
+        'can_delete' => \App\Http\Middleware\CanDelete::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,

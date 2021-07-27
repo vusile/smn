@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Composer;
 use App\Models\Song;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
@@ -37,11 +38,13 @@ class AccountController extends Controller
     public function impersonate(User $user)
     {
         auth()->user()->impersonate($user);
+        redirect('akaunti');
     }
 
     public function stopImpersonating()
     {
         auth()->user()->leaveImpersonation();
+        redirect('akaunti');
     }
 
     public function pending()
@@ -73,16 +76,46 @@ class AccountController extends Controller
         );
     }
 
-    protected function getLiveSongs()
+    public function others()
     {
-        return
-            Song::where(function (Builder $query) {
-                $query->approved()->orWhere->forRecording();
-            })
-            ->when(!auth()->user()->hasAnyRole(['super admin', 'admin']), function ($query) {
-                return $query->ownedBy(auth()->user());
-            })
-            ->orderBy('id', 'desc');
+        $songs = $this->getLiveSongs(true)
+            ->paginate(20);
+
+        $status = 'Nyimbo zilizopakiwa na wengine';
+
+        $count = $songs->total();
+
+        return view(
+            'account.songs',
+            compact('songs', 'status', 'count')
+        );
+    }
+
+    protected function getLiveSongs($byOthers = false)
+    {
+        if($byOthers) {
+            return
+                Song::where(function (Builder $query) {
+                    $query->approved()->orWhere->forRecording();
+                })
+                ->where(function ($query) use ($byOthers) {
+                    $composer = Composer::where('user_id', auth()->user()->id)
+                        ->first();
+                    return $query->byOthers($composer->id);
+
+                })
+                ->orderBy('id', 'desc');
+        }
+        else {
+            return
+                Song::where(function (Builder $query) {
+                    $query->approved()->orWhere->forRecording();
+                })
+                    ->when(!auth()->user()->hasAnyRole(['super admin', 'admin']), function ($query) use ($byOthers) {
+                        return $query->ownedBy(auth()->user());
+                    })
+                    ->orderBy('id', 'desc');
+        }
     }
 
     protected function getPendingSongs()

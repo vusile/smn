@@ -131,7 +131,16 @@ class Song extends Model
 
     public function getIsActiveAttribute()
     {
-        if (in_array($this->status, [1, 2, 8])) {
+        if (
+            in_array(
+                $this->status,
+                [
+                    config('song.statuses.approved'),
+                    config('song.statuses.approved_and_verified'),
+                    config('song.statuses.received_ithibati_active_on_site')
+                ]
+            )
+        ) {
             return true;
         }
 
@@ -149,45 +158,64 @@ class Song extends Model
 
     public function scopeApproved($query)
     {
-        return $query->whereIn('status', [1, 2, 8, 9]);
+        return $query->whereIn('status',
+            [
+                config('song.statuses.approved'),
+                config('song.statuses.approved_and_verified'),
+                config('song.statuses.received_ithibati_active_on_site')
+            ]
+        );
     }
 
     public function scopeForRecording($query)
     {
-        return $query->whereIn('status', [7]);
+        return $query->whereIn('status', [config('song.statuses.received_ithibati_for_recording')]);
     }
 
     public function scopePending($query)
     {
-        return $query->whereIn('status', [4]);
+        return $query->whereIn('status', [config('song.statuses.pending')]);
     }
 
     public function scopeDenied($query)
     {
-        return $query->whereIn('status', [5]);
+        return $query->whereIn('status', [config('song.statuses.denied')]);
     }
 
-    public function getDeniedAttribute() {
-        return $this->status == 5;
+    public function getIsDeniedAttribute() {
+        return $this->status == config('song.statuses.denied');
     }
 
-    public function getPendingAttribute() {
-        return $this->status == 4;
+    public function getIsPendingAttribute() {
+        return $this->status == config('song.statuses.pending');
+    }
+
+    public function getIsDeletedAttribute() {
+        return $this->status == config('song.statuses.deleted');
     }
 
     public function scopeWaitingForIthibati($query)
     {
-        return $query->whereIn('status', [6]);
+        return $query->whereIn('status', [config('song.statuses.waiting_for_ithibati')]);
     }
 
     public function scopeWithIthibati($query)
     {
-        return $query->whereIn('status', [7,8]);
+        return $query->whereIn('status',
+            [
+                config('song.statuses.received_ithibati_for_recording'),
+                config('song.statuses.received_ithibati_active_on_site')
+            ]);
     }
 
     public function scopeWithNoIthibati($query)
     {
-        return $query->whereIn('status', [9]);
+        return $query->whereIn('status', [config('song.statuses.denied_ithibati')]);
+    }
+
+    public function scopeDeleted($query)
+    {
+        return $query->whereIn('status', [config('song.statuses.deleted')]);
     }
 
     public function scopeOwnedBy($query, $user)
@@ -230,5 +258,11 @@ class Song extends Model
                 ->pluck('song_id');
 
         return $query->whereIn('id', $topTen);
+    }
+
+    public function scopeByOthers($query, $composerId)
+    {
+        return $query->where('composer_id', $composerId)
+            ->where('user_id', '<>', auth()->user()->id);
     }
 }

@@ -160,7 +160,8 @@ class SongUploadController extends Controller
             'nota_original' => $originalFileName ?? null,
             'software_file' => $softwareFileName ?? null,
             'uploaded_date' => Carbon::now()->format('Y-m-d H:i:s'),
-            'status' => 4
+            'status' => 4,
+            'name'=> Str::title($request->input('name'))
         ];
 
         $song = Song::create(
@@ -297,6 +298,8 @@ class SongUploadController extends Controller
             $originalFileName = getFileNameFromPath($originalFilePath);
             $additionalInfo['nota_original'] = $originalFileName;
         }
+
+        $additionalInfo['name'] = Str::title($request->input('name'));
 
         Song::where('id', $request->input('song_id'))
             ->update(
@@ -458,5 +461,34 @@ class SongUploadController extends Controller
                 'songStatuses'
             )
         );
+    }
+
+    public function deleteReason(Song $song) {
+        $song->status = config('song.statuses.deleted');
+        $song->save();
+
+        return view(
+            'songs.delete.reason',
+            compact(
+                'song'
+            )
+        );
+    }
+
+    public function delete(Request $request, Song $song) {
+
+        if(!$request->input('delete_reason')) {
+            return redirect()->back()->with('error', 'Ni lazima uweke sababu ya kufuta wimbo');
+        }
+
+        $song->status = config('song.statuses.deleted');
+        $song->delete_reason = $request->input('delete_reason');
+        $song->save();
+
+        return redirect('akaunti')
+            ->with(
+                'message',
+                'Umefanikiwa kufuta wimbo ' . $song->name
+            );
     }
 }

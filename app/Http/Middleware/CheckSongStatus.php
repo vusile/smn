@@ -25,7 +25,7 @@ class CheckSongStatus
 
         $song = Song::find($id);
 
-        if ($song->pending || $song->denied) {
+        if ($song->is_pending || $song->is_denied || $song->is_deleted) {
             return redirect(route('missing-page'));
         } else {
             return $next($request);
