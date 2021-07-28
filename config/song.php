@@ -27,5 +27,8 @@ return [
         'received_ithibati_active_on_site' => 8,
         'denied_ithibati' => 9,
         'deleted' => 10,
-    ]
+    ],
+    'show_in_site_statuses' => [
+        1,2,8
+    ],
 ];

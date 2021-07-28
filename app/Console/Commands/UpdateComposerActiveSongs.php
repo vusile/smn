@@ -35,14 +35,13 @@ class UpdateComposerActiveSongs extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
      */
     public function handle()
     {
-        $query = "SELECT composers.*, composers.name name, composers.url url, COUNT( songs.id ) counts FROM songs, composers WHERE songs.composer_id = composers.id AND songs.status in (1,2) GROUP BY songs.composer_id ORDER BY composers.name";
-        
+        $query = "SELECT composers.*, composers.name name, composers.url url, COUNT( songs.id ) counts FROM songs, composers WHERE songs.composer_id = composers.id AND songs.status in (". implode( ",", config('song.show_in_site_statuses')) .") GROUP BY songs.composer_id ORDER BY composers.name";
+
         $activeSongs = DB::select($query);
-        
+
         foreach($activeSongs as $activeSong) {
             Composer::where('id', $activeSong->id)
                 ->update(
