@@ -21,7 +21,7 @@ Route::get('/song/{slug}/{song}', function($slug, $song){
     return redirect("/wimbo/$slug/$song", 301);
 });
 Route::get('/wimbo/{slug}/{song}', 'SongController@show')
-        ->middleware(\App\Http\Middleware\CheckSongUrl::class);
+        ->middleware(['check_song_status', 'check_song_url']);
 Route::get('/composer/profile/{slug}/{composer}', function($slug, $composer){
     return redirect("/watunzi/wasifu-mawasiliano/$slug/$composer", 301);
 });
@@ -45,7 +45,7 @@ Route::get('/categories', function(){
 });
 Route::get('/makundi-nyimbo', 'CategoryController@index');
 Route::get('/makundi-nyimbo/{slug}/{category}', 'CategoryController@show')
-        ->middleware(\App\Http\Middleware\CheckCategoryUrl::class);
+        ->middleware('check_category_url');
 Route::get('/category/{slug}/{category}', function($slug, $category) {
     return redirect("/makundi-nyimbo/$slug/$category", 301);
 });
