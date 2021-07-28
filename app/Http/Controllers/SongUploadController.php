@@ -464,9 +464,6 @@ class SongUploadController extends Controller
     }
 
     public function deleteReason(Song $song) {
-        $song->status = config('song.statuses.deleted');
-        $song->save();
-
         return view(
             'songs.delete.reason',
             compact(
