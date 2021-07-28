@@ -16,6 +16,7 @@ class CanDelete
      */
     public function handle($request, Closure $next)
     {
+        dd($request->user_id);
         if(
             auth()->user()->id == $request->user_id
             || auth()->user()->id == $request->route('song')->composer->user_id
