@@ -38,13 +38,13 @@ class AccountController extends Controller
     public function impersonate(User $user)
     {
         auth()->user()->impersonate($user);
-        redirect('akaunti');
+        return redirect('akaunti');
     }
 
     public function stopImpersonating()
     {
         auth()->user()->leaveImpersonation();
-        redirect('akaunti');
+        return redirect('akaunti');
     }
 
     public function pending()
