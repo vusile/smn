@@ -114,6 +114,8 @@
                                 </li>
                                 <li><a href="/akaunti/nyimbo/pending">Subiri Review</a>
                                 </li>
+                                <li><a href="/akaunti/nyimbo/others">Pakiwa na Wengine</a>
+                                </li>
                                 <li><a href="/akaunti/watunzi">Watunzi</a>
                                 </li>
                                 <li><a href="/akaunti/review-nyimbo">Review Nyimbo</a>
@@ -155,6 +157,8 @@
                         </li>
                         <li><a href="/akaunti/nyimbo/pending"><i class="notika-icon notika-edit"></i> Subiri Review</a>
                         </li>
+                        <li><a href="/akaunti/nyimbo/others"><i class="notika-icon notika-edit"></i> Pakiwa na Wengine</a>
+                        </li>
                         <li><a href="/akaunti/watunzi"><i class="notika-icon notika-support"></i> Watunzi</a>
                         </li>
                         <li><a href="/akaunti/review-nyimbo"><i class="notika-icon notika-form"></i> Review Nyimbo</a>
@@ -184,6 +188,16 @@
             @if (session('msg', null))
                 <div class="alert alert-success" role="alert">
                     {{session('msg', null)}}
+                </div>
+            @endif
+            @if (session('message', null))
+                <div class="alert alert-success" role="alert">
+                    {{session('message', null)}}
+                </div>
+            @endif
+            @if (session('error', null))
+                <div class="alert alert-danger" role="alert">
+                    {{session('error', null)}}
                 </div>
             @endif
         </div>

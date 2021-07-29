@@ -8,7 +8,7 @@
             <small>
                 <a href = '/edit-song/{{$song->id}}'>Badili Wimbo</a> |
                 <a href = '/upload/preview/{{$song->id}}'>Hakiki Wimbo</a> |
-                <!--<a href = '/delete-song/{{$song->id}}'>Ondoa Wimbo</a>-->
+                <a href = '/delete-reason/{{$song->id}}'>Ondoa Wimbo</a>
             </small>
                 <br><small><strong>Pakua:</strong> <a href="/song/download/{{ $song->id }}/pdf/{{$song->pdf}}" role="button">Download Nota</a></small>
         </p>
