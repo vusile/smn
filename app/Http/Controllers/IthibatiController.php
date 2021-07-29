@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Song;
 use App\Models\User;
+use App\Services\IthibatiService;
 use App\Services\SongService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -112,33 +113,11 @@ class IthibatiController extends Controller
             }
 
             $song->ithibati_number = sprintf(config('song.ithibati.format'), strtoupper(substr(str_shuffle(MD5(microtime())), 0, 5)), $song->id, date("y"));
-
-
             $song->approved_date = Carbon::now()->toDateString();
 
-            $path = storage_path('app/public/' . config('song.files.paths.pdf') . $song->pdf);
-            $savePath = storage_path('app/public/' . config('song.files.paths.pdf') . 'ithibati-' . $song->pdf);
+            $ithibatiService = new IthibatiService();
+            $ithibatiService->printIthibatiNumberOnPdf($song, null);
 
-            $pdf = new Fpdi();
-
-            $pageCount = $pdf->setSourceFile(
-                $path
-            );
-
-            for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
-                // import a page
-                $templateId = $pdf->importPage($pageNo);
-
-                $pdf->AddPage();
-                // use the imported page and adjust the page size
-                $pdf->useTemplate($templateId, ['adjustPageSize' => false]);
-
-                $pdf->SetFont('Helvetica');
-                $pdf->SetFontSize(10);
-                $pdf->SetXY(10, 5);
-                $pdf->Write(8, 'Namba ya Ithibati: ' . $song->ithibati_number);
-            }
-            $pdf->Output($savePath, 'F');
         } else {
             $song->status = 9;
 

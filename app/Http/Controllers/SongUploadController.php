@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Composer;
 use App\Models\Dominika;
 use App\Models\Song;
+use App\Services\IthibatiService;
 use App\Services\SearchService;
 use App\Services\SongService;
 use Illuminate\Http\Request;
@@ -262,6 +263,7 @@ class SongUploadController extends Controller
             $customMessages
         );
 
+        $song = Song::find($request->input('song_id'));
         $additionalInfo = [];
 
         if ($request->file('pdf')){
@@ -269,6 +271,11 @@ class SongUploadController extends Controller
             $pdfPath = $request->file('pdf')->storeAs('uploads/files', $pdfName);
 
             $additionalInfo['pdf'] = $pdfName;
+
+            if ($song->ithibati_number) {
+               $ithibatiService = new IthibatiService();
+               $ithibatiService->printIthibatiNumberOnPdf($song);
+            }
         }
 
         if ($request->file('midi')) {
@@ -301,15 +308,13 @@ class SongUploadController extends Controller
 
         $additionalInfo['name'] = Str::title($request->input('name'));
 
-        Song::where('id', $request->input('song_id'))
-            ->update(
-                array_replace(
-                    $request->except(['categories', '_token', 'song_id', 'composer_alive']),
-                    $additionalInfo
-                )
-            );
+        $song->update(
+            array_replace(
+                $request->except(['categories', '_token', 'song_id', 'composer_alive']),
+                $additionalInfo
+            )
+        );
 
-        $song = Song::find($request->input('song_id'));
 
         $this->composerLifeStatus(
             $request->input('composer_alive'),
