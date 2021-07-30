@@ -69,7 +69,7 @@ class ComposerController extends Controller
         SEOMeta::setTitle("Nyimbo za " . $composer->name);
         SEOMeta::setDescription("Mkusanyiko wa nyimbo za " . $composer->name);
 
-        $approvedSongs = $composer->songs()->approved();
+        $approvedSongs = $composer->songs()->approved()->get();
 
         return view(
             'composers.songs',
