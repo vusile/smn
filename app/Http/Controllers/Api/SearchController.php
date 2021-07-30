@@ -36,7 +36,7 @@ class SearchController extends Controller
 //        }
 
         $songs = $this->searchService
-            ->search(request()->query('st'), 'songs');
+            ->search(request()->input('st'), 'songs');
 
         if($songs) {
             $songs = $songs->filter(function($song){
