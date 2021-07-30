@@ -52,9 +52,7 @@ class SearchController extends Controller
 
         }
 
-        return [
-            $songs ? new SongCollection($songs) : null,
-        ];
+        return $songs ? new SongCollection($songs) : null;
     }
 
     public function searchUserSongs()
