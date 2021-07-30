@@ -28,5 +28,5 @@ Route::get('/makundi-nyimbo/{category}', 'Api\CategoryController@show');
 Route::get('/dominika-sikukuu/', 'Api\DominikaController@index');
 Route::get('/dominika-sikukuu/zifuatazo', 'Api\DominikaController@thisWeek');
 Route::get('/dominika-sikukuu/{dominika}', 'Api\DominikaController@show');
-Route::get('/search', 'Api\SearchController@index');
 Route::get('/watunzi/wa-kundi/{category}', 'Api\ComposerController@inCategory');
+Route::post('/search', 'Api\SearchController@index');
