@@ -57,8 +57,8 @@ class SearchController extends Controller
             ->when($categoryId, function($query) use ($categoryId) {
                 $query->category($categoryId);
             })
-//            ->sortBy('views')
-        ->get();
+            ->orderBy('views')
+            ->paginate();
 
 
         return $songs ? new SongCollection($songs) : null;
