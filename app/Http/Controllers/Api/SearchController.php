@@ -53,7 +53,7 @@ class SearchController extends Controller
         }
 
         return [
-            'songs' => $songs ? new SongCollection($songs) : null,
+            $songs ? new SongCollection($songs) : null,
         ];
     }
 
