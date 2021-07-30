@@ -35,22 +35,31 @@ class SearchController extends Controller
 //            )->get();
 //        }
 
-        $songs = $this->searchService
-            ->search(request()->input('st'), 'songs');
+        $composerId = request()->input('composer_id');
+        $categoryId = request()->input('category_id');
+        $searchTerm = request()->input('st');
+        $songIds = array();
 
-        if($songs) {
-            $songs = $songs->filter(function($song){
+        if($searchTerm) {
+            $sphinxResult = $this->searchService
+                ->search(request()->input('st'), 'songs');
+            $songIds = $sphinxResult->filter(function($song){
                 return in_array($song->status, config('song.show_in_site_statuses'));
             });
-
-            $songs = Song::whereIn(
-                'id',
-                $songs->pluck('id')->toArray()
-            )
-//            ->sortBy('views')
-            ->get();
-
         }
+
+        $songs = Song::when($songIds, function($query) use ($songIds) {
+                $query->whereIn('id', $songIds);
+            })
+            ->when($composerId, function($query) use ($composerId) {
+                $query->where('composer_id', $composerId);
+            })
+            ->when($categoryId, function($query) use ($categoryId) {
+                $query->category($categoryId);
+            })
+//            ->sortBy('views')
+        ->get();
+
 
         return $songs ? new SongCollection($songs) : null;
     }
