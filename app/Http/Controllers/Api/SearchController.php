@@ -47,7 +47,7 @@ class SearchController extends Controller
                 'id',
                 $songs->pluck('id')->toArray()
             )
-            ->sortBy('views')
+//            ->sortBy('views')
             ->get();
 
         }
