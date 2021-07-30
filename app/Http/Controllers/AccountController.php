@@ -94,15 +94,14 @@ class AccountController extends Controller
     protected function getLiveSongs($byOthers = false)
     {
         if($byOthers) {
+            $composer = Composer::where('user_id', auth()->user()->id)
+                ->first();
             return
                 Song::where(function (Builder $query) {
                     $query->approved()->orWhere->forRecording();
                 })
-                ->where(function ($query) use ($byOthers) {
-                    $composer = Composer::where('user_id', auth()->user()->id)
-                        ->first();
+                ->when($composer, function ($query) use ($byOthers, $composer) {
                     return $query->byOthers($composer->id);
-
                 })
                 ->orderBy('id', 'desc');
         }
