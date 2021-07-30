@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Composer;
 use App\Models\Song;
 use App\Models\User;
+use Doctrine\DBAL\ParameterType;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
@@ -78,12 +79,18 @@ class AccountController extends Controller
 
     public function others()
     {
-        $songs = $this->getLiveSongs(true)
-            ->paginate(20);
-
+        $composer = Composer::where('user_id', auth()->user()->id)
+            ->first();
         $status = 'Nyimbo zilizopakiwa na wengine';
 
-        $count = $songs->total();
+        if($composer) {
+            $songs = $this->getLiveSongs(true, $composer)
+                ->paginate(20);
+            $count = $songs->total();
+        } else {
+            $songs = null;
+            $count = 0;
+        }
 
         return view(
             'account.songs',
@@ -91,19 +98,21 @@ class AccountController extends Controller
         );
     }
 
-    protected function getLiveSongs($byOthers = false)
+    protected function getLiveSongs($byOthers = false, $composer = null)
     {
         if($byOthers) {
-            $composer = Composer::where('user_id', auth()->user()->id)
-                ->first();
-            return
-                Song::where(function (Builder $query) {
-                    $query->approved()->orWhere->forRecording();
-                })
-                ->when($composer, function ($query) use ($byOthers, $composer) {
-                    return $query->byOthers($composer->id);
-                })
-                ->orderBy('id', 'desc');
+            if($composer) {
+                return
+                    Song::where(function (Builder $query) {
+                        $query->approved()->orWhere->forRecording();
+                    })
+                        ->when($composer, function ($query) use ($byOthers, $composer) {
+                            return $query->byOthers($composer->id);
+                        })
+                        ->orderBy('id', 'desc');
+            } else {
+                return null;
+            }
         }
         else {
             return

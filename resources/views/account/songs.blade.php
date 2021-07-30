@@ -1,7 +1,7 @@
 @extends('layouts.backend-end')
 @section('content')
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4">{{ $status }} - {{$songs->total()}}</h1>
+    <h1 class="display-4">{{ $status }} - {{$count}}</h1>
 </div>
 
 <div class="container">
@@ -17,9 +17,11 @@
             </div>
         </div>
     </form>
-    @foreach($songs as $song)
-        @include("songs.partials.account-song-row")
-    @endforeach
-    {{ $songs->links() }}
+    @if($songs != null)
+        @foreach($songs as $song)
+            @include("songs.partials.account-song-row")
+        @endforeach
+        {{ $songs->links() }}
+    @endif
 </div>
 @stop
