@@ -116,7 +116,7 @@ class IthibatiController extends Controller
             $song->approved_date = Carbon::now()->toDateString();
 
             $ithibatiService = new IthibatiService();
-            $ithibatiService->printIthibatiNumberOnPdf($song, null);
+            $ithibatiService->printIthibatiNumberOnPdf($song);
 
         } else {
             $song->status = 9;

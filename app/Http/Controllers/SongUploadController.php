@@ -274,7 +274,7 @@ class SongUploadController extends Controller
 
             if ($song->ithibati_number) {
                $ithibatiService = new IthibatiService();
-               $ithibatiService->printIthibatiNumberOnPdf($song);
+               $ithibatiService->printIthibatiNumberOnPdf($song, $pdfName);
             }
         }
 
