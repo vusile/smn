@@ -40,6 +40,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('clean-up:downloads-views')->daily();
+        $schedule->command('sitemap:generate')->dailyAt("22:00");
         $schedule->command('review:songs')->everyFiveMinutes();
         $schedule->command('composers:update-active-songs')->everyTenMinutes();
         $schedule->command('users:update-active-songs')->everyTenMinutes();
