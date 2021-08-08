@@ -40,40 +40,22 @@ class GenerateSitemap extends Command
         $sitemap = '<?xml version="1.0" encoding="UTF-8"?>';
         $sitemap .= '<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">';
 
-        $sitemap .= '<url>';
-        $sitemap .= '<loc>https://swahilimusicnotes.com</loc>';
-        $sitemap .= '<lastmod>'. date('Y-m-d') . '</lastmod>';
-        $sitemap .= '<changefreq>daily</changefreq>';
-        $sitemap .= '<priority>1.0</priority>';
-        $sitemap .= '</url>';
+        $sitemap .= $this->generateUrlNode("", "daily", "1.0");
 
         $categories = Category::all();
 
         foreach($categories as $category) {
-            $sitemap .= '<url>';
-            $sitemap .= '<loc>https://swahilimusicnotes.com/makundi-nyimbo/' . $category->url . '/' . $category->id . '</loc>';
-            $sitemap .= '<lastmod>'. Carbon::create(null, null, null, null, null, null) . '</lastmod>';
-            $sitemap .= '<changefreq>daily</changefreq>';
-            $sitemap .= '<priority>0.9</priority>';
-            $sitemap .= '</url>';
+            $loc = '/makundi-nyimbo/' . $category->url . '/' . $category->id;
+            $sitemap .= $this->generateUrlNode($loc, 'daily', '0.9');
         }
 
-        $sitemap .= '<url>';
-        $sitemap .= '<loc>https://swahilimusicnotes.com/watunzi</loc>';
-        $sitemap .= '<lastmod>'. Carbon::create(null, null, null, null, null, null) . '</lastmod>';
-        $sitemap .= '<changefreq>daily</changefreq>';
-        $sitemap .= '<priority>0.6</priority>';
-        $sitemap .= '</url>';
+        $sitemap .= $this->generateUrlNode("/watunzi", "daily", "0.6");
 
         $composers = Composer::all();
 
         foreach($composers as $composer) {
-            $sitemap .= '<url>';
-            $sitemap .= '<loc>https://swahilimusicnotes.com/watunzi/nyimbo/' . $composer->url . '/' . $composer->id . '</loc>';
-            $sitemap .= '<lastmod>'. Carbon::create(null, null, null, null, null, null) . '</lastmod>';
-            $sitemap .= '<changefreq>weekly</changefreq>';
-            $sitemap .= '<priority>0.6</priority>';
-            $sitemap .= '</url>';
+            $loc = '/watunzi/nyimbo/' . $composer->url . '/' . $composer->id;
+            $sitemap .= $this->generateUrlNode($loc, "weekly", "0.6");
         }
 
         $songs = Song::with(
@@ -84,12 +66,8 @@ class GenerateSitemap extends Command
             ->approved()->orderBy('name')->get();
 
         foreach($songs as $song) {
-            $sitemap .= '<url>';
-            $sitemap .= '<loc>https://swahilimusicnotes.com/wimbo/' . $song->url . '/' . $song->id . '</loc>';
-            $sitemap .= '<lastmod>'. Carbon::create(null, null, null, null, null, null) . '</lastmod>';
-            $sitemap .= '<changefreq>monthly</changefreq>';
-            $sitemap .= '<priority>0.8</priority>';
-            $sitemap .= '</url>';
+            $loc = '/wimbo/' . $song->url . '/' . $song->id;
+            $sitemap .= $this->generateUrlNode($loc, "monthly", "0.8");
         }
 
         $sitemap .= '</urlset>';
@@ -99,5 +77,17 @@ class GenerateSitemap extends Command
         //Ping Google
         Http::get('https://www.google.com/ping?sitemap=https://swahilimusicnotes.com/sitemap.xml');
 
+    }
+
+    private function generateUrlNode($loc, $changeFreq, $priority): string
+    {
+        $node = '<url>';
+        $node .= '<loc>https://swahilimusicnotes.com'. $loc .'</loc>';
+        $node .= '<lastmod>'. date('Y-m-d') . '</lastmod>';
+        $node .= '<changefreq>'. $changeFreq . '</changefreq>';
+        $node .= '<priority>'. $priority .'</priority>';
+        $node .= '</url>';
+
+        return $node;
     }
 }
