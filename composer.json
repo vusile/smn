@@ -23,9 +23,9 @@
         "league/flysystem": "^1.0",
         "mvvershinin/sphinxsearch": "dev-master",
         "propaganistas/laravel-phone": "^4.2",
-        "spatie/laravel-permission": "^3.17",
         "setasign/fpdf": "^1.8",
         "setasign/fpdi-tcpdf": "^2.0",
+        "spatie/laravel-permission": "^4.2",
         "venturecraft/revisionable": "1.*"
     },
     "require-dev": {

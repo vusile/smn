@@ -172,3 +172,4 @@ Route::get('/missing-page', 'HomeController@missingPage')->name('missing-page');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/contact', 'ContactController@index')->name('contact');
 Route::post('/contact', 'ContactController@sendEMail')->name('send-message');
+Route::get('/sitemap.xml', 'SitemapController@index')->name('sitemap');
