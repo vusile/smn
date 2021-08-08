@@ -42,7 +42,7 @@ class GenerateSitemap extends Command
 
         $sitemap .= '<url>';
         $sitemap .= '<loc>https://swahilimusicnotes.com</loc>';
-        $sitemap .= '<lastmod>'. Carbon::create(null, null, null, null, null, null) . '</lastmod>';
+        $sitemap .= '<lastmod>'. date('Y-m-d') . '</lastmod>';
         $sitemap .= '<changefreq>daily</changefreq>';
         $sitemap .= '<priority>1.0</priority>';
         $sitemap .= '</url>';
