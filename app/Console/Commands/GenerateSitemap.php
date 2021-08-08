@@ -71,7 +71,7 @@ class GenerateSitemap extends Command
             $sitemap .= '<url>';
             $sitemap .= '<loc>https://swahilimusicnotes.com/watunzi/nyimbo/' . $composer->url . '/' . $composer->id . '</loc>';
             $sitemap .= '<lastmod>'. Carbon::create(null, null, null, null, null, null) . '</lastmod>';
-            $sitemap .= '<changefreq>daily</changefreq>';
+            $sitemap .= '<changefreq>weekly</changefreq>';
             $sitemap .= '<priority>0.6</priority>';
             $sitemap .= '</url>';
         }
@@ -87,7 +87,7 @@ class GenerateSitemap extends Command
             $sitemap .= '<url>';
             $sitemap .= '<loc>https://swahilimusicnotes.com/wimbo/' . $song->url . '/' . $song->id . '</loc>';
             $sitemap .= '<lastmod>'. Carbon::create(null, null, null, null, null, null) . '</lastmod>';
-            $sitemap .= '<changefreq>daily</changefreq>';
+            $sitemap .= '<changefreq>monthly</changefreq>';
             $sitemap .= '<priority>0.8</priority>';
             $sitemap .= '</url>';
         }
