@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    @if(env('APP_ENV') == 'production')
+    @if(App::environment('production'))
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-18823668-4"></script>
         <script>
@@ -13,7 +13,7 @@
         </script>
     @endif
 
-    @if(env('APP_ENV') != 'production')
+    @if(!App::environment('production'))
         <meta name="robots" content="noindex,nofollow">
     @endif
     <!-- Required meta tags -->
