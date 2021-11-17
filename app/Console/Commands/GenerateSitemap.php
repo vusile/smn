@@ -75,8 +75,9 @@ class GenerateSitemap extends Command
         Storage::put('sitemaps/sitemap.xml', $sitemap, 'public');
 
         //Ping Google
-        Http::get('https://www.google.com/ping?sitemap=https://swahilimusicnotes.com/sitemap.xml');
-
+        if (App::environment('production')) {
+            Http::get('https://www.google.com/ping?sitemap=https://swahilimusicnotes.com/sitemap.xml');
+        }
     }
 
     private function generateUrlNode($loc, $changeFreq, $priority): string
