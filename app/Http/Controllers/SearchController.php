@@ -84,7 +84,7 @@ class SearchController extends Controller
 
         $songs = Song::whereIn(
                 'id',
-                $songs->collect()->pluck('id')->toArray()
+                collect($songs)->pluck('id')->toArray()
             )
                 ->paginate(20);
 

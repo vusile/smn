@@ -62,7 +62,7 @@ class Song extends Model
         'fit_for_liturgy' => 'Inafaa kwenye liturjia',
     ];
 
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'url' => [
