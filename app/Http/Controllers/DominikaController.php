@@ -25,6 +25,7 @@ class DominikaController extends Controller
                 }
 
             )
+            ->has('songs')
             ->whereDate('dominika_date', '>=', Carbon::today()->toDateString())
             ->orderBy('dominika_date')
             ->get();
