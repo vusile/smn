@@ -51,6 +51,7 @@ class HomeController extends Controller
                 ->get();
 
         $ibadaZaWikiHii = Dominika::thisWeek()
+            ->has('songs')
             ->select('title', 'id', 'dominika_date', 'rangi')
             ->orderBy('dominika_date')
             ->get();
