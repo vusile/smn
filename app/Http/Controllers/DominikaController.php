@@ -59,21 +59,25 @@ class DominikaController extends Controller
 
         $mwanzo = $dominikaSongs
                 ->where('parts_of_mass_id', 1)
+                ->where('approved', true)
                 ->pluck('song_id')
                 ->all();
 
         $katikati = $dominikaSongs
                 ->where('parts_of_mass_id', 2)
+                ->where('approved', true)
                 ->pluck('song_id')
                 ->all();
 
         $shangilio = $dominikaSongs
                 ->where('parts_of_mass_id', 3)
+                ->where('approved', true)
                 ->pluck('song_id')
                 ->all();
 
         $antifona = $dominikaSongs
                 ->where('parts_of_mass_id', 4)
+                ->where('approved', true)
                 ->pluck('song_id')
                 ->all();
 
