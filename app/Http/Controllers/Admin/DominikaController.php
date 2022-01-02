@@ -39,7 +39,7 @@ class DominikaController extends Controller
                 }
 
             )
-            ->whereDate('dominika_date', '>=', Carbon::today()->toDateString())
+            ->whereYear('dominika_date', '>=', Carbon::today()->year())
             ->orderBy('dominika_date')
             ->get();
 
