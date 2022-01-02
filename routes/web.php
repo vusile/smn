@@ -124,13 +124,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/verify-number', 'UserController@verificationForm')->name('verify-number-form');
     Route::post('/verify-number', 'UserController@verifyNumber')->name('verify-number');
     Route::group(['middleware' => ['role:super admin']], function () {
-        Route::get('/admin/dominikas', 'Admin\DominikaController@index')->name('admin-doninika-index');
-        Route::get('/admin/dominikas/search', 'Admin\DominikaController@search')->name('admin-doninika-search');
-        Route::get('/admin/dominikas/{dominika}', 'Admin\DominikaController@show')->name('admin-doninika-show');
-        Route::post('/admin/dominikas/delete/{dominika}', 'Admin\DominikaController@delete')->name('admin-doninika-delete');
-        Route::post('/admin/dominikas/update-date/{dominika}', 'Admin\DominikaController@update_date')->name('admin-doninika-update-date');
-        Route::get('/admin/dominikas/add-songs/{part}/{dominika}', 'Admin\DominikaController@add_songs')->name('admin-doninika-add-songs');
-        Route::post('/admin/dominikas/update-songs/{dominika}', 'Admin\DominikaController@update_songs')->name('admin-doninika-update-songs');
+
+        //Move to another role
+
+        //end move to another role
         Route::get('/admin/categories', 'Admin\CategoriesController@index')->name('admin-categories-index');
         Route::post('/admin/categories/save/', 'Admin\CategoriesController@save')->name('admin-categories-save');
         Route::get('/admin/categories/create/', 'Admin\CategoriesController@create')->name('admin-categories-create');
@@ -159,10 +156,25 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/change-mhakiki/{song}', 'SongReviewController@changeMhakiki');
         Route::post('/save-mhakiki', 'SongReviewController@saveMhakiki');
     });
+
     Route::group(['middleware' => ['role:viongozi kamati muziki']], function () {
         Route::get('/change-mtoa-ithibati/{song}', 'IthibatiController@changeMtoaIthibati');
         Route::post('/save-mtoa-ithibati', 'IthibatiController@saveMtoaIthibati');
     });
+
+    Route::group(['middleware' => ['role:dominika admin']], function () {
+        Route::get('/admin/dominikas', 'Admin\DominikaController@index')->name('admin-doninika-index');
+        Route::get('/admin/dominikas/search', 'Admin\DominikaController@search')->name('admin-doninika-search');
+        Route::get('/admin/dominikas/review-dominika', 'Admin\DominikaController@reviewDominika')->name('admin-doninika-review-dominika');
+        Route::get('/admin/review-dominika/{action}/{song}/{dominika}', 'Admin\DominikaController@changeDominikaStatus')->name('admin-doninika-change-status');
+        Route::get('/admin/dominikas/{dominika}', 'Admin\DominikaController@show')->name('admin-doninika-show');
+        Route::post('/admin/dominikas/delete/{dominika}', 'Admin\DominikaController@delete')->name('admin-doninika-delete');
+        Route::post('/admin/dominikas/update-date/{dominika}', 'Admin\DominikaController@update_date')->name('admin-doninika-update-date');
+        Route::get('/admin/dominikas/add-songs/{part}/{dominika}', 'Admin\DominikaController@add_songs')->name('admin-doninika-add-songs');
+        Route::post('/admin/dominikas/update-songs/{dominika}', 'Admin\DominikaController@update_songs')->name('admin-doninika-update-songs');
+    });
+
+
     Route::post('/delete/{song}', 'SongUploadController@delete')
         ->name('delete-song')
         ->middleware('can_delete');

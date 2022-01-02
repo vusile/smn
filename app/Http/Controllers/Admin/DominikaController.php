@@ -197,4 +197,41 @@ class DominikaController extends Controller
 
         return redirect("/admin/dominikas/" . $dominika->id);
     }
+
+    public function reviewDominika() {
+        $songIds = DB::table("dominikas_songs")
+            ->where('approved', false)
+            ->get()
+            ->pluck('song_id');
+
+        $songs = Song::whereIn('id', $songIds)
+            ->get();
+
+        return view(
+            'dominika.admin.review',
+            compact(
+                'songs'
+            )
+        );
+    }
+
+    public function changeDominikaStatus(string $status, Song $song, Dominika $dominika) {
+        switch ($status) {
+            case 'approve':
+                DB::table('dominikas_songs')
+                    ->where('song_id', $song->id)
+                    ->where('dominika_id', $dominika->id)
+                    ->update(['approved' => true]);
+                break;
+
+            case 'deny':
+                DB::table('dominikas_songs')
+                    ->where('song_id', $song->id)
+                    ->where('dominika_id', $dominika->id)
+                    ->delete();
+                break;
+        }
+
+        return redirect("/admin/dominikas/review-dominika");
+    }
 }

@@ -18,7 +18,7 @@ class Composer extends Model
 
     protected $fillable = ['name', 'details', 'email', 'phone', 'url', 'photo1', 'photo2', 'photo3', 'jimbo', 'parokia', 'user_id', 'mimi_ndio_huyu_mtunzi', 'added_by'];
 
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'url' => [
