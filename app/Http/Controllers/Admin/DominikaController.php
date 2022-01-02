@@ -7,6 +7,7 @@ use App\Models\Song;
 use App\Services\SearchService;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Symfony\Component\Console\Input\Input;
@@ -38,6 +39,7 @@ class DominikaController extends Controller
                 }
 
             )
+            ->whereDate('dominika_date', '>=', Carbon::today()->toDateString())
             ->orderBy('dominika_date')
             ->get();
 
