@@ -101,10 +101,10 @@ class CycleBDominikaUpdates extends Command
             150 => ["dominika_date" => "2021-11-02", "rangi" => "Urujuani"], //Marehemu Wote
             152 => ["dominika_date" => "2021-11-21", "rangi" => "Nyeupe"], //Kristu Mfalme
             175 => ["dominika_date" => "2021-06-11", "rangi" => "Nyeupe"], //Moyo Mtakatifu wa Yesu
-            170 => ["dominika_date" => "2021-11-28", "rangi" => "Urujuani"], // Mwaka B", //Dominika ya 1 ya Majilio
-            155 => ["dominika_date" => "2021-12-05", "rangi" => "Urujuani"], // Mwaka B", //Dominika ya 2 ya Majilio
-            158 => ["dominika_date" => "2021-12-12", "rangi" => "Urujuani"], // Mwaka B", //Dominika ya 3 ya Majilio
-            161 => ["dominika_date" => "2021-12-19", "rangi" => "Urujuani"], // Mwaka B", //Dominika ya 4 ya Majilio
+            171 => ["dominika_date" => "2021-11-28", "rangi" => "Urujuani"], // Mwaka C", //Dominika ya 1 ya Majilio
+            156 => ["dominika_date" => "2021-12-05", "rangi" => "Urujuani"], // Mwaka C", //Dominika ya 2 ya Majilio
+            159 => ["dominika_date" => "2021-12-12", "rangi" => "Urujuani"], // Mwaka C", //Dominika ya 3 ya Majilio
+            162 => ["dominika_date" => "2021-12-19", "rangi" => "Urujuani"], // Mwaka C", //Dominika ya 4 ya Majilio
             164 => ["dominika_date" => "2021-12-24", "rangi" => "Nyeupe"], //Kuzaliwa kwa Bwana (Mkesha)
             165 => ["dominika_date" => "2021-12-24", "rangi" => "Nyeupe"], //Kuzaliwa kwa Bwana (Misa ya Usiku)
             166 => ["dominika_date" => "2021-12-25", "rangi" => "Nyeupe"], //Kuzaliwa kwa Bwana (Misa ya Alfajiri)

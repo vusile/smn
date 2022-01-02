@@ -44,10 +44,10 @@ class CycleADominikaUpdates extends Command
             10 => ["dominika_date" => "2020-02-09", "rangi" => "Kijani"], //Dominika ya 5 Mwaka A
             13 => ["dominika_date" => "2020-02-16", "rangi" => "Kijani"], //Dominika ya 6 Mwaka A
             16 => ["dominika_date" => "2020-02-23", "rangi" => "Kijani"], //Dominika ya 7 Mwaka A
-//            19 => ["dominika_date" => "NULL", "rangi" => "Kijani"], //Dominika ya 8 Mwaka A
-//            22 => ["dominika_date" => "NULL", "rangi" => "Kijani"], //Dominika ya 9 Mwaka A
-//            25 => ["dominika_date" => "NULL", "rangi" => "Kijani"], //Dominika ya 10 Mwaka A
-//            28 => ["dominika_date" => "NULL", "rangi" => "Kijani"], //Dominika ya 11 Mwaka A
+            19 => ["dominika_date" => "NULL", "rangi" => "Kijani"], //Dominika ya 8 Mwaka A
+            22 => ["dominika_date" => "NULL", "rangi" => "Kijani"], //Dominika ya 9 Mwaka A
+            25 => ["dominika_date" => "NULL", "rangi" => "Kijani"], //Dominika ya 10 Mwaka A
+            28 => ["dominika_date" => "NULL", "rangi" => "Kijani"], //Dominika ya 11 Mwaka A
             31 => ["dominika_date" => "2020-06-21", "rangi" => "Kijani"], //Dominika ya 12 Mwaka A
             34 => ["dominika_date" => "2020-06-28", "rangi" => "Kijani"], //Dominika ya 13 Mwaka A
             37 => ["dominika_date" => "2020-07-05", "rangi" => "Kijani"], //Dominika ya 14 Mwaka A
@@ -98,7 +98,10 @@ class CycleADominikaUpdates extends Command
             148 => ["dominika_date" => "2020-08-15", "rangi" => "Nyeupe"], //Kupalizwa Mbinguni Bikira Maria
             149 => ["dominika_date" => "2020-11-01", "rangi" => "Nyeupe"], //Watakatifu Wote
             150 => ["dominika_date" => "2020-11-02", "rangi" => "Urujuani"], //Marehemu Wote
-            160 => ["dominika_date" => "2019-12-22", "rangi" => "Urujuani"], // Mwaka A", //Dominika ya 4 ya Majilio
+            170 => ["dominika_date" => "2021-11-28", "rangi" => "Urujuani"], // Mwaka B", //Dominika ya 1 ya Majilio
+            155 => ["dominika_date" => "2021-12-05", "rangi" => "Urujuani"], // Mwaka B", //Dominika ya 2 ya Majilio
+            158 => ["dominika_date" => "2021-12-12", "rangi" => "Urujuani"], // Mwaka B", //Dominika ya 3 ya Majilio
+            161 => ["dominika_date" => "2021-12-19", "rangi" => "Urujuani"], // Mwaka B", //Dominika ya 4 ya Majilio
             164 => ["dominika_date" => "2019-12-24", "rangi" => "Nyeupe"], //Kuzaliwa kwa Bwana (Mkesha)
             165 => ["dominika_date" => "2019-12-24", "rangi" => "Nyeupe"], //Kuzaliwa kwa Bwana (Misa ya Usiku)
             166 => ["dominika_date" => "2019-12-25", "rangi" => "Nyeupe"], //Kuzaliwa kwa Bwana (Misa ya Alfajiri)

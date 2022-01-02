@@ -77,8 +77,7 @@ class SongUploadController extends Controller
         );
 
         $songName = $request->input('name');
-        $categories = Category::orderBy('title')
-                ->get();
+        $categories = $this->getCategories();
 
         $softwares = DB::table('softwares')
                 ->get()
@@ -442,8 +441,7 @@ class SongUploadController extends Controller
             ->toArray();
 
 
-        $categories = Category::orderBy('title')
-            ->get();
+        $categories = $this->getCategories();
 
         $softwares = DB::table('softwares')
                 ->get()
@@ -466,6 +464,20 @@ class SongUploadController extends Controller
                 'songStatuses'
             )
         );
+    }
+
+    private function getCategories() {
+        return Category::orderBy('title')
+            ->get()
+            ->filter(function($value, $key) {
+                if(
+                    (!auth()->user()->hasAnyRole(['super admin', 'admin', 'viongozi kamati muziki', 'viongozi uhakiki', 'uhakiki'])
+                        && !in_array($value->url, config('categories.cannot_post')))
+                    || auth()->user()->hasAnyRole(['super admin', 'admin', 'viongozi kamati muziki', 'viongozi uhakiki', 'uhakiki'])
+                ) {
+                    return $value;
+                }
+            });
     }
 
     public function deleteReason(Song $song) {

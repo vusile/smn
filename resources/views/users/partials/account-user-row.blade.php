@@ -46,6 +46,13 @@
             @elseif(!$user->hasRole('viongozi uhakiki'))
                 <a href = '/assign-role/viongozi uhakiki/{{$user->id}}'>Mpe uwezo wa Kiongozi wa Uhakiki</a>
             @endif
+                <br>
+
+            @if($user->hasRole('dominika admin'))
+                <a style ="color: red" href = '/remove-role/dominika admin/{{$user->id}}'>Ondoa uwezo wa Kuboresha Dominika</a>
+            @elseif(!$user->hasRole('dominika admin'))
+                <a href = '/assign-role/dominika admin/{{$user->id}}'>Mpe uwezo wa Kuboresha Dominika</a>
+            @endif
 
         </p>
     </div>

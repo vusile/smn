@@ -120,8 +120,6 @@
                                 </li>
                                 <li><a href="/akaunti/review-nyimbo">Review Nyimbo</a>
                                 </li>
-                                <li><a href="/logout">Logout</a>
-                                </li>
                                 @if(auth()->user()->hasAnyRole(['super admin']))
                                     <li><a href="#Appviews"  class="dropdown-toggle" data-toggle="dropdown"><i class="notika-icon notika-app"></i> Admin Stuff</a>
                                         <ul class="dropdown-menu">
@@ -131,10 +129,20 @@
                                         </ul>
                                     </li>
                                 @endif
+                                @if(auth()->user()->hasAnyRole(['dominika admin']))
+                                    <li><a href="#Appviews"  class="dropdown-toggle" data-toggle="dropdown"><i class="notika-icon notika-app"></i> Admin Stuff</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="/admin/dominikas">Dominika</a></li>
+                                            <li><a href="/admin/dominikas/review-dominika">Hakiki nyimbo za dominika</a></li>
+                                        </ul>
+                                    </li>
+                                @endif
                                 @can('kutoa ithibati')
                                     <li><a href="/akaunti/toa-ithibati">Toa Ithibati</a>
                                     </li>
                                 @endcan
+                                <li><a href="/logout">Logout</a>
+                                </li>
                             </ul>
                         </nav>
                     </div>
@@ -163,8 +171,6 @@
                         </li>
                         <li><a href="/akaunti/review-nyimbo"><i class="notika-icon notika-form"></i> Review Nyimbo</a>
                         </li>
-                        <li><a href="/logout"><i class="notika-icon notika-right-arrow"></i> Logout</a>
-                        </li>
                         @if(auth()->user()->hasAnyRole(['super admin']))
                             <li><a href="#Appviews"  class="dropdown-toggle" data-toggle="dropdown"><i class="notika-icon notika-app"></i> Admin Stuff</a>
                               <ul class="dropdown-menu">
@@ -174,10 +180,20 @@
                               </ul>
                             </li>
                         @endif
+                        @if(auth()->user()->hasAnyRole(['dominika admin']))
+                            <li><a href="#Appviews"  class="dropdown-toggle" data-toggle="dropdown"><i class="notika-icon notika-app"></i> Dominika</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/admin/dominikas">Dominika</a></li>
+                                    <li><a href="/admin/dominikas/review-dominika">Hakiki nyimbo za dominika</a></li>
+                                </ul>
+                            </li>
+                        @endif
                         @can('kutoa ithibati')
                             <li><a href="/akaunti/toa-ithibati"><i class="notika-icon notika-form"></i> Toa Ithibati</a>
                             </li>
                         @endcan
+                        <li><a href="/logout"><i class="notika-icon notika-right-arrow"></i> Logout</a>
+                        </li>
                     </ul>
                 </div>
             </div>
