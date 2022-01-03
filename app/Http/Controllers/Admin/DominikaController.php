@@ -209,10 +209,17 @@ class DominikaController extends Controller
         $songs = Song::whereIn('id', $songIds)
             ->get();
 
+        $partsOfMass = [
+            1 => 'Mwanzo',
+            2 => 'Katikati',
+            3 => 'Shangilio',
+            4 => 'Antifona'
+        ];
+
         return view(
             'dominika.admin.review',
             compact(
-                'songs'
+                'songs', 'partsOfMass'
             )
         );
     }

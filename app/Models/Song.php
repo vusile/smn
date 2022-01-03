@@ -2,11 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\SongDownload;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Venturecraft\Revisionable\Revisionable;
 use Venturecraft\Revisionable\RevisionableTrait;
 
 class Song extends Model
@@ -88,7 +86,7 @@ class Song extends Model
 
     public function dominikas()
     {
-        return $this->belongsToMany('App\Models\Dominika', 'dominikas_songs');
+        return $this->belongsToMany('App\Models\Dominika', 'dominikas_songs')->withPivot('parts_of_mass_id');
     }
 
     public function comments()

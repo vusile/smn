@@ -14,7 +14,7 @@
                         <h2><a href="{!! downloadLink($song, 'pdf') !!}">{{$song->name}}</a> </h2>
                         @foreach($song->dominikas as $dominika)
                             <div class="row">
-                                <p><a href = "/dominika-sikukuu/{{Str::slug($dominika->title)}}/{{$dominika->id}}">{{ $dominika->title }}</a> >> <a href = "/admin/review-dominika/approve/{{$song->id}}/{{$dominika->id}}">SAWA</a> ---- <a href = "/admin/review-dominika/deny/{{$song->id}}/{{$dominika->id}}">SI SAWA</a></p>
+                                <p>{{$partsOfMass[$dominika->pivot->parts_of_mass_id]}} - <a href = "/dominika-sikukuu/{{Str::slug($dominika->title)}}/{{$dominika->id}}">{{ $dominika->title }}</a> >> <a href = "/admin/review-dominika/approve/{{$song->id}}/{{$dominika->id}}">SAWA</a> ---- <a href = "/admin/review-dominika/deny/{{$song->id}}/{{$dominika->id}}">SI SAWA</a></p>
                             </div>
                         @endforeach
                     </div>
