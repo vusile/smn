@@ -162,9 +162,6 @@ class DominikaController extends Controller
                 break;
         }
 
-        $songs = Song::take(5)
-            ->get();
-
         $existingSongs = DB::table('dominikas_songs')
             ->where('dominika_id', $dominika->id)
             ->where('parts_of_mass_id', $partOfMassId)
