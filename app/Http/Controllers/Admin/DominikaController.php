@@ -139,7 +139,7 @@ class DominikaController extends Controller
     }
     public function search() {
         $songs = $this->searchService
-            ->search(request()->query('st'), 'songs');
+            ->search(request()->query('q'), 'songs');
 
         $composerNames = Composer::whereIn(
             'id',
