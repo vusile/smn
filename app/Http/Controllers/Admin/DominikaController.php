@@ -141,6 +141,8 @@ class DominikaController extends Controller
         $songs = $this->searchService
             ->search(request()->query('q'), 'songs');
 
+        $composerNames = [];
+
         if($songs) {
             $composerNames = Composer::whereIn(
                 'id',
