@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Composer;
 use App\Models\Dominika;
 use App\Models\Song;
 use App\Services\SearchService;
@@ -140,6 +141,12 @@ class DominikaController extends Controller
         $songs = $this->searchService
             ->search(request()->query('st'), 'songs');
 
+        $composerNames = Composer::whereIn(
+            'id',
+            $songs->pluck('composer_id')->toArray()
+        )
+            ->pluck('name', 'id');
+
         $part = request()->query('part');
         $dominika = Dominika::find(request()->query('dominika'));
         $partOfMassId = "";
@@ -172,7 +179,7 @@ class DominikaController extends Controller
         return view(
             'dominika.admin.update_songs',
             compact(
-                'part', 'dominika', 'songs', 'partOfMassId', 'existingSongs'
+                'part', 'dominika', 'songs', 'partOfMassId', 'existingSongs', 'composerNames'
             )
         );
     }

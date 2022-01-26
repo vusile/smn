@@ -38,7 +38,7 @@
                             <strong>Changua zinazofaa:</strong> <br /><br />
                             @foreach($songs as $song)
                                 @if(!in_array($song->id, $existingSongs))
-                                    <input type="checkbox" name="update[]" value="{{$song->id}}"> {!! songLink($song) !!}  - {{$song->composer->name}}<br />
+                                    <input type="checkbox" name="update[]" value="{{$song->id}}"> {!! songLink($song) !!}  - {{$composerNames[$song->composer_id]}}<br />
                                 @endif
                             @endforeach
                             <br />
