@@ -43,7 +43,7 @@
                         <strong>Nyimbo za Mwanzo:</strong> <a href ="/admin/dominikas/add-songs/mwanzo/{{$dominika->id}}">Ongeza nyingine</a><br /><br />
                         <input type="checkbox" onClick="toggle(this, 'mwanzo')" /> Chagua zote<br/>
                         @foreach($approvedDominikaSongs->whereIn('id', $mwanzo) as $song)
-                            <input id="mwanzo-{{$song->id}}" type="checkbox" name="changeStatus[]" value="{{$song->id}}"> <a href="{!! downloadLink($song, 'pdf') !!}">{{$song->name}}</a> - {{$song->composer->name}} >>
+                            <input id="mwanzo-{{$song->id}}" type="checkbox" name="changeStatus[]" value="{{$song->id}}"> <a href="{{downloadLink($song, 'pdf')}}" >{{$song->name}}</a> - {{$song->composer->name}} >>
                             @if($statuses[$song->id])
                                 <a href = "/admin/review-dominika/deny/{{$song->id}}/{{$dominika->id}}">SI SAWA</a><br />
                             @else
@@ -62,7 +62,7 @@
                         <br /><strong>Nyimbo za Katikati:</strong> <a href ="/admin/dominikas/add-songs/katikati/{{$dominika->id}}">Ongeza nyingine</a><br /><br />
                         <input type="checkbox" onClick="toggle(this, 'katikati')" /> Chagua zote<br/>
                         @foreach($approvedDominikaSongs->whereIn('id', $katikati) as $song)
-                            <input id="katikati-{{$song->id}}" type="checkbox" name="changeStatus[]" value="{{$song->id}}"> <a href="{!! downloadLink($song, 'pdf') !!}">{{$song->name}}</a>  - {{$song->composer->name}} >>
+                            <input id="katikati-{{$song->id}}" type="checkbox" name="changeStatus[]" value="{{$song->id}}"> <a href="{{downloadLink($song, 'pdf')}}">{{$song->name}}</a>  - {{$song->composer->name}} >>
                             @if($statuses[$song->id])
                                 <a href = "/admin/review-dominika/deny/{{$song->id}}/{{$dominika->id}}">SI SAWA</a><br />
                             @else
@@ -81,7 +81,7 @@
                         <br/><strong>Shangilio:</strong> <a href ="/admin/dominikas/add-songs/shangilio/{{$dominika->id}}">Ongeza nyingine</a><br /><br />
                         <input type="checkbox" onClick="toggle(this, 'shangilio')" /> Chagua zote<br/>
                         @foreach($approvedDominikaSongs->whereIn('id', $shangilio) as $song)
-                            <input id="shangilio-{{$song->id}}" type="checkbox" name="changeStatus[]" value="{{$song->id}}"> <a href="{!! downloadLink($song, 'pdf') !!}">{{$song->name}}</a> - {{$song->composer->name}} >>
+                            <input id="shangilio-{{$song->id}}" type="checkbox" name="changeStatus[]" value="{{$song->id}}"> <a href="{{downloadLink($song, 'pdf')}}">{{$song->name}}</a> - {{$song->composer->name}} >>
                             @if($statuses[$song->id])
                                 <a href = "/admin/review-dominika/deny/{{$song->id}}/{{$dominika->id}}">SI SAWA</a><br />
                             @else
@@ -99,7 +99,7 @@
                         <br /><strong>Antifona / Komunio:</strong> <a href ="/admin/dominikas/add-songs/antifona/{{$dominika->id}}">Ongeza nyingine</a><br /><br />
                         <input id="antifona-{{$song->id}}" type="checkbox" onClick="toggle(this, 'shangilio')" /> Chagua zote<br/>
                         @foreach($approvedDominikaSongs->whereIn('id', $antifona) as $song)
-                            <input type="checkbox" name="changeStatus[]" value="{{$song->id}}"> <a href="{!! downloadLink($song, 'pdf') !!}">{{$song->name}}</a> - {{$song->composer->name}} >>
+                            <input type="checkbox" name="changeStatus[]" value="{{$song->id}}"> <a href="{{downloadLink($song, 'pdf')}}">{{$song->name}}</a> - {{$song->composer->name}} >>
                             @if($statuses[$song->id])
                                 <a href = "/admin/review-dominika/deny/{{$song->id}}/{{$dominika->id}}">SI SAWA</a><br />
                             @else

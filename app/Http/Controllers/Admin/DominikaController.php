@@ -92,7 +92,7 @@ class DominikaController extends Controller
                 ->all();
 
         $approvedDominikaSongs = Song::approved()
-                ->select('id', 'name', 'url', 'views', 'downloads', 'composer_id')
+                ->select('id', 'name', 'url', 'views', 'downloads', 'composer_id', 'pdf')
                 ->with('composer:id,name')
                 ->whereIn('id', $dominikaSongs->pluck('song_id')->all())
                 ->orderBy('views')
