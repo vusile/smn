@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Symfony\Component\Console\Input\Input;
 
 class DominikaController extends Controller
 {
@@ -70,6 +69,8 @@ class DominikaController extends Controller
                 ->where('dominika_id', $dominika->id)
                 ->get();
 
+        $statuses = $dominikaSongs->pluck('approved', 'song_id');
+
         $mwanzo = $dominikaSongs
                 ->where('parts_of_mass_id', 1)
                 ->pluck('song_id')
@@ -90,7 +91,6 @@ class DominikaController extends Controller
                 ->pluck('song_id')
                 ->all();
 
-
         $approvedDominikaSongs = Song::approved()
                 ->select('id', 'name', 'url', 'views', 'downloads', 'composer_id')
                 ->with('composer:id,name')
@@ -106,18 +106,31 @@ class DominikaController extends Controller
                 'mwanzo',
                 'katikati',
                 'shangilio',
-                'antifona'
+                'antifona',
+                'statuses'
             )
         );
     }
 
-    public function delete(Request $request, Dominika $dominika) {
-
-        if($request->get('delete')) {
+    public function changeStatus(Request $request, Dominika $dominika) {
+        if($request->submit == "delete") {
             DB::table('dominikas_songs')
                 ->where('dominika_id', $dominika->id)
-                ->whereIn('song_id', $request->get('delete'))
+                ->where('parts_of_mass_id', $request->get('parts_of_mass_id'))
+                ->whereIn('song_id', $request->get('changeStatus'))
                 ->delete();
+
+
+            DB::table('dominikas_songs')
+                ->where('parts_of_mass_id', $request->get('parts_of_mass_id'))
+                ->where('dominika_id', $dominika->id)
+                ->update(['approved' => true]);
+        } else {
+            DB::table('dominikas_songs')
+                ->where('parts_of_mass_id', $request->get('parts_of_mass_id'))
+                ->where('dominika_id', $dominika->id)
+                ->whereIn('song_id', $request->get('changeStatus'))
+                ->update(['approved' => true]);
         }
 
         return back();
@@ -249,6 +262,6 @@ class DominikaController extends Controller
                 break;
         }
 
-        return redirect("/admin/dominikas/review-dominika");
+        return redirect()->back();
     }
 }

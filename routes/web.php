@@ -168,7 +168,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/dominikas/review-dominika', 'Admin\DominikaController@reviewDominika')->name('admin-doninika-review-dominika');
         Route::get('/admin/review-dominika/{action}/{song}/{dominika}', 'Admin\DominikaController@changeDominikaStatus')->name('admin-doninika-change-status');
         Route::get('/admin/dominikas/{dominika}', 'Admin\DominikaController@show')->name('admin-doninika-show');
-        Route::post('/admin/dominikas/delete/{dominika}', 'Admin\DominikaController@delete')->name('admin-doninika-delete');
+        Route::post('/admin/dominikas/change-status/{dominika}', 'Admin\DominikaController@changeStatus')->name('admin-dominika-change-status');
         Route::post('/admin/dominikas/update-date/{dominika}', 'Admin\DominikaController@update_date')->name('admin-doninika-update-date');
         Route::get('/admin/dominikas/add-songs/{part}/{dominika}', 'Admin\DominikaController@add_songs')->name('admin-doninika-add-songs');
         Route::post('/admin/dominikas/update-songs/{dominika}', 'Admin\DominikaController@update_songs')->name('admin-doninika-update-songs');

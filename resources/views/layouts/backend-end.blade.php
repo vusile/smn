@@ -133,7 +133,6 @@
                                     <li><a href="#Appviews"  class="dropdown-toggle" data-toggle="dropdown"><i class="notika-icon notika-app"></i> Ruhusa Maalum</a>
                                         <ul class="dropdown-menu">
                                             <li><a href="/admin/dominikas">Dominika</a></li>
-                                            <li><a href="/admin/dominikas/review-dominika">Hakiki nyimbo za dominika</a></li>
                                         </ul>
                                     </li>
                                 @endif
@@ -184,7 +183,6 @@
                             <li><a href="#Appviews"  class="dropdown-toggle" data-toggle="dropdown"><i class="notika-icon notika-app"></i> Ruhusa Maalum</a>
                                 <ul class="dropdown-menu">
                                     <li><a href="/admin/dominikas">Dominika</a></li>
-                                    <li><a href="/admin/dominikas/review-dominika">Hakiki nyimbo za dominika</a></li>
                                 </ul>
                             </li>
                         @endif
