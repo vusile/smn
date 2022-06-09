@@ -93,8 +93,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/upload/preview/{song}', 'SongUploadController@preview')
         ->name('song-upload.preview');
     Route::get('/akaunti', 'AccountController@index')
-        ->name('akaunti')
-        ->middleware('check_phone');
+        ->name('akaunti');
+//        ->middleware('check_phone'); disabled for now. waiting for sms service
     Route::get('/akaunti/watunzi', 'ComposerController@account')
             ->name('account.composers');
     Route::get('/akaunti/nyimbo/pending', 'AccountController@pending')
