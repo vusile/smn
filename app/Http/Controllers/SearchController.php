@@ -37,6 +37,8 @@ class SearchController extends Controller
         $composers = $this->searchService
             ->search(request()->query('st'), 'composers');
 
+        dd($composers);
+
         if($composers) {
             $composers = Composer::whereIn(
                 'id',
@@ -48,8 +50,6 @@ class SearchController extends Controller
 
         $songs = $this->searchService
             ->search(request()->query('st'), 'songs');
-
-        dd($songs);
 
         if($songs) {
             $songs = $songs->filter(function($song){
