@@ -11,9 +11,9 @@ class SearchService
     {
         $sphinx = new SphinxSearch();
 
-        dd($sphinx);
+//        dd($sphinx);
 
-        return $sphinx
+        dd( $sphinx
             ->search(
                 utf8_encode($searchString),
                 $index
@@ -21,7 +21,7 @@ class SearchService
             ->limit(1000)
             ->setMatchMode(SphinxClient::SPH_MATCH_ALL)
             ->setRankingMode(SphinxClient::SPH_SORT_RELEVANCE)
-            ->get();
+            ->get());
     }
 
     public function userSearch($searchString, $index = null)
