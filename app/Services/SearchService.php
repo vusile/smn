@@ -11,6 +11,8 @@ class SearchService
     {
         $sphinx = new SphinxSearch();
 
+        dd($sphinx);
+
         return $sphinx
             ->search(
                 utf8_encode($searchString),
