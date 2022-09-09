@@ -49,6 +49,8 @@ class SearchController extends Controller
         $songs = $this->searchService
             ->search(request()->query('st'), 'songs');
 
+        dd($songs);
+
         if($songs) {
             $songs = $songs->filter(function($song){
                 return in_array($song->status, [1,2,7,8]);
