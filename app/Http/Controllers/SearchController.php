@@ -37,8 +37,6 @@ class SearchController extends Controller
         $composers = $this->searchService
             ->search(request()->query('st'), 'composers');
 
-        dd($composers);
-
         if($composers) {
             $composers = Composer::whereIn(
                 'id',
