@@ -24,8 +24,6 @@ class AccountController extends Controller
             ->groupBy('user_id')
             ->get();
 
-        dd($songsReviewed);
-
         return view(
             'account.index',
             compact(
