@@ -13,7 +13,7 @@
         "cviebrock/eloquent-sluggable": "^7.0",
         "fideloper/proxy": "^4.4",
         "google/recaptcha": "^1.2",
-        "htmlmin/htmlmin": "^*.0",
+        "htmlmin/htmlmin": "^8.0",
         "jaybizzle/crawler-detect": "^1.2",
         "lab404/laravel-impersonate": "^1.7",
         "laravel/framework": "^8.0",
