@@ -10,7 +10,7 @@
         "aws/aws-sdk-php-laravel": "~3.0",
         "backpack/crud": "^4.1",
         "barryvdh/laravel-elfinder": "^0.4.5",
-        "cviebrock/eloquent-sluggable": "^7.0",
+        "cviebrock/eloquent-sluggable": "^8.0",
         "fideloper/proxy": "^4.4",
         "google/recaptcha": "^1.2",
         "htmlmin/htmlmin": "^8.0",
