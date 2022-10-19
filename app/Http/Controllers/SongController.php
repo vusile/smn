@@ -45,7 +45,7 @@ class SongController extends Controller
             $parts = $this->songService->determinePartOfMass($song);
         }
 
-        if($this->crawlerDetect->isCrawler()) {
+        if(!$this->crawlerDetect->isCrawler()) {
             $songView = SongView::firstOrCreate(
                 [
                     'viewed_on' => Carbon::now()->format('Y-m-d'),
@@ -90,7 +90,7 @@ class SongController extends Controller
                 exit;
 
             case 'pdf':
-                if($this->crawlerDetect->isCrawler()) {
+                if(!$this->crawlerDetect->isCrawler()) {
                     $songDownload = SongDownload::firstOrCreate(
                         ['downloaded_on' => Carbon::now()->format('Y-m-d'), 'song_id' => $song->id]
                     );
