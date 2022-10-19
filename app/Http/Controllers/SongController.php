@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MonthlySongStat;
 use App\Models\Song;
 use App\Models\SongView;
 use App\Models\SongDownload;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Jaybizzle\CrawlerDetect\CrawlerDetect;;
 
 class SongController extends Controller
 {
@@ -19,9 +21,15 @@ class SongController extends Controller
      */
     protected $songService;
 
+    /*
+     * @var CrawlerDetect
+     */
+    protected $crawlerDetect;
+
     public function __construct(SongService $songService)
     {
         $this->songService = $songService;
+        $this->crawlerDetect = new CrawlerDetect();
     }
 
     public function show(string $slug, Song $song)
@@ -37,15 +45,26 @@ class SongController extends Controller
             $parts = $this->songService->determinePartOfMass($song);
         }
 
-        $songView = SongView::firstOrCreate(
-            [
-                'viewed_on' => Carbon::now()->format('Y-m-d'),
-                'song_id' => $song->id
-            ]
-        );
+        if($this->crawlerDetect->isCrawler()) {
+            $songView = SongView::firstOrCreate(
+                [
+                    'viewed_on' => Carbon::now()->format('Y-m-d'),
+                    'song_id' => $song->id
+                ]
+            );
 
-        $songView->increment('views');
-        $song->increment('views');
+            $monthlyStat = MonthlySongStat::firstOrCreate(
+                [
+                    'month' => date('m'),
+                    'year' => date('Y'),
+                    'song_id' => $song->id,
+                ]
+            );
+
+            $monthlyStat->increment('views');
+            $songView->increment('views');
+            $song->increment('views');
+        }
 
         return view(
             'songs.show',
@@ -71,12 +90,23 @@ class SongController extends Controller
                 exit;
 
             case 'pdf':
-                $songDownload = SongDownload::firstOrCreate(
-                    ['downloaded_on' => Carbon::now()->format('Y-m-d'), 'song_id' => $song->id]
-                );
+                if($this->crawlerDetect->isCrawler()) {
+                    $songDownload = SongDownload::firstOrCreate(
+                        ['downloaded_on' => Carbon::now()->format('Y-m-d'), 'song_id' => $song->id]
+                    );
 
-                $songDownload->increment('downloads');
-                $song->increment('downloads');
+                    $monthlyStat = MonthlySongStat::firstOrCreate(
+                        [
+                            'month' => date('m'),
+                            'year' => date('Y'),
+                            'song_id' => $song->id,
+                        ]
+                    );
+
+                    $monthlyStat->increment('downloads');
+                    $songDownload->increment('downloads');
+                    $song->increment('downloads');
+                }
 
                 if(!$song->ithibati_number || request('original')) {
                     $pdfName = $song->pdf;
