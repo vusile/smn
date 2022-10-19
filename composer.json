@@ -16,9 +16,9 @@
         "htmlmin/htmlmin": "^7.0",
         "jaybizzle/crawler-detect": "^1.2",
         "lab404/laravel-impersonate": "^1.7",
-        "laravel/framework": "^7.14",
+        "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^2.4",
+        "laravel/ui": "^3.0",
         "laravelcollective/html": "^6.2",
         "league/flysystem": "^1.0",
         "mvvershinin/sphinxsearch": "dev-master",
@@ -37,18 +37,16 @@
         "laracasts/generators": "dev-master",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^v5.0",
-        "phpunit/phpunit": "^8.5"
+        "phpunit/phpunit": "^9.0"
     },
     "autoload": {
         "files": [
             "app/helpers.php"
         ],
-        "classmap": [
-            "database/seeds",
-            "database/factories"
-        ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
         }
     },
     "autoload-dev": {
