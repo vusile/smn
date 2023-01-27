@@ -5,7 +5,7 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "^8.0.11",
+        "php": "^7.4",
         "artesaos/seotools": "^0.19",
         "aws/aws-sdk-php-laravel": "~3.0",
         "backpack/crud": "^4.1",
@@ -14,6 +14,7 @@
         "fideloper/proxy": "^4.4",
         "google/recaptcha": "^1.2",
         "htmlmin/htmlmin": "^7.0",
+        "jaybizzle/crawler-detect": "^1.2",
         "lab404/laravel-impersonate": "^1.7",
         "laravel/framework": "^7.14",
         "laravel/tinker": "^2.0",
