@@ -11,9 +11,9 @@
             <div class="card">
                 <div class="card-header">Simu za Swahili Music Notes</div>
                 <div class="card-body">
-                    <small style="color:red">Namba hizi si mawasiliano ya mtunzi, ni ya SMN</small></strong>
-                    Kwa shida ya <span style="color:red">kiufundi</span>: +255 657 867 793, +255 768 205 729 <strong><br>
-                    Kwa shida <span style="color:red">nyingine yoyote</span> : +255 767 670 784 <strong><br>
+                    <small style="color:red">Namba hizi si mawasiliano ya mtunzi, ni ya SMN</small><br />
+                    Kwa shida ya <span style="color:red">kiufundi</span>: +255 657 867 793, +255 768 205 729 <br>
+                    Kwa shida <span style="color:red">nyingine yoyote</span> : +255 767 670 784 <br>
                 </div>
             </div>
             <div class="card">
