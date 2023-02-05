@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 class WebHookController extends Controller
 {
     public function verify() {
+
+        dd(config('whatsapp.verify_token'));
         if(
             request()->query('hub.mode') == 'subscribe'
             && request()->query('hub.verify_token') == config('whatsapp.verify_token')
