@@ -16,7 +16,9 @@ class WebHookController extends Controller
                 [
                     request()->query('hub_challenge'),
                 ],
-                http_response_code(200)
+            )->setStatusCode(
+                ResponseAlias::HTTP_OK,
+                Response::$statusTexts[ResponseAlias::HTTP_OK]
             );
         }
 
