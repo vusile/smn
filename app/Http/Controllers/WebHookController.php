@@ -8,6 +8,9 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 class WebHookController extends Controller
 {
     public function verify() {
+        echo request()->query('hub.verify_token');
+        echo request()->query('hub.mode');
+        dd("Hello world");
         if(
 //            request()->query('hub.mode') == 'subscribe'
 //            &&
