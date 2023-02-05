@@ -14,7 +14,7 @@ class SmsService
      * @return \Illuminate\Http\Client\Response
      */
     private function sendSms($to, $sms) {
-        $rahisisha_api = config('zesha.api_url');
+        $rahisisha_api = config('whatsapp.api_url');
 
         // Message parameters
         $param['username'] = config('zesha.username');
