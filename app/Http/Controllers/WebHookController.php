@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
+
 class WebHookController extends Controller
 {
     public function verify() {
@@ -19,7 +22,9 @@ class WebHookController extends Controller
 
         return response()->json(
             [],
-            http_response_code(200)
+        )->setStatusCode(
+            ResponseAlias::HTTP_BAD_REQUEST,
+            Response::$statusTexts[ResponseAlias::HTTP_BAD_REQUEST]
         );
     }
 
