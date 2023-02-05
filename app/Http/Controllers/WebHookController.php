@@ -13,6 +13,7 @@ class WebHookController extends Controller
             && request()->query('hub_verify_token') == config('whatsapp.verify_token')
         ) {
             echo request()->query('hub_challenge');
+            return ;
 //            return response()->json(
 //                [
 //                    request()->query('hub_challenge'),
