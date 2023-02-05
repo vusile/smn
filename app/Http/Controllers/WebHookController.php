@@ -10,7 +10,7 @@ class WebHookController extends Controller
     public function verify() {
         if(
             request()->query('hub.mode') == 'subscribe'
-            && request()->query('hub.verify_token') == config('verify_token')
+            && request()->query('hub.verify_token') == config('whatsapp.verify_token')
         ) {
             return response()->json(
                 [
