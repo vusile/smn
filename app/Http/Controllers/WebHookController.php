@@ -8,18 +8,13 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 class WebHookController extends Controller
 {
     public function verify() {
-        echo request()->query('verify_token');
-        echo request()->query('hub_verify_token');
-        echo request()->query('hub_mode');
-        dd("Hello world");
         if(
-//            request()->query('hub.mode') == 'subscribe'
-//            &&
-             request()->query('hub.verify_token') == config('whatsapp.verify_token')
+            request()->query('hub_mode') == 'subscribe'
+            && request()->query('hub_verify_token') == config('whatsapp.verify_token')
         ) {
             return response()->json(
                 [
-                    request()->query('hub.challenge'),
+                    request()->query('hub_challenge'),
                 ],
                 http_response_code(200)
             );
