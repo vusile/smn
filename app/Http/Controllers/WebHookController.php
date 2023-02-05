@@ -12,14 +12,15 @@ class WebHookController extends Controller
             request()->query('hub_mode') == 'subscribe'
             && request()->query('hub_verify_token') == config('whatsapp.verify_token')
         ) {
-            return response()->json(
-                [
-                    request()->query('hub_challenge'),
-                ],
-            )->setStatusCode(
-                ResponseAlias::HTTP_OK,
-                Response::$statusTexts[ResponseAlias::HTTP_OK]
-            );
+            echo request()->query('hub_challenge');
+//            return response()->json(
+//                [
+//                    request()->query('hub_challenge'),
+//                ],
+//            )->setStatusCode(
+//                ResponseAlias::HTTP_OK,
+//                Response::$statusTexts[ResponseAlias::HTTP_OK]
+//            );
         }
 
         return response()->json(
