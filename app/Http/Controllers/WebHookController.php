@@ -9,8 +9,8 @@ class WebHookController extends Controller
 {
     public function verify() {
         echo request()->query('verify_token');
-        echo request()->query('hub.verify_token');
-        echo request()->query('hub.mode');
+        echo request()->query('hub_verify_token');
+        echo request()->query('hub_mode');
         dd("Hello world");
         if(
 //            request()->query('hub.mode') == 'subscribe'
