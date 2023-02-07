@@ -13,13 +13,13 @@
                 <div class="card-body">
                     <small style="color:red">Namba hizi si mawasiliano ya mtunzi, ni ya SMN</small><br />
                     Kwa shida ya <span style="color:red">kiufundi</span>: +255 657 867 793, +255 768 205 729 <br>
-                    Kwa shida <span style="color:red">nyingine yoyote</span> : +255 767 670 784 <br>
+{{--                    Kwa shida <span style="color:red">nyingine yoyote</span> : +255 767 670 784 <br>--}}
                 </div>
             </div>
             <div class="card">
                 <div class="card-header">Wasiliana Na SMN</div>
 
-                
+
                 <div class="card-body">
                     <form method="POST" action="{{ route('send-message') }}">
                         @csrf
@@ -37,7 +37,7 @@
                                 @endif
                             </div>
                         </div>
-                        
+
 
                         <div class="form-group row">
                             <label for="phone" class="col-md-4 col-form-label text-md-right">Namba ya simu</label>
@@ -52,7 +52,7 @@
                                 @endif
                             </div>
                         </div>
-                        
+
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">Email yako</label>
 
@@ -66,7 +66,7 @@
                                 @endif
                             </div>
                         </div>
-                        
+
                         <div class="form-group row">
                             <label for="message" class="col-md-4 col-form-label text-md-right">Ujumbe wako</label>
 
@@ -84,7 +84,7 @@
                             <label for="feedback-recaptcha" class="col-md-4 col-form-label text-md-right"></label>
                             <div class="col-md-6">
                                 <div class="g-recaptcha" id="feedback-recaptcha" data-sitekey="6LfmUYAUAAAAAMRJDZX7NR784FH74RRz0brOYh4G"></div>
-                                
+
                                 @if ($errors->has('g-recaptcha-response'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
@@ -101,7 +101,7 @@
                             </div>
                         </div>
                     </form>
-                    
+
                 </div>
             </div>
         </div>
