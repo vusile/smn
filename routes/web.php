@@ -11,6 +11,9 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', 'HomeController@index');
 Route::get('/home', function() {
     return redirect('/');
@@ -189,3 +192,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/contact', 'ContactController@index')->name('contact');
 Route::post('/contact', 'ContactController@sendEMail')->name('send-message');
 Route::get('/sitemap.xml', 'SitemapController@index')->name('sitemap');
+Route::get('/wwh', 'WebHookController@verify')->name('wwh-verify');
+Route::post('/wwh', 'WebHookController@event')->name('wwh-event');
