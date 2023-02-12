@@ -106,7 +106,7 @@
     @show
     <footer class="blog-footer">
       <!--<p>&nbsp</p>-->
-      <p>Mawasiliano ya Swahili Music Notes<a href="/contact">Bofya hapa</a></p>
+      <p>Mawasiliano ya Swahili Music Notes <a href="/contact">Bofya hapa</a> | <a href="/privacy-policy">Sera ya faragha</a> </p>
       <p>&copy {{date('Y')}}</p>
     </footer>
     <!-- Optional JavaScript -->
