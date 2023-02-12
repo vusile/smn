@@ -194,3 +194,8 @@ Route::post('/contact', 'ContactController@sendEMail')->name('send-message');
 Route::get('/sitemap.xml', 'SitemapController@index')->name('sitemap');
 Route::get('/wwh', 'WebHookController@verify')->name('wwh-verify');
 Route::post('/wwh', 'WebHookController@event')->name('wwh-event');
+Route::get('/privacy-policy', function() {
+    return view(
+        'privacy-policy'
+    );
+});
