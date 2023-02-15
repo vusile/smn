@@ -3,27 +3,84 @@
 namespace App\Services;
 
 use App\Models\User;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Propaganistas\LaravelPhone\PhoneNumber;
 
 class SmsService
 {
     /**
-     * @param $to
-     * @param $sms
-     * @return \Illuminate\Http\Client\Response
+     * @param User $user
+     * @param string $template
+     * @param array $bodyValues
+     * @param array $buttonValues
+     * @return Response | false
      */
-    private function sendSms($to, $sms) {
-        $rahisisha_api = config('whatsapp.api_url');
+    public function sendSms(User $user, string $template, array $bodyValues = [], array $buttonValues = []) {
 
-        // Message parameters
-        $param['username'] = config('zesha.username');
-        $param['password'] = config('zesha.password');
-        $param['GSM'] = $to; // Recipient number (+ is optional)
-        $param['SMSText'] = $sms; // Your SMS message
-        $param['sender'] = config('zesha.sender_id');; // Your sender ID
+        if(!$user->has_whatsapp) {
+            return false;
+        }
 
-        $response = Http::get($rahisisha_api, $param);
+        $phone = PhoneNumber::make($user->phone, "TZ")->formatE164();
+
+        $templateInfo = [
+            'name' => $template,
+            'language' => [
+                'code' => 'sw'
+            ]
+        ];
+
+        $components = [];
+        if($bodyValues) {
+            $parameters = [];
+            foreach($bodyValues as $type => $value) {
+                $component = [
+                    'type' => 'text',
+                    'text' => $value
+                ];
+
+                $parameters[] = $component;
+            }
+
+            $components[] = [
+                'type' => 'body',
+                'parameters' => $parameters
+            ];
+        }
+
+        if($buttonValues) {
+            $parameters = [];
+            foreach($bodyValues as $type => $value) {
+                $component = [
+                    'type' => $type,
+                    'text' => $value
+                ];
+
+                $parameters[] = $component;
+            }
+
+            $components[] = [
+                'type' => 'button',
+                'sub_type' => 'url',
+                'index' => 0,
+                'parameters' => $parameters
+            ];
+        }
+
+        $templateInfo['components'] = $components;
+
+        $response = Http::withToken(config('whatsapp.whatsapp_token'))
+            ->asJson()
+            ->post(config('whatsapp.api_url'),
+                [
+                    'messaging_product' => 'whatsapp',
+                    'recipient_type' => 'individual',
+                    'to' => $phone,
+                    'type' => 'template',
+                    'template' => json_encode($templateInfo),
+                ]
+            );
 
         return $response;
     }
@@ -31,21 +88,11 @@ class SmsService
     /**
      * @param User $user
      * @param int $code
-     * @return bool
+     * @return Response | false
      */
     public function sendActivationCode(User $user, int $code)
     {
-        $message = __('messages.verification_code',
-            [
-                'code' => $code,
-            ]
-        );
-
-        //I really shouldn't need this.
-        $phone = PhoneNumber::make($user->phone, "TZ")->formatE164();
-        $this->sendSms($phone, $message);
-
-        return true;
+        return $this->sendSms($user, 'auth_code', ['text' => $code]);
     }
 
 }

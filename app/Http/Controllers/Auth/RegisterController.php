@@ -106,7 +106,7 @@ class RegisterController extends Controller
                 break;
 
             default:
-                $sendMessage = false;
+                $sendMessage = true;
                 break;
         }
 

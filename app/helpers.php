@@ -26,3 +26,10 @@ if (!function_exists('downloadLink')) {
         return  url('/') . '/song/download/' . $song->id . '/' . $type . '/' . $song->$type;
     }
 }
+
+if (!function_exists('whatsappBold')) {
+    function whatsappBold(string $text)
+    {
+        return  '*'.$text.'*';
+    }
+}
