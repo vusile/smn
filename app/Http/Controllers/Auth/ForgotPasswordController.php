@@ -39,7 +39,7 @@ class ForgotPasswordController extends Controller
             ->get()
             ->first();
 
-        if($user->phone_verified || $user->has_whatsapp) {
+        if($user->has_whatsapp) {
             $code = rand(0001, 9999);
             $user->verification_code = $code;
             $user->forgotten_password_code = $code;
