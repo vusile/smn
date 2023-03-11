@@ -8,6 +8,10 @@
                 - <a href = '/admin/users/change-password-request/{{$user->id}}'>Send Password Reset</a>
             @endif
             <br> <small>Nyimbo: {{$user->songs()->count()}}</small>
+
+            @if($user->verification_code)
+                <br> <small>Password Reset Code: {{$user->verification_code}}</small>
+            @endif
         </p>
     </div>
 

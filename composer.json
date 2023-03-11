@@ -26,7 +26,8 @@
         "setasign/fpdf": "^1.8",
         "setasign/fpdi-tcpdf": "^2.0",
         "spatie/laravel-permission": "^4.2",
-        "venturecraft/revisionable": "1.*"
+        "venturecraft/revisionable": "1.*",
+      "ext-json": "*"
     },
     "require-dev": {
         "backpack/generators": "^3.1",

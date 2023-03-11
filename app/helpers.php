@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Str;
+
 if (! function_exists('songLink')) {
     function songLink($song, $newPage = false) {
         $target = "";
@@ -31,5 +33,12 @@ if (!function_exists('whatsappBold')) {
     function whatsappBold(string $text)
     {
         return  '*'.$text.'*';
+    }
+}
+
+if (!function_exists('cleanUpAnswer')) {
+    function cleanUpAnswer(string $answer): string
+    {
+        return Str::upper(str_replace(" ", '', $answer));
     }
 }

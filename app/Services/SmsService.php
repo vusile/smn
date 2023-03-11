@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
+use libphonenumber\NumberParseException;
 use Propaganistas\LaravelPhone\PhoneNumber;
 
 class SmsService
@@ -22,7 +23,17 @@ class SmsService
             return false;
         }
 
-        $phone = PhoneNumber::make($user->phone, "TZ")->formatE164();
+        $madePhone = PhoneNumber::make($user->phone);
+
+        try {
+            if(!$madePhone->getCountry()) {
+                return false;
+            }
+        } catch (NumberParseException $e) {
+            return false;
+        }
+
+        $phone = $madePhone->formatE164();
 
         $templateInfo = [
             'name' => $template,

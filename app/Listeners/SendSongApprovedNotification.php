@@ -52,6 +52,7 @@ class SendSongApprovedNotification
 
         $composer = $song->composer;
 
+        //todo: See if you can also send this as a message
         if ($composer->email && $composer->user_id != $song->user->id) {
             $composerMessage = (new ComposerSongApprovedEmail($song))
                     ->onQueue('songs');

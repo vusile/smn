@@ -68,12 +68,15 @@ Route::get('/logout', 'Auth\LoginController@logout');
 Route::post('/password/send-instructions', 'Auth\ForgotPasswordController@sendEmailResetInstructions')->name('password.instructions');
 Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('password.reset');
 Route::post('/password/update/{user}', 'Auth\ResetPasswordController@resetWithCode')->name('password.update.code');
-Route::get('/password-reset-code/{user}', 'Auth\ForgotPasswordController@passwordResetCode')->name('password.reset.code');
+//Route::get('/password-reset-code/{user}', 'Auth\ForgotPasswordController@passwordResetCode')->name('password.reset.code');
+Route::get('/password-reset-code/{user}/{code}', 'Auth\ForgotPasswordController@passwordResetCode')->name('password.reset.code');
 Route::post('/comment/', 'CommentController@store');
 Route::post('/composer-email/', 'ComposerEmailController@store');
 Route::get('/search', 'SearchController@index');
 Route::get('/auth/{provider}', 'Auth\SocialAuthController@redirectToProvider');
 Route::get('/auth/{provider}/callback', 'Auth\SocialAuthController@handleProviderCallback');
+Route::post('/verify-answers', 'Auth\PasswordResetQuestionsController@verifyAnswers')->name('verify-answers');
+Route::get('/verify-answers/{user}', 'Auth\PasswordResetQuestionsController@getQuestionsToVerify')->name('get-verify-answers');
 
 Route::middleware(['auth'])->group(function () {
     Route::group(['middleware' => ['review.songs']], function() {
@@ -96,14 +99,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/upload/preview/{song}', 'SongUploadController@preview')
         ->name('song-upload.preview');
     Route::get('/akaunti', 'AccountController@index')
-        ->name('akaunti');
-//        ->middleware('check_phone'); disabled for now. waiting for sms service
+        ->name('akaunti')
+        ->middleware(['check_phone', 'get_auth_questions']);
     Route::get('/akaunti/watunzi', 'ComposerController@account')
             ->name('account.composers');
     Route::get('/akaunti/nyimbo/pending', 'AccountController@pending')
             ->name('account.songs.pending');
     Route::get('/akaunti/nyimbo/live', 'AccountController@live')
-            ->name('account.songs.pending');
+            ->name('account.songs.live');
     Route::get('/akaunti/nyimbo/others', 'AccountController@others')
         ->name('account.songs.others');
     Route::get('/mtunzi/create', 'ComposerController@create');
@@ -126,6 +129,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/phone-collector', 'UserController@getPhoneNumber');
     Route::get('/verify-number', 'UserController@verificationForm')->name('verify-number-form');
     Route::post('/verify-number', 'UserController@verifyNumber')->name('verify-number');
+    Route::get('/password-reset-questions', 'Auth\PasswordResetQuestionsController@show');
+    Route::post('/save-password-reset-questions', 'Auth\PasswordResetQuestionsController@save')->name("save_password_reset_questions");
     Route::group(['middleware' => ['role:super admin']], function () {
 
         //Move to another role

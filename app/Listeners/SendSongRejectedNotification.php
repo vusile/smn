@@ -35,14 +35,14 @@ class SendSongRejectedNotification
 
         if($song->user->has_whatsapp) {
             $smsService = new SmsService();
-            $this->formatForWhatsApp($reviews);
+            $this->formatForWhatsApp($reviews, $song);
 
             $smsService->sendSms(
                 $song->user,
                 'song_not_approved',
                 [
                     'name' => whatsappBold($song->name),
-                    'reasons' => $this->formatForWhatsApp($reviews)
+                    'reasons' => $this->formatForWhatsApp($reviews, $song)
                 ],
             );
 
@@ -72,7 +72,7 @@ class SendSongRejectedNotification
 
         foreach($approvalQuestionScores as $ap) {
 
-            if((config('song.reviews.no_of_reviews_per_song') - $ap->answers_count) < 2) {
+            if((config('song.reviews.no_of_reviews_per_song') - $ap->answers_count) < 2 || $song->user->automatic_review) {
                 $reviewsWithComments = DB::table('reviews')
                     ->select(DB::raw('review_question_id, comment'))
                     ->whereNotNull('comment')
@@ -99,17 +99,18 @@ class SendSongRejectedNotification
         ];
     }
 
-    private function formatForWhatsApp(array $reviews)
+    private function formatForWhatsApp(array $reviews, $song)
     {
         $approvalQuestions = $reviews[0];
         $comments = $reviews[1];
         $whatsappReviews = '';
         foreach($approvalQuestions as $approvalQuestion){
-            if(config('song.reviews.no_of_reviews_per_song') - $approvalQuestion->answers_count < 2) {
+            if(config('song.reviews.no_of_reviews_per_song') - $approvalQuestion->answers_count < 2 || $song->user->automatic_review) {
 
-                    $whatsappReviews .= $approvalQuestion->question . ':\n';
-                    $whatsappReviews .= whatsappBold('Umepata ' . (config('song.reviews.no_of_reviews_per_song') - $approvalQuestion->answers_count) . "/" . config('song.reviews.no_of_reviews_per_song'));
+                $maxNumOfReviews = $song->user->automatic_review ? 1 : config('song.reviews.no_of_reviews_per_song');
 
+                $whatsappReviews .= $approvalQuestion->question . ':\n';
+                $whatsappReviews .= whatsappBold('Umepata ' . ($maxNumOfReviews - $approvalQuestion->answers_count) . "/" . $maxNumOfReviews);
 
                 if(isset($comments[$approvalQuestion->review_question_id])) {
                     $whatsappReviews .= '\n\n' . whatsappBold('Mapendekezo') . '\n';

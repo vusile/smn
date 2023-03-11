@@ -35,10 +35,11 @@ class ForgotPasswordController extends Controller
 
     public function sendEmailResetInstructions(Request $request) {
         $user = User::where('email', $request->email)
+            ->orWhere('phone', $request->email)
             ->get()
             ->first();
 
-        if($user->phone_verified) {
+        if($user->phone_verified || $user->has_whatsapp) {
             $code = rand(0001, 9999);
             $user->verification_code = $code;
             $user->forgotten_password_code = $code;
@@ -48,14 +49,16 @@ class ForgotPasswordController extends Controller
             $smsService = new SmsService();
             $smsService->sendActivationCode($user, $code);
 
-            return redirect('/password-reset-code/' . $user->id)->with('message', 'Tumekutumia Ujumbe mfupi wenye namba itakayosaidia kubadili password yako.');
+            return redirect('/password-reset-code/' . $user->id . '/1')->with('message', 'Tumekutumia Ujumbe mfupi wenye namba itakayosaidia kubadili password yako.');
+        } elseif($user->authAnswers()->count()) {
+            return redirect(route('get-verify-answers', [$user->id]));
         } else {
             return $this->sendResetLinkEmail($request);
         }
     }
 
-    public function passwordResetCode(User $user) {
+    public function passwordResetCode(User $user, bool $showCodeField) {
         return view('auth.passwords.reset-code',
-                compact('user'));
+                compact('user', 'showCodeField'));
     }
 }
