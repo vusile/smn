@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 if (! function_exists('songLink')) {
@@ -40,5 +41,12 @@ if (!function_exists('cleanUpAnswer')) {
     function cleanUpAnswer(string $answer): string
     {
         return Str::upper(str_replace(" ", '', $answer));
+    }
+}
+
+if (!function_exists('timeSent')) {
+    function timeSent(string $date): string
+    {
+        return Carbon::parse($date)->format('d F Y');
     }
 }

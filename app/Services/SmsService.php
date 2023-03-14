@@ -79,7 +79,9 @@ class SmsService
             ];
         }
 
-        $templateInfo['components'] = $components;
+        if(count($components)) {
+            $templateInfo['components'] = $components;
+        }
 
         $response = Http::withToken(config('whatsapp.whatsapp_token'))
             ->asJson()

@@ -100,16 +100,6 @@ class RegisterController extends Controller
         $code = rand(0001, 9999);
         $phone = PhoneNumber::make($request->phone, $request->phone_country)->formatE164();
 
-        switch ($request->phone_country) {
-            case 'TZ':
-                $sendMessage = true;
-                break;
-
-            default:
-                $sendMessage = true;
-                break;
-        }
-
         $user = User::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -122,7 +112,7 @@ class RegisterController extends Controller
             'auto_verified' => $sendMessage ? false : true,
         ]);
 
-        if($sendMessage) {
+        if($request->has_whatsapp) {
             $smsService = new SmsService();
             $smsService->sendActivationCode($user, $code);
         } else {
