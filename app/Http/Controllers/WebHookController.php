@@ -6,6 +6,7 @@ use App\Models\WhatsappTracker;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
@@ -39,6 +40,8 @@ class WebHookController extends Controller
     }
 
     public function determineType($array) {
+        Log::debug('lets determine type.');
+        Log::debug('lets determine type.' . json_encode($array));
         $newArray = [];
         $isMessage = false;
         $isStatus = false;
