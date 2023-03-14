@@ -30,6 +30,14 @@ class WebHookController extends Controller
     }
 
     public function event(Request $request) {
+        WhatsappTracker::create(
+            [
+                'type' => 'message',
+                'phone' => '255657867793',
+                'message_id' => '123',
+                'message' => 'a song for the lonely'
+            ]
+        );
         $this->determineType(
             Arr::dot(
                 json_decode(
