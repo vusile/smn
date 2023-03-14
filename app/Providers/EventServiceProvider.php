@@ -28,10 +28,10 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\SendSongCreatedEmail',
         ],
         'App\Events\SongApproved' => [
-            'App\Listeners\SendSongApprovedEmail',
+            'App\Listeners\SendSongApprovedNotification',
         ],
         'App\Events\SongRejected' => [
-            'App\Listeners\SendSongRejectedEmail',
+            'App\Listeners\SendSongRejectedNotification',
         ],
         'App\Events\IthibatiApproved' => [
             'App\Listeners\SendIthibatiApprovedEmail',

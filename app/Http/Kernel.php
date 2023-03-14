@@ -10,6 +10,7 @@ use App\Http\Middleware\CheckPhone;
 use App\Http\Middleware\CheckSongStatus;
 use App\Http\Middleware\CheckSongUrl;
 use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\GetAuthQuestions;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\ReviewSongs;
 use App\Http\Middleware\TrimStrings;
@@ -97,5 +98,6 @@ class Kernel extends HttpKernel
         'role' => RoleMiddleware::class,
         'permission' => PermissionMiddleware::class,
         'role_or_permission' => RoleOrPermissionMiddleware::class,
+        'get_auth_questions' => GetAuthQuestions::class,
     ];
 }

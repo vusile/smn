@@ -11,14 +11,19 @@
                     <form method="POST" action="/password/update/{{$user->id}}">
                         @csrf
 
-                        <input type="hidden" name="verify_code" value="{{ $user->verification_code }}">
+
                         <input type="hidden" name="email" value="{{ $user->email }}">
 
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">Namba uliyotumiwa</label>
 
                             <div class="col-md-6">
-                                <input id="code" type="text" class="form-control{{ $errors->has('code') ? ' is-invalid' : '' }}" name="code" value="{{ $code ?? old('code') }}" required autofocus>
+                                @if(!$showCodeField)
+                                    <input type="hidden" name="session_var" value="{{ base64_encode($user->verification_code) }}">
+                                    <input type="hidden" name="mod_id" value="{{ base64_encode($user->id) }}">
+                                @else
+                                    <input id="code" type="text" class="form-control{{ $errors->has('code') ? ' is-invalid' : '' }}" name="code" value="{{ $code ?? old('code') }}" required autofocus>
+                                @endif
 
                                 @if ($errors->has('code'))
                                     <span class="invalid-feedback" role="alert">

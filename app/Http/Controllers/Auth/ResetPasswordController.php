@@ -53,7 +53,7 @@ class ResetPasswordController extends Controller
     {
         Session::flash('msg', 'Umefanikiwa kubadili password na tumeshakulogin. Karibu tena SMN');
 
-        if($user->verification_code == $request->code) {
+        if(($user->verification_code == $request->code) || ($user->verification_code == base64_decode($request->session_var))) {
             $this->resetPassword($user, $request->password);
             return $this->sendResetResponse($request, null);
         } else {

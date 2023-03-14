@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Notifications\MailResetPasswordNotification;
 use App\Traits\SongTrait;
 use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Lab404\Impersonate\Models\Impersonate;
@@ -48,5 +49,10 @@ class User extends Authenticatable implements CanResetPassword
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new MailResetPasswordNotification($token));
+    }
+
+    public function authAnswers(): HasMany
+    {
+        return $this->hasMany('App\Models\AuthAnswer');
     }
 }
