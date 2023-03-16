@@ -90,8 +90,8 @@ Route::get('/password-reset-code/{user}/{code}', 'Auth\ForgotPasswordController@
 Route::post('/comment/', 'CommentController@store');
 Route::post('/composer-email/', 'ComposerEmailController@store');
 Route::get('/search', 'SearchController@index');
-Route::get('/auth/{provider}', 'Auth\SocialAuthController@redirectToProvider');
-Route::get('/auth/{provider}/callback', 'Auth\SocialAuthController@handleProviderCallback');
+//Route::get('/auth/{provider}', 'Auth\SocialAuthController@redirectToProvider');
+//Route::get('/auth/{provider}/callback', 'Auth\SocialAuthController@handleProviderCallback');
 Route::post('/verify-answers', 'Auth\PasswordResetQuestionsController@verifyAnswers')->name('verify-answers');
 Route::get('/verify-answers/{user}', 'Auth\PasswordResetQuestionsController@getQuestionsToVerify')->name('get-verify-answers');
 
