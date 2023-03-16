@@ -31,14 +31,9 @@ class WebHookController extends Controller
     }
 
     public function event(Request $request) {
-        $smsService = new SmsService();
-        $smsService->sendSms(User::find(1), 'auth_code', ['text' => '1234']);
-
         $this->determineType(
             Arr::dot(
-                json_decode(
-                    $request->get('body') , true
-                )
+                $request->get('entry')
             )
         );
     }
@@ -55,7 +50,7 @@ class WebHookController extends Controller
 
             if(Str::contains($key, ['statuses'])) {
                 $isStatus = true;
-                if(Str::contains($key, ['conversation', 'id'])) {
+                if(Str::contains($key, ['conversation.id'])) {
                     $key = str_replace('conversation.id', 'conversation_id', $key);
                 }
                 $newArray[array_reverse(explode(".", $key))[0]] = $value;
