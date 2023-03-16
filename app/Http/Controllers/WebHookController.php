@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\WhatsappTracker;
 use App\Services\SmsService;
 use Illuminate\Http\Request;
@@ -31,6 +32,7 @@ class WebHookController extends Controller
 
     public function event(Request $request) {
         $smsService = new SmsService();
+        $smsService->sendSms(User::find(1), 'auth_code', ['text' => '1234']);
 
         $this->determineType(
             Arr::dot(
