@@ -49,7 +49,7 @@ class ForgotPasswordController extends Controller
             $smsService = new SmsService();
             $smsService->sendActivationCode($user, $code);
 
-            return redirect('/password-reset-code/' . $user->id . '/1')->with('message', 'Tumekutumia Ujumbe mfupi wenye namba itakayosaidia kubadili password yako.');
+            return redirect('/password-reset-code/' . $user->id . '/1')->with('message', 'Tumekutumia Ujumbe wa Whatsapp wenye namba itakayosaidia kubadili password yako.');
         } elseif($user->authAnswers()->count()) {
             return redirect(route('get-verify-answers', [$user->id]));
         } else {
