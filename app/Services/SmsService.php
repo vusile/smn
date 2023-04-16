@@ -62,9 +62,9 @@ class SmsService
 
         if($buttonValues) {
             $parameters = [];
-            foreach($bodyValues as $type => $value) {
+            foreach($buttonValues as $type => $value) {
                 $component = [
-                    'type' => $type,
+                    'type' => "text",
                     'text' => $value
                 ];
 
