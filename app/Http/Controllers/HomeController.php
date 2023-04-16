@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dominika;
 use App\Models\Song;
 use App\Models\User;
+use App\Services\SmsService;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -12,6 +13,9 @@ class HomeController extends Controller
 {
     public function index()
     {
+        $smsService = new SmsService();
+        $smsService->sendOptions();
+
         $now = Carbon::now();
 
         $activeSongsCount = Song::approved()

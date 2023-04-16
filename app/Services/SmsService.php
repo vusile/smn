@@ -108,4 +108,53 @@ class SmsService
         return $this->sendSms($user, 'auth_code', ['text' => $code]);
     }
 
+    public function sendOptions()
+    {
+         $interactive = [
+            "type" => "list",
+            "header" => [
+                "type" => "text",
+                "text" => "Maswali ya Mara kwa Mara",
+            ],
+            "body" => [
+                "text" => "Karibu tukusaidie. Ni jambo gani ambalo ungependa kupata msaada:"
+            ],
+            "footer" => [
+                "text" => "Kutoka kwa bot wa SMN"
+            ],
+            "action" => [
+                "button" => "Chagua kati ya yafuatayo",
+                "sections" => [
+                    "title" => "",
+                    "rows" => [
+                        [
+                            "id" => 1,
+                            "title" => "Nahitaji kujua namna ya kupaika nyimbo"
+                        ],
+                        [
+                            "id" => 2,
+                            "title" => "Mbona wimbo wangu umechelewa kuingia kwenye mtandao"
+                        ],
+                        [
+                            "id" => 3,
+                            "title" => "Natengneza vipi akaunti"
+                        ],
+                    ]
+                ]
+            ],
+        ];
+
+        $response = Http::withToken(config('whatsapp.whatsapp_token'))
+            ->asJson()
+            ->post(config('whatsapp.api_url'),
+                [
+                    'messaging_product' => 'whatsapp',
+                    'recipient_type' => 'individual',
+                    "type" => "interactive",
+                    "to" => "255657867793",
+                    "interactive" => json_encode($interactive)
+                ]
+            );
+    }
+
 }
