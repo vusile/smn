@@ -13,8 +13,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $smsService = new SmsService();
-        $smsService->sendOptions();
+//        $smsService = new SmsService();
+//        $smsService->sendOptions();
 
         $now = Carbon::now();
 
