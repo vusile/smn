@@ -50,6 +50,11 @@ Route::get('/privacy-policy', function() {
         'privacy-policy'
     );
 });
+Route::get('/changia-smn', function() {
+    return view(
+        'donate/how-to-donate'
+    );
+});
 //These are all the closured routes for ease of commenting out for caching
 
 

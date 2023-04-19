@@ -125,24 +125,28 @@ class SmsService
             "action" => [
                 "button" => "Chagua kati ya yafuatayo",
                 "sections" => [
-                    "title" => "",
-                    "rows" => [
-                        [
-                            "id" => 1,
-                            "title" => "Nahitaji kujua namna ya kupaika nyimbo"
-                        ],
-                        [
-                            "id" => 2,
-                            "title" => "Mbona wimbo wangu umechelewa kuingia kwenye mtandao"
-                        ],
-                        [
-                            "id" => 3,
-                            "title" => "Natengneza vipi akaunti"
-                        ],
+                    [
+                        "title" => "",
+                        "rows" => [
+                            [
+                                "id" => 1,
+                                "title" => "Nahitaji kujua namna ya kupaika nyimbo"
+                            ],
+                            [
+                                "id" => 2,
+                                "title" => "Mbona wimbo wangu umechelewa kuingia kwenye mtandao"
+                            ],
+                            [
+                                "id" => 3,
+                                "title" => "Natengneza vipi akaunti"
+                            ],
+                        ]
                     ]
                 ]
             ],
         ];
+
+//         dd(json_encode($interactive));
 
         $response = Http::withToken(config('whatsapp.whatsapp_token'))
             ->asJson()
