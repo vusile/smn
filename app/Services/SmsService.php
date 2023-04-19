@@ -143,18 +143,6 @@ class SmsService
 
         $madePhone = PhoneNumber::make("+255768203282");
         $phone = $madePhone->formatE164();
-//         dd(json_encode(
-//             [
-//                 'messaging_product' => 'whatsapp',
-//                 'recipient_type' => 'individual',
-//                 "type" => "interactive",
-//                 "to" => $phone,
-//                 "interactive" => $interactive
-//             ]
-//         ));
-
-//        dd($interactive);
-
 
         $response = Http::withToken(config('whatsapp.whatsapp_token'))
             ->asJson()
