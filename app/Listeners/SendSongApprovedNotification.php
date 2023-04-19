@@ -38,7 +38,7 @@ class SendSongApprovedNotification
                 $song->user,
                 'song_approved',
                 ['name' => $song->name],
-                ['url' => $song->url],
+                ['url' => $song->url . "/" . $song->id],
             )
         ) {
             return;

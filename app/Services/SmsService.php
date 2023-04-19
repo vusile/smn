@@ -112,33 +112,28 @@ class SmsService
     {
          $interactive = [
             "type" => "list",
-            "header" => [
-                "type" => "text",
-                "text" => "Maswali ya Mara kwa Mara",
-            ],
             "body" => [
-                "text" => "Karibu tukusaidie. Ni jambo gani ambalo ungependa kupata msaada:"
+                "text" => "Karibu nikusaidie. Ni jambo gani ambalo ungependa kujifunza?"
             ],
             "footer" => [
                 "text" => "Kutoka kwa bot wa SMN"
             ],
             "action" => [
-                "button" => "Chagua kati ya yafuatayo",
+                "button" => "Tuma",
                 "sections" => [
                     [
-                        "title" => "",
                         "rows" => [
                             [
-                                "id" => 1,
-                                "title" => "Nahitaji kujua namna ya kupaika nyimbo"
+                                "id" => "1",
+                                "title" => "Kupakia nyimbo"
                             ],
                             [
-                                "id" => 2,
-                                "title" => "Mbona wimbo wangu umechelewa kuingia kwenye mtandao"
+                                "id" => "2",
+                                "title" => "Uhakiki wa nyimbo"
                             ],
                             [
-                                "id" => 3,
-                                "title" => "Natengneza vipi akaunti"
+                                "id" => "3",
+                                "title" => "Kutengeza akaunti"
                             ],
                         ]
                     ]
@@ -146,7 +141,20 @@ class SmsService
             ],
         ];
 
-//         dd(json_encode($interactive));
+        $madePhone = PhoneNumber::make("+255768203282");
+        $phone = $madePhone->formatE164();
+//         dd(json_encode(
+//             [
+//                 'messaging_product' => 'whatsapp',
+//                 'recipient_type' => 'individual',
+//                 "type" => "interactive",
+//                 "to" => $phone,
+//                 "interactive" => $interactive
+//             ]
+//         ));
+
+//        dd($interactive);
+
 
         $response = Http::withToken(config('whatsapp.whatsapp_token'))
             ->asJson()
@@ -154,11 +162,13 @@ class SmsService
                 [
                     'messaging_product' => 'whatsapp',
                     'recipient_type' => 'individual',
-                    "type" => "interactive",
-                    "to" => "255657867793",
-                    "interactive" => json_encode($interactive)
+                    'type' => 'interactive',
+                    'to' => $phone,
+                    'interactive' => json_encode($interactive)
                 ]
             );
+
+        dd($response);
     }
 
 }
