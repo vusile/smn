@@ -67,7 +67,7 @@ class WebHookController extends Controller
                 ]
             );
 
-            if(str_contains($newArray['from'], "255657867793")) {
+            if(trim($newArray['from']) == "255657867793") {
                 $smsService = new SmsService();
                 $smsService->sendOptions();
             }
