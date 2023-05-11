@@ -38,7 +38,7 @@ class SendSongApprovedNotification
                 $song->user,
                 'song_approved',
                 ['name' => $song->name],
-                ['url' => $song->url . "/" . $song->id],
+                ['url' => $song->url . "/" . $song->id . "?utm_source=whatsapp&utm_medium=whatsapp"],
             )
         ) {
             return;
