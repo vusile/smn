@@ -5,7 +5,11 @@ namespace App\Models;
 use App\Notifications\MailResetPasswordNotification;
 use App\Traits\SongTrait;
 use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Lab404\Impersonate\Models\Impersonate;
@@ -54,5 +58,15 @@ class User extends Authenticatable implements CanResetPassword
     public function authAnswers(): HasMany
     {
         return $this->hasMany('App\Models\AuthAnswer');
+    }
+
+    public function helpable(): MorphTo
+    {
+        return $this->morphTo();
+    }
+
+    public function helpers(): MorphToMany
+    {
+        return $this->morphToMany(User::class, 'helpable', 'helpers', 'helpable_id', 'helper_id');
     }
 }

@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Artesaos\SEOTools\Facades\SEOMeta;
-use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
 class AdminUserController extends Controller

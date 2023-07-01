@@ -127,6 +127,7 @@
                                             <li><a href="/admin/categories">Categories</a></li>
                                             <li><a href="/users/">Users</a></li>
                                             <li><a href="/whatsapp-messages/">Whatsapp Messages</a></li>
+                                            <li><a href="/admin/all-composers/">Composers</a></li>
                                         </ul>
                                     </li>
                                 @endif
@@ -178,6 +179,7 @@
                                   <li><a href="/admin/categories">Categories</a></li>
                                   <li><a href="/users/">Users</a></li>
                                   <li><a href="/whatsapp-messages/">Whatsapp Messages</a></li>
+                                  <li><a href="/admin/all-composers/">Composers</a></li>
                               </ul>
                             </li>
                         @endif

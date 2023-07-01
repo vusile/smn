@@ -178,6 +178,8 @@ Route::middleware(['auth'])->group(function () {
             ->name('whatsapp-create');
         Route::post('/whatsapp-messages/send', 'WhatsAppMessagesController@send')
             ->name('whatsapp-send');
+        Route::get('/akaunti/all-composers', 'ComposerController@all')->name('admin-composers-all');
+
     });
     Route::group(['middleware' => ['permission:kutoa ithibati']], function () {
         Route::get('/akaunti/toa-ithibati', 'IthibatiController@index')
@@ -217,6 +219,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/delete-reason/{song}', 'SongUploadController@deleteReason')
         ->name('delete-reason')
         ->middleware('can_delete');
+    Route::get('/akaunti/add-composer-helpers/{composer}', 'HelpersController@addComposerHelpers')->name('add-composer-helpers');
+    Route::get('/akaunti/add-user-helpers/{user}', 'HelpersController@addUserHelpers')->name('add-user-helpers');
+    Route::post('/akaunti/save-helpers', 'HelpersController@saveHelpers')->name('save-helpers');
 });
 Auth::routes();
 

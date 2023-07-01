@@ -200,7 +200,7 @@ class ComposerController extends Controller
         $me = Composer::where('user_id', auth()->user()->id)
             ->orderBy('name')
             ->whereNotNull('name')
-            ->paginate(20);
+            ->get();
 
         $composers = Composer::where('added_by', auth()->user()->id)
             ->orderBy('name')
@@ -211,6 +211,17 @@ class ComposerController extends Controller
         return view(
             'account.composers',
             compact('me', 'composers')
+        );
+    }
+
+    public function all()
+    {
+        $composers = Composer::orderBy('name')
+            ->paginate(20);
+
+        return view(
+            'account.composers',
+            compact('composers')
         );
     }
 }

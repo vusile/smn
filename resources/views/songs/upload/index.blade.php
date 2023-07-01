@@ -5,7 +5,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        
+
         <div class="col-lg-8" >
             <br />
             <br />
@@ -27,7 +27,7 @@
 
                 <div class="form-group row">
                     <div class="col-sm-8">
-                        <p><strong>Jina la mtunzi:</a></strong></p>
+                        <p><strong>Jina la mtunzi:</strong></p>
                         {{Form::select(
                               'composer_id',
                               ['' => 'Chagua moja'] + $composers,
@@ -53,17 +53,17 @@
             </form>
         </div>
         <div class="col-lg-2"></div>
-      
+
     </div>
 </div>
 @section('footer')
     <script type="text/javascript" src="/js/fastselect.standalone.min.js"></script>
-    
+
     <script type="text/javascript">
         $(document).ready(function() {
             $('#composer_id').fastselect();
         });
     </script>
-    
+
 @stop
 @stop

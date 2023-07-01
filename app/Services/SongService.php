@@ -61,16 +61,29 @@ class SongService
 
     public function approveSong(Song $song)
     {
-        $song->status = 1;
+        if($this->isVerifiedByComposer($song)) {
+            $song->status = config('song.statuses.approved_and_verified');
+        } else {
+            $song->status = config('song.statuses.approved');
+        }
         $song->approved_date = Carbon::now()->toDateString();
         $song->save();
 
         event(new SongApproved($song));
     }
 
+    private function isVerifiedByComposer(Song $song)
+    {
+        return $song->composer()->user_id == $song->user()->id
+            || in_array(
+                $song->user->id,
+                $song->composer()->helpers()->get()->pluck('id')->toArray()
+            );
+    }
+
     public function rejectSong(Song $song)
     {
-        $song->status = 5;
+        $song->status = config('song.statuses.denied');
         $song->save();
 
         event(new SongRejected($song));

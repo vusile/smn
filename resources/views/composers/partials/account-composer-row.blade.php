@@ -2,7 +2,8 @@
     <div id="{{ substr($composer->name,0,1) }}" class="col-lg-4" >
         <p>{{ Str::title($composer->name) }}<br>
             <small>
-                <a href = '/mtunzi/edit/{{$composer->id}}'>Boresha Taarifa za Mtunzi</a>
+                <a href = '/mtunzi/edit/{{$composer->id}}'>Boresha Taarifa za Mtunzi</a> |
+                <a href = '/akaunti/add-composer-helpers/{{$composer->id}}'>Ongeza Wasaidizi</a>
             </small>
         </p>
     </div>

@@ -6,11 +6,13 @@
     "type": "project",
     "require": {
         "php": "^7.4",
+        "ext-json": "*",
         "artesaos/seotools": "^0.19",
         "aws/aws-sdk-php-laravel": "~3.0",
         "backpack/crud": "^4.1",
         "barryvdh/laravel-elfinder": "^0.4.5",
         "cviebrock/eloquent-sluggable": "^7.0",
+        "doctrine/dbal": "2.*",
         "fideloper/proxy": "^4.4",
         "google/recaptcha": "^1.2",
         "htmlmin/htmlmin": "^7.0",
@@ -26,8 +28,7 @@
         "setasign/fpdf": "^1.8",
         "setasign/fpdi-tcpdf": "^2.0",
         "spatie/laravel-permission": "^4.2",
-        "venturecraft/revisionable": "1.*",
-      "ext-json": "*"
+        "venturecraft/revisionable": "1.*"
     },
     "require-dev": {
         "backpack/generators": "^3.1",
