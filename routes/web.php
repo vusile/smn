@@ -210,6 +210,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/admin/dominikas/update-songs/{dominika}', 'Admin\DominikaController@update_songs')->name('admin-doninika-update-songs');
     });
 
+    Route::get('/admin/upload-donor-report', 'DonorsController@upload');
+    Route::get('/admin/mkeka', 'DonorsController@mkeka');
+    Route::group(['middleware' => ['role:donors']], function () {
+    });
+
 
     Route::post('/delete/{song}', 'SongUploadController@delete')
         ->name('delete-song')

@@ -15,9 +15,10 @@ class CreateDonorsTable extends Migration
     {
         Schema::create('donors', function (Blueprint $table) {
             $table->id();
-            $table->mediumText('phone');
+            $table->string('phone', 20);
             $table->text('name');
-            $table->integer('total_contribution');
+            $table->integer('total_contribution')->default(0);
+            $table->unique('phone');
             $table->timestamps();
         });
     }

@@ -13,16 +13,16 @@ class CreateContributionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('contributions', function (Blueprint $table) {
+        Schema::create('donor_contributions', function (Blueprint $table) {
             $table->id();
-            $table->text("reference_number");
+//            $table->string("reference_number", 50)->nullable();
             $table->integer("amount");
-            $table->boolean("divide_monthly");
+//            $table->boolean("divide_monthly")->default(true);
+            $table->boolean("processed")->default(false);
             $table->dateTime("contribution_date");
-            $table->unsignedInteger('donor_id');
+            $table->unsignedBigInteger('donor_id');
             $table->foreign('donor_id')->references('id')->on('donors');
-            $table->unique("reference_number");
-            $table->index("reference_number");
+            $table->unique(['amount', 'contribution_date', 'donor_id']);
             $table->timestamps();
         });
     }
@@ -34,6 +34,6 @@ class CreateContributionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contributions');
+        Schema::dropIfExists('donor_contributions');
     }
 }

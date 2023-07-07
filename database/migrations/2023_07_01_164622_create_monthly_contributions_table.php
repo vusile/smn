@@ -15,10 +15,10 @@ class CreateMonthlyContributionsTable extends Migration
     {
         Schema::create('monthly_contributions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('contribution_id');
+            $table->unsignedBigInteger('donor_contribution_id');
             $table->integer("amount");
-            $table->unsignedInteger('month_year_id');
-            $table->foreign('contribution_id')->references('id')->on('contributions');
+            $table->unsignedBigInteger('month_year_id');
+            $table->foreign('donor_contribution_id')->references('id')->on('donor_contributions');
             $table->foreign('month_year_id')->references('id')->on('month_years');
             $table->timestamps();
         });

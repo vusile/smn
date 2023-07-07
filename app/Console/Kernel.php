@@ -9,6 +9,7 @@ use App\Console\Commands\CycleBDominikaUpdates;
 use App\Console\Commands\CycleCDominikaUpdates;
 use App\Console\Commands\ReviewSongs;
 use App\Console\Commands\UpdateComposerActiveSongs;
+use App\Console\Commands\UpdateTotalContributions;
 use App\Console\Commands\UpdateUserActiveSongs;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -28,7 +29,8 @@ class Kernel extends ConsoleKernel
         CleanUpDownloadsAndViewsTable::class,
         CycleADominikaUpdates::class,
         CycleBDominikaUpdates::class,
-        CycleCDominikaUpdates::class
+        CycleCDominikaUpdates::class,
+        UpdateTotalContributions::class,
     ];
 
     /**

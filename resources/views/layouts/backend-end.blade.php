@@ -59,6 +59,7 @@
     <!-- modernizr JS
         ============================================ -->
     <script src="/js/backend/modernizr-2.8.3.min.js"></script>
+    @livewireStyles
     @section('header')
     @show
 </head>
@@ -299,6 +300,7 @@
     <!-- main JS
         ============================================ -->
     <script src="/js/backend/main.js"></script>
+    @livewireScripts
     @section('footer')
     @show
 </body>

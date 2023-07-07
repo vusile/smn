@@ -16,7 +16,6 @@ class CreateMonthYearsTable extends Migration
         Schema::create('month_years', function (Blueprint $table) {
             $table->id();
             $table->mediumText("value");
-            $table->index("value");
             $table->timestamps();
         });
     }
