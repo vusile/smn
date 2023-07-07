@@ -42,6 +42,7 @@ class WebHookController extends Controller
         $newArray = [];
         $isMessage = false;
         $isStatus = false;
+        $isOther = false;
         foreach($array as $key => $value) {
             if(Str::contains($key, ['messages'])) {
                 $isMessage = true;
@@ -53,6 +54,11 @@ class WebHookController extends Controller
                 if(Str::contains($key, ['conversation.id'])) {
                     $key = str_replace('conversation.id', 'conversation_id', $key);
                 }
+                $newArray[array_reverse(explode(".", $key))[0]] = $value;
+            }
+
+            if(!$isMessage && !$isStatus) {
+                $isOther=true;
                 $newArray[array_reverse(explode(".", $key))[0]] = $value;
             }
         }
@@ -71,6 +77,17 @@ class WebHookController extends Controller
                 $smsService = new SmsService();
                 $smsService->sendOptions();
             }
+        }
+
+        if($isOther) {
+            WhatsappTracker::create(
+                [
+                    'type' => 'message',
+                    'phone' => $newArray['from'],
+                    'message_id' => $newArray['id'],
+                    'message' => implode(" ", $newArray)
+                ]
+            );
         }
 
         if($isStatus) {
