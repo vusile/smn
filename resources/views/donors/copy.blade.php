@@ -1,5 +1,9 @@
 <h2><a href="/admin/mkeka">Rudi kwenye mkeka</a></h2>
 <button class="btn" >Copy Message!</button>
+<br />
+<br />
+<div style="color: seagreen; font-weight: bold; font-size: 24px" id="success"></div>
+<div style="color: red; font-weight: bold; font-size: 24px" id="failure"></div>
 <div id = "message">
     {!! $message !!}
 </div>
@@ -22,8 +26,12 @@
             var successful = document.execCommand('copy');
             var msg = successful ? 'successful' : 'unsuccessful';
             console.log('Fallback: Copying text command was ' + msg);
+            document.getElementById('success').innerHTML = "Umefanikiwa kucopy";
+            document.getElementById('failure').innerHTML = ""
         } catch (err) {
             console.error('Fallback: Oops, unable to copy', err);
+            document.getElementById('failure').innerHTML = "Kuna shida. Mtaarifu admin!";
+            document.getElementById('success').innerHTML = ""
         }
 
         document.body.removeChild(textArea);
@@ -35,8 +43,12 @@
         }
         navigator.clipboard.writeText(text).then(function() {
             console.log('Async: Copying to clipboard was successful!');
+            document.getElementById('success').innerHTML = "Umefanikiwa kucopy";
+            document.getElementById('failure').innerHTML = ""
         }, function(err) {
             console.error('Async: Could not copy text: ', err);
+            document.getElementById('failure').innerHTML = "Kuna shida. Mtaarifu admin!";
+            document.getElementById('success').innerHTML = ""
         });
     }
 
