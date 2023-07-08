@@ -57,10 +57,10 @@ class WebHookController extends Controller
                 $newArray[array_reverse(explode(".", $key))[0]] = $value;
             }
 
-            if(!$isMessage && !$isStatus) {
-                $isOther=true;
-                $newArray[array_reverse(explode(".", $key))[0]] = $value;
-            }
+//            if(!$isMessage && !$isStatus) {
+//                $isOther=true;
+//                $newArray[array_reverse(explode(".", $key))[0]] = $value;
+//            }
         }
 
         if($isMessage) {
@@ -79,16 +79,16 @@ class WebHookController extends Controller
             }
         }
 
-        if($isOther) {
-            WhatsappTracker::create(
-                [
-                    'type' => 'message',
-                    'phone' => $newArray['from'],
-                    'message_id' => $newArray['id'],
-                    'message' => implode(" ", $newArray)
-                ]
-            );
-        }
+//        if($isOther) {
+//            WhatsappTracker::create(
+//                [
+//                    'type' => 'message',
+//                    'phone' => $newArray['from'],
+//                    'message_id' => $newArray['id'],
+//                    'message' => implode(" ", $newArray)
+//                ]
+//            );
+//        }
 
         if($isStatus) {
             WhatsappTracker::updateOrCreate(
