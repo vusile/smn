@@ -74,8 +74,8 @@ class DonorsController extends Controller
             $smsService->sendSms(
                 auth()->user(),
                 'song_not_approved',
-                ['date' => $date->monthName . " - " . $date->year],
-                ['message' => $message],
+                ['name' => $date->monthName . " - " . $date->year],
+                ['reasons' => $message],
             )
         ) {
             return;
