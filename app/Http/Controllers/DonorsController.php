@@ -52,10 +52,12 @@ class DonorsController extends Controller
         $monthlyTotal = collect($monthlyTotals)->sum();
         $donors = Donor::orderBy('name')->get();
 
+
         $message = whatsappBold(
-            sprintf("Jumla ya michango mwezi wa %s %s: %s", $date->monthName, $date->year, number_format($monthlyTotal))
+            sprintf('TUMSIFU YESU KRISTO.\n\nJumla ya michango mwezi wa %s %s: %s', $date->monthName, $date->year, number_format($monthlyTotal))
         );
 
+        $message .= ' \n\nSponsors waliochangia mwezi wa ' . $date->monthName . ' ' . $date->year . ' kupitia M-Koba (SMN SPONSORS) na CHANGISHA NUMBER 8182296 (VUSILE SILONDA SMN SPONSORS) Ni:';
         $message .= '\n\n';
         $message .= '_Maelezo: Namba iliyo baada ya jina lako, ni mchango wa mwezi huu. Namba iliyo kwenye mabano ni jumla ya michango yako tangia zoezi lianze_';
         $message .= '\n\n';
@@ -73,21 +75,24 @@ class DonorsController extends Controller
             $index += 1;
         }
 
-        $smsService = new SmsService();
+//        $smsService = new SmsService();
 
-        if (
-            $smsService->sendSms(
-                auth()->user(),
-                'mchango_wa_mwezi',
-                [
-                    'name' => $date->monthName . " - " . $date->year,
-                    'reasons' => $message
-                ]
-            )
-        ) {
-            return back()->with("message", "Mkeka umetumwa");
-        }
-        return back()->with("message", "Mkeka haujatumwa");
+        echo "<h2><a href='/admin/mkeka'>Go Back</a></h2><br /><br />";
+        echo $message;
+
+//        if (
+//            $smsService->sendSms(
+//                auth()->user(),
+//                'song_not_approved',
+//                [
+//                    'name' => $date->monthName . " - " . $date->year,
+//                    'reasons' => $message
+//                ]
+//            )
+//        ) {
+//            return back()->with("message", "Mkeka umetumwa");
+//        }
+//        return back()->with("message", "Mkeka haujatumwa");
     }
 
     private function generateMonthlyTotals($date): array
