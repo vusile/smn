@@ -56,34 +56,29 @@ class DonorsController extends Controller
             sprintf("Jumla ya michango mwezi wa %s %s: %s", $date->monthName, $date->year, number_format($monthlyTotal))
         );
 
-        $message .= "\n\n";
+        $message .= '\n\n';
+        $message .= '_Maelezo: Namba iliyo baada ya jina lako, ni mchango wa mwezi huu. Namba iliyo kwenye mabano ni jumla ya michango yako tangia zoezi lianze_';
+        $message .= '\n\n';
+        $message .= '_Mfano: Francis John - 2,000 (10,000). 2,000 ni mchango wa mwezi huu. 10,000 ni jumla uliyochanga (ikijumuisha hiyo 2,000) tangu tuanze kuchangia._';
+        $message .= '\n\n';
 
         $index = 1;
 
         foreach ($donors as $donor) {
-            $message .= $index . " " . $donor->name . " - ";
+            $message .= $index . ". " . $donor->name . " - ";
             $message .= isset($monthlyTotals[$donor->id]) ? number_format($monthlyTotals[$donor->id]) : 0;
             $message .= " (";
             $message .= isset($totals[$donor->id]) ? number_format($totals[$donor->id]) : 0 ;
-            $message .= ") \n";
+            $message .= ')\n';
             $index += 1;
         }
 
         $smsService = new SmsService();
 
-        dd(            $smsService->sendSms(
-            auth()->user(),
-            'song_not_approved',
-            [
-                'name' => $date->monthName . " - " . $date->year,
-                'reasons' => $message
-            ]
-        ));
-
         if (
             $smsService->sendSms(
                 auth()->user(),
-                'song_not_approved',
+                'mchango_wa_mwezi',
                 [
                     'name' => $date->monthName . " - " . $date->year,
                     'reasons' => $message
