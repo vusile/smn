@@ -71,25 +71,19 @@ class DonorsController extends Controller
 
         $smsService = new SmsService();
 
-        dd(
-            $smsService->sendSms(
-                auth()->user(),
-                'song_not_approved',
-                ['name' => $date->monthName . " - " . $date->year],
-                ['reasons' => $message],
-            )
-        );
-
         if (
             $smsService->sendSms(
                 auth()->user(),
                 'song_not_approved',
-                ['name' => $date->monthName . " - " . $date->year],
-                ['reasons' => $message],
+                [
+                    'name' => $date->monthName . " - " . $date->year,
+                    'reasons' => $message
+                ]
             )
         ) {
-            return;
+            return back()->with("message", "Mkeka umetumwa");
         }
+        return back()->with("message", "Mkeka haujatumwa");
     }
 
     private function generateMonthlyTotals($date): array
