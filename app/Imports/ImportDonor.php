@@ -27,7 +27,6 @@ class ImportDonor implements ToCollection
                         ]
                     );
 
-
                     DonorContribution::firstOrCreate(
                         [
                             'donor_id' => $donor->id,

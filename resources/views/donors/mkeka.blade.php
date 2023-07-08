@@ -5,14 +5,16 @@
     </div>
 
     <div class="container">
-    <a href="/admin/mkeka?minus={{$minus}}&&plus={{request('plus')}}">Rudi Mwezi mmoja</a> | <a href="/admin/mkeka?plus={{$plus}}&&minus={{request('minus')}}">Nenda mbele Mwezi mmoja</a>  <br /><br />
+    <a href="/admin/mkeka?minus={{$minus}}&plus={{request('plus')}}">Rudi Mwezi mmoja</a> | <a href="/admin/mkeka?plus={{$plus}}&minus={{request('minus')}}">Nenda mbele Mwezi mmoja</a>  <br /><br />
 
-        <h2>Jumla ya michango mwezi huu {{ number_format($monthlyTotal) }}</h2>
+        <h2>Jumla ya michango mwezi wa {{ $date->monthName }} {{ $date->year }}: {{ number_format($monthlyTotal) }}</h2>
 
         @foreach($donors as $donor)
             {{$loop->index + 1}}. {{$donor->name}} -
             {{ isset($monthlyTotals[$donor->id]) ? number_format($monthlyTotals[$donor->id]) : 0 }}
             ({{ isset($totals[$donor->id]) ? number_format($totals[$donor->id]) : 0 }}) <br />
         @endforeach
+
+        <a href="/admin/tuma-mkeka?date={{$date->format('Y-m-d')}}">Tuma Message</a>
     </div>
 @stop

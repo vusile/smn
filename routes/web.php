@@ -212,6 +212,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/admin/upload-donor-report', 'DonorsController@upload');
     Route::get('/admin/mkeka', 'DonorsController@mkeka');
+    Route::get('/admin/tuma-mkeka', 'DonorsController@tumaMkeka');
     Route::group(['middleware' => ['role:donors']], function () {
     });
 
