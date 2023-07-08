@@ -71,6 +71,15 @@ class DonorsController extends Controller
 
         $smsService = new SmsService();
 
+        dd(            $smsService->sendSms(
+            auth()->user(),
+            'song_not_approved',
+            [
+                'name' => $date->monthName . " - " . $date->year,
+                'reasons' => $message
+            ]
+        ));
+
         if (
             $smsService->sendSms(
                 auth()->user(),
