@@ -54,15 +54,15 @@ class DonorsController extends Controller
 
 
         $message = whatsappBold(
-            sprintf('TUMSIFU YESU KRISTO.\n\nJumla ya michango mwezi wa %s %s: %s', $date->monthName, $date->year, number_format($monthlyTotal))
+            sprintf('TUMSIFU YESU KRISTO*.<br><br>*Jumla ya michango mwezi wa %s %s: %s', $date->monthName, $date->year, number_format($monthlyTotal))
         );
 
-        $message .= ' \n\nSponsors waliochangia mwezi wa ' . $date->monthName . ' ' . $date->year . ' kupitia M-Koba (SMN SPONSORS) na CHANGISHA NUMBER 8182296 (VUSILE SILONDA SMN SPONSORS) Ni:';
-        $message .= '\n\n';
+        $message .= '<br><br>Sponsors waliochangia mwezi wa ' . $date->monthName . ' ' . $date->year . ' kupitia M-Koba (SMN SPONSORS) na CHANGISHA NUMBER 8182296 (VUSILE SILONDA SMN SPONSORS) Ni:';
+        $message .= '<br><br>';
         $message .= '_Maelezo: Namba iliyo baada ya jina lako, ni mchango wa mwezi huu. Namba iliyo kwenye mabano ni jumla ya michango yako tangia zoezi lianze_';
-        $message .= '\n\n';
+        $message .= '<br><br>';
         $message .= '_Mfano: Francis John - 2,000 (10,000). 2,000 ni mchango wa mwezi huu. 10,000 ni jumla uliyochanga (ikijumuisha hiyo 2,000) tangu tuanze kuchangia._';
-        $message .= '\n\n';
+        $message .= '<br><br>';
 
         $index = 1;
 
@@ -71,14 +71,17 @@ class DonorsController extends Controller
             $message .= isset($monthlyTotals[$donor->id]) ? number_format($monthlyTotals[$donor->id]) : 0;
             $message .= " (";
             $message .= isset($totals[$donor->id]) ? number_format($totals[$donor->id]) : 0 ;
-            $message .= ')\n';
+            $message .= ')<br>';
             $index += 1;
         }
 
+        $message .= "<br>*Asanteni sana, Mungu awabariki*";
 //        $smsService = new SmsService();
 
-        echo "<h2><a href='/admin/mkeka'>Go Back</a></h2><br /><br />";
-        echo $message;
+//        echo "<h2><a href='/admin/mkeka'>Go Back</a></h2><br /><br />";
+//        echo ($message);
+
+        return view('donors.copy', compact('message'));
 
 //        if (
 //            $smsService->sendSms(
