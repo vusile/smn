@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": "^7.4",
+        "ext-json": "*",
         "artesaos/seotools": "^0.19",
         "aws/aws-sdk-php-laravel": "~3.0",
         "backpack/crud": "^4.1",
@@ -21,13 +22,14 @@
         "laravel/ui": "^2.4",
         "laravelcollective/html": "^6.2",
         "league/flysystem": "^1.0",
+        "livewire/livewire": "^2.12",
+        "maatwebsite/excel": "^3.1",
         "mvvershinin/sphinxsearch": "dev-master",
         "propaganistas/laravel-phone": "^4.2",
         "setasign/fpdf": "^1.8",
         "setasign/fpdi-tcpdf": "^2.0",
         "spatie/laravel-permission": "^4.2",
-        "venturecraft/revisionable": "1.*",
-      "ext-json": "*"
+        "venturecraft/revisionable": "1.*"
     },
     "require-dev": {
         "backpack/generators": "^3.1",
@@ -72,7 +74,8 @@
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover"
+            "@php artisan package:discover --ansi",
+            "@php artisan vendor:publish --force --tag=livewire:assets --ansi"
         ]
     },
     "config": {
