@@ -56,8 +56,24 @@
 
     copyBtn.addEventListener('click', function(event) {
         let text = document.getElementById('message').innerHTML
-        copyTextToClipboard(window.encodeURIComponent(text));
+        copyTextToClipboard(htmlToFormat(text));
     });
+
+    function htmlToFormat(html) {
+        const codes = { B: "*", I: "_", STRIKE: "~" };
+        const {body} = new DOMParser().parseFromString(html, "text/html");
+        const dfs = ({childNodes}) => Array.from(childNodes, node => {
+            if (node.nodeType === 1) {
+                const s = dfs(node);
+                const code = codes[node.tagName];
+                return code ? s.replace(/^(\s*)(?=\S)|(?<=\S)(\s*)$/g, `$1${code}$2`) : s;
+            } else {
+                return node.textContent;
+            }
+        }).join("");
+
+        return dfs(body);
+    }
 
 </script>
 
