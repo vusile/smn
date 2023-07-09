@@ -60,7 +60,7 @@
     });
 
     function htmlToFormat(html) {
-        const codes = { B: "*", I: "_", STRIKE: "~" };
+        const codes = { B: "*", I: "_", STRIKE: "~", BR: "%0a" };
         const {body} = new DOMParser().parseFromString(html, "text/html");
         const dfs = ({childNodes}) => Array.from(childNodes, node => {
             if (node.nodeType === 1) {
