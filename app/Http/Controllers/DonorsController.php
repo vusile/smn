@@ -51,12 +51,11 @@ class DonorsController extends Controller
             sprintf('TUMSIFU YESU KRISTO*.<br><br>*Jumla ya michango mwezi wa %s %s: %s', $date->monthName, $date->year, number_format($monthlyTotal))
         );
 
-        $message .= '<br><br>Sponsors waliochangia mwezi wa ' . $date->monthName . ' ' . $date->year . ' kupitia M-Koba (SMN SPONSORS) na CHANGISHA NUMBER 8182296 (VUSILE SILONDA SMN SPONSORS) Ni:';
-        $message .= '<br><br>';
-        $message .= '_Maelezo: Namba iliyo baada ya jina lako, ni mchango wa mwezi huu. Namba iliyo kwenye mabano ni jumla ya michango yako tangia zoezi lianze_';
+        $message .= '<br><br>_Maelezo: Namba iliyo baada ya jina lako, ni mchango wa mwezi huu. Namba iliyo kwenye mabano ni jumla ya michango yako tangia zoezi lianze_';
         $message .= '<br><br>';
         $message .= '_Mfano: Francis John - 2,000 (10,000). 2,000 ni mchango wa mwezi huu. 10,000 ni jumla uliyochanga (ikijumuisha hiyo 2,000) tangu tuanze kuchangia._';
-        $message .= '<br><br>';
+        $message .= '<br><br>Sponsors waliochangia mwezi wa ' . $date->monthName . ' ' . $date->year . ' kupitia M-Koba (SMN SPONSORS) na CHANGISHA NUMBER 8182296 (VUSILE SILONDA SMN SPONSORS) Ni:';
+        $message .= '<br><br>*_Kama kuna kasoro yoyote tafadhali tufahamishe_*';
 
         $index = 1;
 

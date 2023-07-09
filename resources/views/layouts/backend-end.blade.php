@@ -121,6 +121,16 @@
                                 </li>
                                 <li><a href="/akaunti/review-nyimbo">Review Nyimbo</a>
                                 </li>
+                                @if(auth()->user()->hasAnyRole(['donors']))
+                                    <li><a href="#Appviews"  class="dropdown-toggle" data-toggle="dropdown"><i class="notika-icon notika-dollar"></i> Sponsors</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="/admin/mkeka">Mkeka</a></li>
+                                            @if(auth()->user()->hasAnyRole(['super admin']))
+                                                <li><a href="/admin/upload-donor-report">Upload statements</a></li>
+                                            @endif
+                                        </ul>
+                                    </li>
+                                @endif
                                 @if(auth()->user()->hasAnyRole(['super admin']))
                                     <li><a href="#Appviews"  class="dropdown-toggle" data-toggle="dropdown"><i class="notika-icon notika-app"></i> Admin Stuff</a>
                                         <ul class="dropdown-menu">
@@ -172,6 +182,16 @@
                         </li>
                         <li><a href="/akaunti/review-nyimbo"><i class="notika-icon notika-form"></i> Review Nyimbo</a>
                         </li>
+                        @if(auth()->user()->hasAnyRole(['donors']))
+                            <li><a href="#Appviews"  class="dropdown-toggle" data-toggle="dropdown"><i class="notika-icon notika-dollar"></i> Sponsors</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/admin/mkeka">Mkeka</a></li>
+                                    @if(auth()->user()->hasAnyRole(['super admin']))
+                                        <li><a href="/admin/upload-donor-report">Upload statements</a></li>
+                                    @endif
+                                </ul>
+                            </li>
+                        @endif
                         @if(auth()->user()->hasAnyRole(['super admin']))
                             <li><a href="#Appviews"  class="dropdown-toggle" data-toggle="dropdown"><i class="notika-icon notika-app"></i> Admin Stuff</a>
                               <ul class="dropdown-menu">
