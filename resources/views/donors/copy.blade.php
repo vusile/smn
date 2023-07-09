@@ -5,7 +5,7 @@
 <div style="color: seagreen; font-weight: bold; font-size: 24px" id="success"></div>
 <div style="color: red; font-weight: bold; font-size: 24px" id="failure"></div>
 <div id = "message">
-    {!! $message !!}
+    {!! str_replace("<br>", '\r\n', $message) !!}
 </div>
 
 <script>
@@ -60,7 +60,7 @@
     });
 
     function htmlToFormat(html) {
-        const codes = { B: "*", I: "_", STRIKE: "~", BR: "%0a" };
+        const codes = { B: "*", I: "_", STRIKE: "~", BR: "%0a" , br: "%0a" };
         const {body} = new DOMParser().parseFromString(html, "text/html");
         const dfs = ({childNodes}) => Array.from(childNodes, node => {
             if (node.nodeType === 1) {
@@ -72,6 +72,7 @@
             }
         }).join("");
 
+        console.log(body)
         return dfs(body);
     }
 
