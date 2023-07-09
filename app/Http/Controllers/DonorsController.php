@@ -30,32 +30,22 @@ class DonorsController extends Controller
 
         $monthlyTotals = $this->generateMonthlyTotals($date);
         $totals = $this->generateTotalsToDate($date);
-
         $monthlyTotal = collect($monthlyTotals)->sum();
         $donors = Donor::orderBy('name')->get();
 
         $minus = request('minus') ? request('minus') + 1 : 1;
         $plus = request('plus') ? request('plus') + 1 : 1;
 
+        $message = $this->generateWhatsappMessage($monthlyTotals, $totals, $monthlyTotal, $donors, $date);
+
         return view(
             'donors.mkeka',
-            compact('date', 'totals', 'donors', 'minus', 'plus', 'monthlyTotals', 'monthlyTotal')
+            compact('date', 'totals', 'donors', 'minus', 'plus', 'monthlyTotals', 'monthlyTotal', 'message')
         );
     }
 
-    public function tumaMkeka()
+    public function generateWhatsappMessage($monthlyTotals, $totals, $monthlyTotal, $donors, $date)
     {
-
-        $text = "Hello world How aer you?\ntoday?";
-        dd(urlencode($text));
-
-        $date = Carbon::parse(request('date'));
-
-        $monthlyTotals = $this->generateMonthlyTotals($date);
-        $totals = $this->generateTotalsToDate($date);
-        $monthlyTotal = collect($monthlyTotals)->sum();
-        $donors = Donor::orderBy('name')->get();
-
 
         $message = whatsappBold(
             sprintf('TUMSIFU YESU KRISTO*.<br><br>*Jumla ya michango mwezi wa %s %s: %s', $date->monthName, $date->year, number_format($monthlyTotal))
@@ -79,27 +69,9 @@ class DonorsController extends Controller
             $index += 1;
         }
 
-        $message .= "<br>*Asanteni sana, Mungu awabariki*";
-//        $smsService = new SmsService();
+        $message .= "<br>" . whatsappBold("Asanteni sana, Mungu awabariki");
 
-//        echo "<h2><a href='/admin/mkeka'>Go Back</a></h2><br /><br />";
-//        echo ($message);
-
-        return view('donors.copy', compact('message'));
-
-//        if (
-//            $smsService->sendSms(
-//                auth()->user(),
-//                'song_not_approved',
-//                [
-//                    'name' => $date->monthName . " - " . $date->year,
-//                    'reasons' => $message
-//                ]
-//            )
-//        ) {
-//            return back()->with("message", "Mkeka umetumwa");
-//        }
-//        return back()->with("message", "Mkeka haujatumwa");
+        return $message;
     }
 
     private function generateMonthlyTotals($date): array
