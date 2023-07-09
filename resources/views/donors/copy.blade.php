@@ -4,8 +4,8 @@
 <br />
 <div style="color: seagreen; font-weight: bold; font-size: 24px" id="success"></div>
 <div style="color: red; font-weight: bold; font-size: 24px" id="failure"></div>
-<div id = "message">
-    {!! nl2br($message) !!}
+<div id = "message" style="white-space: pre">
+    {!! urldecode($message) !!}
 </div>
 
 <script>
@@ -56,11 +56,12 @@
 
     copyBtn.addEventListener('click', function(event) {
         let text = document.getElementById('message').innerHTML
+        console.log(text)
         copyTextToClipboard(htmlToFormat(text));
     });
 
     function htmlToFormat(html) {
-        const codes = { B: "*", I: "_", STRIKE: "~", BR: "%0a" , br: "%0a" };
+        const codes = { B: "*", I: "_", STRIKE: "~", P: "" , p: "" };
         const {body} = new DOMParser().parseFromString(html, "text/html");
         const dfs = ({childNodes}) => Array.from(childNodes, node => {
             if (node.nodeType === 1) {
