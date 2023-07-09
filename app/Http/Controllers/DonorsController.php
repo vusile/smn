@@ -56,6 +56,7 @@ class DonorsController extends Controller
         $message .= '_Mfano: Francis John - 2,000 (10,000). 2,000 ni mchango wa mwezi huu. 10,000 ni jumla uliyochanga (ikijumuisha hiyo 2,000) tangu tuanze kuchangia._';
         $message .= '<br><br>Sponsors waliochangia mwezi wa ' . $date->monthName . ' ' . $date->year . ' kupitia M-Koba (SMN SPONSORS) na CHANGISHA NUMBER 8182296 (VUSILE SILONDA SMN SPONSORS) Ni:';
         $message .= '<br><br>*_Kama kuna kasoro yoyote tafadhali tufahamishe_*';
+        $message .= '<br><br>';
 
         $index = 1;
 
