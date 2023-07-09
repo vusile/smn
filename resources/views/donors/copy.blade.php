@@ -56,7 +56,7 @@
 
     copyBtn.addEventListener('click', function(event) {
         let text = document.getElementById('message').innerHTML
-        copyTextToClipboard(text);
+        copyTextToClipboard(window.encodeURIComponent(text));
     });
 
 </script>
