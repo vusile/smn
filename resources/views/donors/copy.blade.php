@@ -5,7 +5,7 @@
 <div style="color: seagreen; font-weight: bold; font-size: 24px" id="success"></div>
 <div style="color: red; font-weight: bold; font-size: 24px" id="failure"></div>
 <div id = "message" style="white-space: pre">
-    {!! urldecode($message) !!}
+    {!! urldecode(str_replace("<br>", '\n', $message)) !!}
 </div>
 
 <script>

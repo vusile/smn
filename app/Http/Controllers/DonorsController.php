@@ -45,6 +45,10 @@ class DonorsController extends Controller
 
     public function tumaMkeka()
     {
+
+        $text = "Hello world How aer you?\ntoday?";
+        dd(urlencode($text));
+
         $date = Carbon::parse(request('date'));
 
         $monthlyTotals = $this->generateMonthlyTotals($date);
