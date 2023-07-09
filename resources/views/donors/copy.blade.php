@@ -5,7 +5,7 @@
 <div style="color: seagreen; font-weight: bold; font-size: 24px" id="success"></div>
 <div style="color: red; font-weight: bold; font-size: 24px" id="failure"></div>
 <div id = "message">
-    {!! str_replace("<br>", '\r\n', $message) !!}
+    {!! nl2br($message) !!}
 </div>
 
 <script>
