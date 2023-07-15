@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Venturecraft\Revisionable\RevisionableTrait;
 
@@ -69,6 +70,15 @@ class Song extends Model
         ];
     }
 
+    public function resolveRouteBinding($value, $field = null): ?Model
+    {
+        $cacheName = "song.{$value}";
+
+        return Cache::rememberForever($cacheName, function () use ($value) {
+            return $this->where('id', $value)->firstOrFail();
+        });
+    }
+
     public function composer()
     {
         return $this->belongsTo('App\Models\Composer');
@@ -110,7 +120,12 @@ class Song extends Model
 
     public function getDescriptionAttribute()
     {
-        return $this->lyrics ?? 'Wimbo huu wa ' . $this->name . ' umetungwa na ' . $this->composer->name;
+        $cacheName = "composer.{$this->composer_id}";
+        $composer = Cache::rememberForever($cacheName, function () {
+            return $this->composer;
+        });
+
+        return $this->lyrics ?? 'Wimbo huu wa ' . $this->name . ' umetungwa na ' . $composer->name;
     }
 
     public function songViews()

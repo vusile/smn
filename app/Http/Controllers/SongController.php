@@ -10,6 +10,7 @@ use App\Services\SongService;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Jaybizzle\CrawlerDetect\CrawlerDetect;;
@@ -34,14 +35,24 @@ class SongController extends Controller
 
     public function show(string $slug, Song $song)
     {
-        SEOMeta::setTitle('Nota za ' . $song->name . ' na ' . $song->composer->name);
+        $cacheName = "composer." . $song->composer_id;
+
+        $composer = Cache::rememberForever($cacheName, function () use ($song) {
+            return $song->composer;
+        });
+
+        SEOMeta::setTitle('Nota za ' . $song->name . ' na ' . $composer->name);
         SEOMeta::setDescription($song->description);
 
         $otherSongs = $this->songService->getOtherSongs($song);
 
         $parts = null;
 
-        if($song->dominikas) {
+        $dominikas = Cache::remember('song-has-dominikas.' . $song->id, 60*60*24*3, function () use ($song) {
+            return $song->dominikas;
+        });
+
+        if($dominikas) {
             $parts = $this->songService->determinePartOfMass($song);
         }
 
