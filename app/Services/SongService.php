@@ -9,6 +9,7 @@ use App\Events\SongRejected;
 use App\Models\Song;
 use App\Services\SearchService;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class SongService
@@ -20,15 +21,17 @@ class SongService
     }
     public function determinePartOfMass(Song $song)
     {
-        $dominikaPartsOfMass = DB::table('dominikas_songs')
+        $dominikaPartsOfMass = Cache::remember('song-dominikas.' . $song->id, 60*60*24*3, function () use ($song) {
+            return DB::table('dominikas_songs')
                 ->where('song_id', $song->id)
                 ->get()
                 ->mapWithKeys(function ($dominikaPartOfMass) {
                     $partOfMass = DB::table('parts_of_mass')
-                            ->find($dominikaPartOfMass->parts_of_mass_id);
+                        ->find($dominikaPartOfMass->parts_of_mass_id);
 
                     return [$dominikaPartOfMass->dominika_id => $partOfMass];
                 });
+        });
 
         return $dominikaPartsOfMass->all();
     }

@@ -6,6 +6,7 @@ use App\Models\Song;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 
 class CheckSongStatus
 {
@@ -23,7 +24,11 @@ class CheckSongStatus
                 explode("/", $uri)
             );
 
-        $song = Song::find($id);
+        $cacheName = "song.{$id}";
+
+        $song = Cache::rememberForever($cacheName, function () use ($id) {
+            return Song::find($id);
+        });
 
         if ($song->is_pending || $song->is_denied || $song->is_deleted) {
             return redirect(route('missing-page'));
