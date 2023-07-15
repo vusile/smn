@@ -25,6 +25,7 @@
         "livewire/livewire": "^2.12",
         "maatwebsite/excel": "^3.1",
         "mvvershinin/sphinxsearch": "dev-master",
+        "predis/predis": "^2.2",
         "propaganistas/laravel-phone": "^4.2",
         "setasign/fpdf": "^1.8",
         "setasign/fpdi-tcpdf": "^2.0",
