@@ -23,7 +23,10 @@
         "laravel/ui": "^2.4",
         "laravelcollective/html": "^6.2",
         "league/flysystem": "^1.0",
+        "livewire/livewire": "^2.12",
+        "maatwebsite/excel": "^3.1",
         "mvvershinin/sphinxsearch": "dev-master",
+        "predis/predis": "^2.2",
         "propaganistas/laravel-phone": "^4.2",
         "setasign/fpdf": "^1.8",
         "setasign/fpdi-tcpdf": "^2.0",
@@ -73,7 +76,8 @@
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover"
+            "@php artisan package:discover --ansi",
+            "@php artisan vendor:publish --force --tag=livewire:assets --ansi"
         ]
     },
     "config": {

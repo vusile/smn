@@ -27,8 +27,7 @@ class AdminUserController extends Controller
     }
 
     public function assign($role, User $user) {
-        $role = Role::whereName($role)
-            ->firstOrFail();
+        $role = Role::findOrCreate($role);
 
         $user->assignRole($role);
 

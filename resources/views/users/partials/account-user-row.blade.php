@@ -58,6 +58,13 @@
                 <a href = '/assign-role/dominika admin/{{$user->id}}'>Mpe uwezo wa Kuboresha Dominika</a>
             @endif
 
+                <br>
+            @if($user->hasRole('donors'))
+                <a style ="color: red" href = '/remove-role/donors/{{$user->id}}'>Ondoa uwezo wa kuona mkeka</a>
+            @elseif(!$user->hasRole('donors'))
+                <a href = '/assign-role/donors/{{$user->id}}'>Mpe uwezo wa kuona mkeka</a>
+            @endif
+
         </p>
     </div>
     <div class="col-lg-4" >
