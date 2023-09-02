@@ -28,6 +28,7 @@ class HomeController extends Controller
 
         $recentSongs = Cache::remember('recent-songs', 3600, function () {
             return Song::approved()
+                ->whereNotNull('approved_date')
                 ->select('url', 'id', 'name', 'composer_id')
                 ->with('composer:id,name')
                 ->orderBy('approved_date', 'desc')
