@@ -24,11 +24,12 @@ class CheckSongStatus
                 explode("/", $uri)
             );
 
-        $cacheName = "song.{$id}";
+//        $cacheName = "song.{$id}";
 
-        $song = Cache::rememberForever($cacheName, function () use ($id) {
-            return Song::find($id);
-        });
+//        $song = Cache::rememberForever($cacheName, function () use ($id) {
+//            return Song::find($id);
+//        });
+        $song = Song::find($id);
 
         if ($song->is_pending || $song->is_denied || $song->is_deleted) {
             return redirect(route('missing-page'));
