@@ -47,7 +47,7 @@ class DonorsController extends Controller
     public function generateWhatsappMessage($monthlyTotals, $totals, $monthlyTotal, $donors, $date, $showCumulative)
     {
         $currentDate = Carbon::now();
-        $hideCumulative = $currentDate->format('Y-m') == $date->format('Y-m') ? $showCumulative : false;
+        $hideCumulative = $currentDate->format('Y-m') == $date->format('Y-m') ? !$showCumulative : false;
         $message = whatsappBold(
             sprintf('TUMSIFU YESU KRISTO*.<br><br>*Jumla ya michango mwezi wa %s %s: %s', $date->monthName, $date->year, number_format($monthlyTotal))
         );
