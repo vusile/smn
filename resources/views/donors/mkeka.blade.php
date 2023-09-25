@@ -31,7 +31,7 @@
     </div>
 
     <div class="container">
-    <a href="/admin/mkeka?minus={{$minus}}&plus={{request('plus')}}">Rudi Mwezi mmoja</a> | <a href="/admin/mkeka?plus={{$plus}}&minus={{request('minus')}}">Nenda mbele Mwezi mmoja</a> | <a href="/admin/mkeka?plus={{$plus}}&minus={{request('minus')}}&showCumulative=1">Show Cumulative</a>  <br /><br />
+    <a href="/admin/mkeka?minus={{$minus}}&plus={{request('plus')}}">Rudi Mwezi mmoja</a> | <a href="/admin/mkeka?plus={{$plus}}&minus={{request('minus')}}">Nenda mbele Mwezi mmoja</a> | <a href="/admin/mkeka?plus={{request('plus')}}&minus={{request('minus')}}&showCumulative=1">Show Cumulative</a>  <br /><br />
 
         <button id="btn" >Copy Mkeka!</button>
         <br><br>
