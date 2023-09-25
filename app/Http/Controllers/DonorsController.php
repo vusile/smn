@@ -36,7 +36,7 @@ class DonorsController extends Controller
         $minus = request('minus') ? request('minus') + 1 : 1;
         $plus = request('plus') ? request('plus') + 1 : 1;
 
-        $message = $this->generateWhatsappMessage($monthlyTotals, $totals, $monthlyTotal, $donors, $date);
+        $message = $this->generateWhatsappMessage($monthlyTotals, $totals, $monthlyTotal, $donors, $date, request('showCumulative'));
 
         return view(
             'donors.mkeka',
@@ -44,10 +44,10 @@ class DonorsController extends Controller
         );
     }
 
-    public function generateWhatsappMessage($monthlyTotals, $totals, $monthlyTotal, $donors, $date)
+    public function generateWhatsappMessage($monthlyTotals, $totals, $monthlyTotal, $donors, $date, $showCumulative)
     {
         $currentDate = Carbon::now();
-        $hideCumulative = $currentDate->format('Y-m') == $date->format('Y-m');
+        $hideCumulative = $currentDate->format('Y-m') == $date->format('Y-m') ? $showCumulative : false;
         $message = whatsappBold(
             sprintf('TUMSIFU YESU KRISTO*.<br><br>*Jumla ya michango mwezi wa %s %s: %s', $date->monthName, $date->year, number_format($monthlyTotal))
         );
