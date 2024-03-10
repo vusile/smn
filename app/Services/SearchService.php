@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use sngrl\SphinxSearch\SphinxSearch;
+// use SphinxSearch;
 use Sphinx\SphinxClient;
 
 class SearchService
