@@ -12,7 +12,11 @@
 @endsection
 @section('content')
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-4">{{ $song->name }}</h1>
+        @if (Str::contains($song->name, 'Tec'))
+            <h1 class="display-4">{{ strtoupper($song->name) }}</h1>
+        @else
+            <h1 class="display-4">{{ $song->name }}</h1>
+        @endif
     </div>
     <div class="container">
         <div class="row">

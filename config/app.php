@@ -151,7 +151,7 @@ return [
         Lab404\Impersonate\ImpersonateServiceProvider::class,
         Propaganistas\LaravelPhone\PhoneServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
-        sngrl\SphinxSearch\SphinxSearchServiceProvider::class,
+        // sngrl\SphinxSearch\SphinxSearchServiceProvider::class,
         Venturecraft\Revisionable\RevisionableServiceProvider::class,
 
         /*
@@ -166,6 +166,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\SphinxSearchServiceProvider::class,
 
     ],
 
