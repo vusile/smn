@@ -5,7 +5,7 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "ext-json": "*",
         "artesaos/seotools": "^1.2.0",
         "aws/aws-sdk-php-laravel": "~3.0",
