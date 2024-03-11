@@ -47,6 +47,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('composers:update-active-songs')->everyTenMinutes();
         $schedule->command('users:update-active-songs')->everyTenMinutes();
         $schedule->command('queue:work --tries=2 --queue=songs --timeout=30')->cron('*/17 * * * *');
+        $schedule->command('cache:clear')->everyTwoHours();
     }
 
     /**
