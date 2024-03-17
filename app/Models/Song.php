@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Venturecraft\Revisionable\RevisionableTrait;
+use Illuminate\Support\Carbon;
 
 class Song extends Model
 {
