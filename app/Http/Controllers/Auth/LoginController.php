@@ -69,7 +69,15 @@ class LoginController extends Controller
             $field = 'email';
         } else {
             $field = 'phone';
-            $login = PhoneNumber::make($login, request()->input('phone_country'))->formatE164();
+
+            $login = (new PhoneNumber
+                (
+                    $login,
+                    [
+                        request()->input('phone_country')
+                    ]
+                )
+            )->formatE164();
         }
 
         request()->merge([$field => $login]);
