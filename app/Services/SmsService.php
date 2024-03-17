@@ -23,7 +23,8 @@ class SmsService
             return false;
         }
 
-        $madePhone = PhoneNumber::make($user->phone);
+        $madePhone = new PhoneNumber($user->phone);
+        // PhoneNumber::make($user->phone);
 
         try {
             if(!$madePhone->getCountry()) {
