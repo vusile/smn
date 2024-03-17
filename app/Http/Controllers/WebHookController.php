@@ -99,7 +99,7 @@ class WebHookController extends Controller
                     'type' => 'status',
                     'phone' => $newArray['recipient_id'],
                     'message_id' => $newArray['id'],
-                    'conversation_id' => $newArray['conversation_id'],
+                    'conversation_id' => isset($newArray['conversation_id']) ? $newArray['conversation_id'] : null ,
                     'delivery_status' => $newArray['status']
                 ]
             );
