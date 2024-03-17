@@ -27,7 +27,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('viewPulse', function (User $user) {
-            return $user->isAdmin();
+            return $user->hasAnyRole(['super admin']);
         });
 
         //
