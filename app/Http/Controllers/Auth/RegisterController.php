@@ -98,7 +98,13 @@ class RegisterController extends Controller
         Session::flash('msg', 'Umefanikiwa kujisajili. Tafadhali thibitisha namba yako ya simu kwa kuweka namba tuliyokutumia kwenye message.');
 
         $code = rand(0001, 9999);
-        $phone = PhoneNumber::make($request->phone, $request->phone_country)->formatE164();
+        $phone = (new PhoneNumber
+        (
+            $request->phone,
+            [
+                $request->phone_country
+            ]
+        ))->formatE164();
 
         $user = User::create([
             'first_name' => $request->first_name,

@@ -45,6 +45,16 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+        $customMessages = [
+            'phone_country.required' => 'Tafadhali chagua nchi uliyosajili namba ya simu hii',
+        ];
+        $request->validate(
+            [
+                'phone_country' => 'required|string',
+            ],
+            $customMessages
+        );
+
         $password = request()->input('password');
         $user = User::where('email', request()->input('username'))
                 ->first();
