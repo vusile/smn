@@ -68,7 +68,7 @@ class RegisterController extends Controller
     protected function create()
     {
         $request = request();
-        $sendMessage = false;
+        $sendMessage = true;
 
         $customMessages = [
             'first_name.required' => 'Jina la kwanza linahitajika',

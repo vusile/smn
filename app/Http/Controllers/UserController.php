@@ -44,7 +44,7 @@ class UserController extends Controller
         $user = auth()->user();
 
         if($user->phone_verified){
-            redirect('/');
+            return redirect('/');
         } else {
             return view(
                 'auth.verify-phone',
