@@ -157,8 +157,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['middleware' => ['role:super admin']], function () {
         Route::get('/admin/pages', 'Admin\PagesController@index')->name('admin-pages-index');
-        Route::get('/admin/pages/{blogPost}', 'Admin\PagesController@edit')->name('admin-pages-edit');
         Route::get('/admin/pages/create', 'Admin\PagesController@create')->name('admin-pages-create');
+        Route::get('/admin/pages/{blogPost}', 'Admin\PagesController@edit')->name('admin-pages-edit');
         Route::post('/admin/pages/save', 'Admin\PagesController@save')->name('admin-pages-save');
         Route::post('/admin/pages/update/{blogPost}', 'Admin\PagesController@update')->name('admin-pages-update');
         Route::get('/admin/categories', 'Admin\CategoriesController@index')->name('admin-categories-index');
