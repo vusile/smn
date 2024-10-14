@@ -136,6 +136,7 @@
                                         <ul class="dropdown-menu">
                                             <li><a href="/admin/dominikas">Dominikas</a></li>
                                             <li><a href="/admin/categories">Categories</a></li>
+                                            <li><a href="/admin/pages">Taarifa</a></li>
                                             <li><a href="/users/">Users</a></li>
                                             <li><a href="/whatsapp-messages/">Whatsapp Messages</a></li>
                                         </ul>
@@ -197,6 +198,7 @@
                               <ul class="dropdown-menu">
                                   <li><a href="/admin/dominikas">Dominikas</a></li>
                                   <li><a href="/admin/categories">Categories</a></li>
+                                  <li><a href="/admin/pages">Taarifa</a></li>
                                   <li><a href="/users/">Users</a></li>
                                   <li><a href="/whatsapp-messages/">Whatsapp Messages</a></li>
                               </ul>

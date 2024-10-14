@@ -14,6 +14,9 @@
                         <h2 class="card-title">{{ $blogPost->title }}</h2>
                         <p class="card-text">{{ Str::limit(strip_tags($blogPost->text), 200) }}</p>
                         <p><a class="btn btn-secondary" href="/blog/{{ $blogPost->url }}/{{ $blogPost->id }}" role="button">Soma Zaidi</a></p>
+                        @if($blogPost->document)
+                            <p><a class="btn btn-secondary" href="{{ asset('storage/documents/' . $blogPost->document) }}" role="button">Pakua Taarifa</a></p>
+                        @endif
                     </div>
                 </div>
             </div>

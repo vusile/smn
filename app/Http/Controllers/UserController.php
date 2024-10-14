@@ -99,7 +99,13 @@ class UserController extends Controller
 
         $code = rand(0001, 9999);
 
-        $phone = PhoneNumber::make($request->phone, $request->phone_country)->formatE164();
+        $phone = (new PhoneNumber
+        (
+            $request->phone,
+            [
+                $request->phone_country
+            ]
+        ))->formatE164();
 
         switch ($request->phone_country) {
             case 'TZ':

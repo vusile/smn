@@ -30,6 +30,23 @@ class BlogPostController extends Controller
             compact('blogPosts', 'title', 'description')
         );
     }
+
+    public function ukwakata()
+    {
+        $title = "Taarifa kutoka UKWAKATA Taifa";
+        $description = "Taarifa mbalimbali kutoka UKWAKATA Taifa";
+        SEOMeta::setTitle($title);
+        SEOMeta::setDescription($description);
+        
+        $blogPosts = BlogPost::where('type', 3)
+            ->orderBy('id' , 'desc')
+            ->get();
+        
+        return view(
+            'pages.index',
+            compact('blogPosts', 'title', 'description')
+        );
+    }
     
     public function show(string $slug, BlogPost $blogPost)
     {
