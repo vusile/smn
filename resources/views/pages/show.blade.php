@@ -8,6 +8,9 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
+            @if($blogPost->document)
+                <p><a class="btn btn-secondary" href="{{ asset('storage/documents/' . $blogPost->document) }}" role="button">Pakua Taarifa</a></p>
+            @endif
             {!! $blogPost->text !!}
         </div>
     </div>
