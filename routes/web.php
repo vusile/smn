@@ -154,17 +154,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/verify-number', 'UserController@verifyNumber')->name('verify-number');
     Route::get('/password-reset-questions', 'Auth\PasswordResetQuestionsController@show');
     Route::post('/save-password-reset-questions', 'Auth\PasswordResetQuestionsController@save')->name("save_password_reset_questions");
-    Route::get('/admin/pages', 'Admin\PagesController@index')->name('admin-pages-index');
-    Route::get('/admin/pages/{blogPost}', 'Admin\PagesController@edit')->name('admin-pages-edit');
-    Route::get('/admin/pages/create', 'Admin\PagesController@create')->name('admin-pages-create');
-    Route::post('/admin/pages/save', 'Admin\PagesController@save')->name('admin-pages-save');
-    Route::post('/admin/pages/update/{blogPost}', 'Admin\PagesController@update')->name('admin-pages-update');
+
     Route::group(['middleware' => ['role:super admin']], function () {
-
-        //Move to another role
-
-        //end move to another role
-        //Route::get('/admin/pages', 'Admin\PagesController@index')->name('admin-pages-index');
+        Route::get('/admin/pages', 'Admin\PagesController@index')->name('admin-pages-index');
+        Route::get('/admin/pages/{blogPost}', 'Admin\PagesController@edit')->name('admin-pages-edit');
+        Route::get('/admin/pages/create', 'Admin\PagesController@create')->name('admin-pages-create');
+        Route::post('/admin/pages/save', 'Admin\PagesController@save')->name('admin-pages-save');
+        Route::post('/admin/pages/update/{blogPost}', 'Admin\PagesController@update')->name('admin-pages-update');
         Route::get('/admin/categories', 'Admin\CategoriesController@index')->name('admin-categories-index');
         Route::post('/admin/categories/save/', 'Admin\CategoriesController@save')->name('admin-categories-save');
         Route::get('/admin/categories/create/', 'Admin\CategoriesController@create')->name('admin-categories-create');
