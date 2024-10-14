@@ -12,8 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('songs', function (Blueprint $table) {
-            $table->bigInteger('downloads');
-            $table->bigInteger('views');
+            if (!Schema::hasColumn('songs', 'downloads')) {
+                $table->bigInteger('downloads');
+            }
+
+            if (!Schema::hasColumn('songs', 'views')) {
+                $table->bigInteger('views');
+            }
         });
     }
 
