@@ -2,6 +2,7 @@
 /public/hot
 /public/uploads/files
 /public/images
+/public/documents
 /public/storage
 /storage/debugbar
 /storage/*.key

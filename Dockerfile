@@ -9,7 +9,10 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN a2enmod rewrite
 
-RUN docker-php-ext-install pdo pdo_mysql mysqli zip gd mbstring
+RUN docker-php-ext-install pdo pdo_mysql mysqli zip gd opcache
+
+ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS="0"
+#ADD opcache.ini "$PHP_INI_DIR/conf.d/opcache.ini"
 
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf

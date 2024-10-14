@@ -9,11 +9,14 @@ services:
     container_name: smn
     volumes:
       - .:/var/www/html
+      - ./vendor:/var/www/html/vendor
     ports:
       - 8000:80
     build:
       context: .
       dockerfile: ./Dockerfile
+    environment:
+      PHP_OPCACHE_VALIDATE_TIMESTAMPS: 1
   db:
     image: mysql:latest
     restart: always
