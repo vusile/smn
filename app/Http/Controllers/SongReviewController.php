@@ -81,12 +81,12 @@ class SongReviewController extends Controller
                     $songsUserHasReviewed
                 );
             })
-            ->when($songsAlredyInReviewProcess, function($query, $songsAlredyInReviewProcess) {
-                return $query->whereIn(
-                    'id',
-                    $songsAlredyInReviewProcess
-                );
-            })
+            // ->when($songsAlredyInReviewProcess, function($query, $songsAlredyInReviewProcess) {
+            //     return $query->whereIn(
+            //         'id',
+            //         $songsAlredyInReviewProcess
+            //     );
+            // })
 //            ->inRandomOrder()
             ->first();
 
